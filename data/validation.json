@@ -1,0 +1,66 @@
+{
+  "status": "INCOMPLETE",
+  "target_count": 20,
+  "verified_report_count": 1,
+  "candidate_dates": [
+    "2026-09-08",
+    "2026-09-09",
+    "2026-09-10",
+    "2026-09-11",
+    "2026-09-14",
+    "2026-09-15",
+    "2026-09-16",
+    "2026-09-17",
+    "2026-09-18",
+    "2026-09-21",
+    "2026-09-22",
+    "2026-09-23",
+    "2026-09-24",
+    "2026-09-25",
+    "2026-09-28",
+    "2026-09-29",
+    "2026-09-30",
+    "2026-10-01",
+    "2026-10-02",
+    "2026-10-05"
+  ],
+  "verified": [
+    {
+      "activity_date": "2026-10-05",
+      "report_date": "2026-10-06",
+      "sha256": "8e75b564bc56aed654325f48bdaa28a2e17d4e698bffc0ab22ff1b83d15ef0d0",
+      "source_url": "https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls",
+      "checks_passed": 164,
+      "verified_values_oz": {
+        "total": 23479618.522,
+        "registered": 15086528.079,
+        "eligible": 8393090.443
+      },
+      "provenance_method": "official_https_download"
+    }
+  ],
+  "not_obtained_dates": [
+    "2026-09-08",
+    "2026-09-09",
+    "2026-09-10",
+    "2026-09-11",
+    "2026-09-14",
+    "2026-09-15",
+    "2026-09-16",
+    "2026-09-17",
+    "2026-09-18",
+    "2026-09-21",
+    "2026-09-22",
+    "2026-09-23",
+    "2026-09-24",
+    "2026-09-25",
+    "2026-09-28",
+    "2026-09-29",
+    "2026-09-30",
+    "2026-10-01",
+    "2026-10-02"
+  ],
+  "calendar_note": "Weekday candidates, not a verified CME trading/reporting calendar; holidays remain unclassified, never filled with guessed data.",
+  "verification_note": "Source bytes are reparsed and balances/detail reconciled. This is not an independent CME audit. Local imports retain their declared provenance.",
+  "twenty_day_change_requires": "21 consecutive dated observations, with no unclassified gaps"
+}

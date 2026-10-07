@@ -1,0 +1,73 @@
+name: Collect and publish COMEX Gold
+
+on:
+  workflow_dispatch:
+  schedule:
+    # UTC -> Asia/Kuala_Lumpur 05:17, 07:17, 07:41 every day.
+    - cron: '17 21 * * *'
+    - cron: '17 23 * * *'
+    - cron: '41 23 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'comex_gold/**'
+      - 'tests/**'
+      - 'requirements.txt'
+      - '.github/workflows/collect-and-publish.yml'
+
+concurrency:
+  group: comex-cloud
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install parser dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Test parsing and failure behavior
+        run: python -m unittest discover -q
+      - name: Download, reconcile, archive
+        id: collect
+        continue-on-error: true
+        run: python -m comex_gold update --timeout 25 --attempts 2
+      - name: Persist history before publishing (including failure status)
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data
+          if ! git diff --cached --quiet; then
+            git commit -m 'Archive CME report and update status [skip ci]'
+            git push origin HEAD:main
+          fi
+      - name: Build public data package
+        run: python -m comex_gold.cloud --output-dir public-data
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public-data
+      - name: Publish data endpoint
+        id: deploy
+        uses: actions/deploy-pages@v4
+      - name: Mark failed collection after publishing explicit failure status
+        if: steps.collect.outcome == 'failure'
+        run: |
+          echo 'CME collection failed; published snapshot explicitly marks the failed attempt.'
+          exit 1

@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+data/.update.lock
+*.tmp
+public-data/
+cloud-deploy/
