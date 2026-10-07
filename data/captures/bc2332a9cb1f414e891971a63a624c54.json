@@ -1,0 +1,14 @@
+{
+  "captured_at_utc": "2026-10-07T09:58:45.486770+00:00",
+  "date": "2026-09-22",
+  "report_date": "2026-09-23",
+  "sha256": "bffa39a0749b18552da32d947d8bf1a939ed4ce5928d3e53e60dd679f62002b0",
+  "source_url": "https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls",
+  "method": "internet_archive_original_cme",
+  "http_status": 200,
+  "archive_url": "https://web.archive.org/web/20260923211408id_/https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls",
+  "archive_timestamp_utc": "20260923211408",
+  "cdx_sha1_base32": "OSPMKQIRANKNW454AX5UTDAHJ4QEPAJ6",
+  "cdx_digest_verified": true,
+  "origin_note": "Original CME URL captured by Internet Archive; historical source is an archive replay, not a current direct CME HTTP response."
+}

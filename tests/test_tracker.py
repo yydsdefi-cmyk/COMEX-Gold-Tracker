@@ -2,6 +2,7 @@
 from copy import deepcopy
 from datetime import date, timedelta
 from io import BytesIO
+import csv
 import json
 from pathlib import Path
 import tempfile
@@ -286,6 +287,31 @@ class DatasetTests(unittest.TestCase):
         self.assertEqual(result["status"], "INCOMPLETE")
         self.assertEqual(result["verified_report_count"], 1)
         self.assertEqual(len(result["not_obtained_dates"]), 19)
+
+    def test_old_balance_break_is_disclosed_without_poisoning_valid_five_day_window(self):
+        observations = observation_sequence(21)
+        observations[1]["summary"]["eligible"]["balances"]["previous"] -= 1000
+        latest = make_latest(observations, {"status": "OK"}, date(2026, 9, 1))
+        self.assertIsNone(latest["change_20d_pct"])
+        self.assertEqual(latest["change_windows"]["20d"]["status"], "PREVIOUS_BALANCE_MISMATCH_OR_REVISION")
+        self.assertIsNotNone(latest["change_5d_pct"])
+        self.assertEqual(latest["change_1d_pct"], -0.357143)
+        self.assertEqual(latest["history_continuity_issues"][0]["series"]["eligible"],
+                         {"prior_total_today_oz": 200.0, "next_prev_total_oz": 199.0})
+
+    def test_archived_cme_provenance_survives_csv_and_validation_export(self):
+        with tempfile.TemporaryDirectory() as temp:
+            folder = Path(temp)
+            archive = {"method": "internet_archive_original_cme", "archive_url": "https://web.archive.org/web/test-only",
+                       "archive_timestamp_utc": "20261007081907", "cdx_sha1_base32": "TEST_ONLY", "cdx_digest_verified": True}
+            store_observation(folder, FIXTURE.read_bytes(), archive)
+            publish(folder, {"status": "OK"}, date(2026, 10, 7))
+            row = next(csv.DictReader((folder / "history.csv").read_text(encoding="utf-8").splitlines()))
+            self.assertEqual(row["provenance_method"], "internet_archive_original_cme")
+            self.assertEqual(row["archive_url"], archive["archive_url"])
+            self.assertEqual(row["cdx_digest_verified"], "True")
+            verified = json.loads((folder / "validation.json").read_text())["verified"][0]
+            self.assertEqual(verified["archive_url"], archive["archive_url"])
 
 
 class CollectorTests(unittest.TestCase):

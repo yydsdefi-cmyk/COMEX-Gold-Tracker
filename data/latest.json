@@ -3,7 +3,7 @@
   "source": "CME",
   "as_of_local_date": "2026-10-07",
   "as_of_timezone": "Asia/Kuala_Lumpur",
-  "generated_at_utc": "2026-10-07T09:28:27.898328+00:00",
+  "generated_at_utc": "2026-10-07T09:58:46.079147+00:00",
   "update_status": "UNCHANGED",
   "last_update": {
     "attempted_at_utc": "2026-10-07T09:28:27.572978+00:00",
@@ -50,8 +50,26 @@
     },
     "last_verified_at_utc": "2026-10-07T09:28:27.885610+00:00"
   },
-  "observation_count": 1,
+  "observation_count": 26,
   "reconciliation_checks_passed": 164,
+  "history_continuity_issues": [
+    {
+      "prior_activity_date": "2026-09-18",
+      "next_activity_date": "2026-09-21",
+      "status": "PREVIOUS_BALANCE_MISMATCH_OR_REVISION",
+      "series": {
+        "total": {
+          "prior_total_today_oz": 27415786.919,
+          "next_prev_total_oz": 23356422.524
+        },
+        "eligible": {
+          "prior_total_today_oz": 12259494.273,
+          "next_prev_total_oz": 8200129.878
+        }
+      },
+      "interpretation": "Do not treat the difference between reports as physical withdrawal; cause is not confirmed."
+    }
+  ],
   "report_age_weekdays": 1,
   "freshness": "WITHIN_AGE_LIMIT",
   "freshness_rule": "Report Date age <= 1 weekday; conservative, not a confirmed CME publication calendar",
@@ -62,12 +80,12 @@
   "registered_change_1d_pct": 0.0,
   "eligible_change_1d_oz": 0.0,
   "eligible_change_1d_pct": 0.0,
-  "change_5d_oz": null,
-  "change_5d_pct": null,
-  "registered_change_5d_oz": null,
-  "registered_change_5d_pct": null,
-  "eligible_change_5d_oz": null,
-  "eligible_change_5d_pct": null,
+  "change_5d_oz": 72339.311,
+  "change_5d_pct": 0.309046,
+  "registered_change_5d_oz": -17292.759,
+  "registered_change_5d_pct": -0.114493,
+  "eligible_change_5d_oz": 89632.07,
+  "eligible_change_5d_pct": 1.079455,
   "change_20d_oz": null,
   "change_20d_pct": null,
   "registered_change_20d_oz": null,
@@ -80,11 +98,11 @@
       "baseline_date": null
     },
     "5d": {
-      "status": "INSUFFICIENT_HISTORY",
-      "baseline_date": null
+      "status": "AVAILABLE_CONSECUTIVE_WEEKDAYS",
+      "baseline_date": "2026-09-28"
     },
     "20d": {
-      "status": "INSUFFICIENT_HISTORY",
+      "status": "MISSING_WEEKDAY_OR_UNCONFIRMED_HOLIDAY",
       "baseline_date": null
     }
   },
@@ -120,8 +138,8 @@
   },
   "registered_alert": {
     "rapid_decline_1d": false,
-    "persistent_decline_5_consecutive_days": null,
-    "persistent_check_status": "INSUFFICIENT_HISTORY",
+    "persistent_decline_5_consecutive_days": false,
+    "persistent_check_status": "AVAILABLE_CONSECUTIVE_WEEKDAYS",
     "rule": "Rapid: Registered 1D < -3%; persistent: declines on each of 5 consecutive verified weekdays",
     "shortage_inference": false
   },

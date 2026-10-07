@@ -1,6 +1,6 @@
 # COMEX Gold — 官方库存数据
 
-数据生成时间：2026-10-07T09:28:27.898328+00:00
+数据生成时间：2026-10-07T09:58:46.079147+00:00
 更新状态：UNCHANGED；数据时效：WITHIN_AGE_LIMIT
 库存日期（Activity Date）：**2026-10-05**；报告日期：2026-10-06
 
@@ -16,15 +16,16 @@ Registered Ratio：64.253719%
 库存变化分级：NORMAL（用户阈值，非 CME 风险评级）。
 
 单日变化直接核对 CME PREV TOTAL 与 TOTAL TODAY；不补造前一个日期的历史记录。
-5D 变化：暂不可计算（INSUFFICIENT_HISTORY）。
-20D 变化：暂不可计算（INSUFFICIENT_HISTORY）。
+5D 变化：+0.309046%（AVAILABLE_CONSECUTIVE_WEEKDAYS）。
+20D 变化：暂不可计算（MISSING_WEEKDAY_OR_UNCONFIRMED_HOLIDAY）。
+历史余额衔接异常：2026-09-18 → 2026-09-21。相邻报告前后余额不一致，原因未确认，不能解读为同量实物出库。
 
 Pledged 已在 Registered 内，不另加；Eligible 单独下降不等于交割黄金短缺。
-Registered 快速下降标记：False；连续下降标记：None
+Registered 快速下降标记：False；连续下降标记：False
 原始报告 SHA-256：`8e75b564bc56aed654325f48bdaa28a2e17d4e698bffc0ab22ff1b83d15ef0d0`
 原始文件：`raw/2026-10-05/8e75b564bc56aed654325f48bdaa28a2e17d4e698bffc0ab22ff1b83d15ef0d0.xls`
 
-20 日核验进度：1/20（INCOMPLETE）。
+20 日核验进度：20/20（COMPLETE_20_OBSERVATIONS）。
 未取得日期只是工作日候选，不代表已确认的 CME 交易日。
 来源：[CME Gold Stocks 原始文件](https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls)；[官方入口](https://www.cmegroup.com/solutions/clearing/operations-and-deliveries/nymex-delivery-notices.html)。
 

@@ -6,6 +6,8 @@
 已部署：[数据入口](https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/)、[JSON](https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/latest.json)、[独立仓库](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker)。
 实际晨报接入规则见 [MORNING_BRIEF_INTEGRATION.md](MORNING_BRIEF_INTEGRATION.md)，包含已验证的 GitHub 文件读取备用路径。
 
+项目预算为零，不购买数据、开通计费 API 或付款试用，见 [OPERATING_POLICY.md](OPERATING_POLICY.md)。免费网页存档已回补 26 份 CME 原报告，最近 20 个工作日候选核验完成；5D 可计算，20D 因日期间隙及余额异常保持 null。详见 [BACKFILL_VALIDATION.md](BACKFILL_VALIDATION.md)。
+
 ## 排程
 
 每天 Asia/Kuala_Lumpur 05:17、07:17、07:41，三个独立尝试。GitHub 的排程可能延迟，不能承诺 8AM 前一定更新。
@@ -65,4 +67,3 @@ NORMAL 仅指总库存单日变化未触发库存阈值，不是黄金市场风�
 - 5D/20D 缺失：当前真实报告不足或存在未分类日期间隙；从已取得的官方报告积累，不填造数据。
 
 参考：[GitHub Pages 工作流](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)、[GitHub 排程限制](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule)。
-

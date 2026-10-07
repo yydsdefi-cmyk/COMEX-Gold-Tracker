@@ -150,6 +150,22 @@ def window_change(observations, n):
             "current": totals(window[-1])}, "AVAILABLE_CONSECUTIVE_WEEKDAYS"
 
 
+def continuity_issues(observations):
+    issues = []
+    for prior, current in zip(observations, observations[1:]):
+        before, previous = totals(prior), totals(current, "previous")
+        mismatches = {key: {"prior_total_today_oz": oz(before[key]),
+                            "next_prev_total_oz": oz(previous[key])}
+                      for key in SERIES if before[key] != previous[key]}
+        if mismatches:
+            issues.append({"prior_activity_date": prior["date"],
+                           "next_activity_date": current["date"],
+                           "status": "PREVIOUS_BALANCE_MISMATCH_OR_REVISION",
+                           "series": mismatches,
+                           "interpretation": "Do not treat the difference between reports as physical withdrawal; cause is not confirmed."})
+    return issues
+
+
 def inventory_alert(current, previous):
     if previous == 0:
         return "UNKNOWN"
@@ -180,6 +196,7 @@ def make_latest(observations, fetch, as_of=None):
                pledged_accounting=last["pledged_accounting"],
                provenance=last["provenance"], observation_count=len(observations),
                reconciliation_checks_passed=len(last["checks"]))
+    out["history_continuity_issues"] = continuity_issues(observations)
     report_date = date.fromisoformat(last["report_date"])
     age = len(candidate_weekdays(report_date + timedelta(days=1), as_of))
     out.update(report_age_weekdays=age,
@@ -228,6 +245,9 @@ def validation_report(observations, as_of=None):
     verified = [{"activity_date": d, "report_date": by_date[d]["report_date"],
                  "sha256": by_date[d]["provenance"]["sha256"],
                  "source_url": by_date[d]["provenance"]["source_url"],
+                 "archive_url": by_date[d]["provenance"].get("archive_url"),
+                 "archive_timestamp_utc": by_date[d]["provenance"].get("archive_timestamp_utc"),
+                 "cdx_digest_verified": by_date[d]["provenance"].get("cdx_digest_verified"),
                  "checks_passed": len(by_date[d]["checks"]),
                  "verified_values_oz": {k: oz(v) for k, v in totals(by_date[d]).items()},
                  "provenance_method": by_date[d]["provenance"]["method"]}
@@ -236,6 +256,8 @@ def validation_report(observations, as_of=None):
     return {"status": "COMPLETE_20_OBSERVATIONS" if not missing else "INCOMPLETE",
             "target_count": 20, "verified_report_count": len(verified),
             "candidate_dates": expected, "verified": verified, "not_obtained_dates": missing,
+            "total_observation_count": len(observations),
+            "history_continuity_issues": continuity_issues(observations),
             "calendar_note": "Weekday candidates, not a verified CME trading/reporting calendar; holidays remain unclassified, never filled with guessed data.",
             "verification_note": "Source bytes are reparsed and balances/detail reconciled. This is not an independent CME audit. Local imports retain their declared provenance.",
             "twenty_day_change_requires": "21 consecutive dated observations, with no unclassified gaps"}
@@ -264,6 +286,11 @@ def chat_report(latest, validation):
             value = latest[f"change_{n}d_pct"]
             lines.append(f"{n}D 变化：" + (f"{value:+.6f}%" if value is not None else "暂不可计算") +
                          f"（{latest['change_windows'][f'{n}d']['status']}）。")
+        if latest.get("history_continuity_issues"):
+            lines.append("历史余额衔接异常：" + "；".join(
+                f"{item['prior_activity_date']} → {item['next_activity_date']}"
+                for item in latest["history_continuity_issues"]) +
+                "。相邻报告前后余额不一致，原因未确认，不能解读为同量实物出库。")
         lines += ["", "Pledged 已在 Registered 内，不另加；Eligible 单独下降不等于交割黄金短缺。",
                   "Registered 快速下降标记：" + str(latest['registered_alert']['rapid_decline_1d']) +
                   "；连续下降标记：" + str(latest['registered_alert']['persistent_decline_5_consecutive_days']),
@@ -295,6 +322,7 @@ def publish(data_dir, fetch=None, as_of=None):
     fields = ["date", "report_date", "total_oz", "registered_oz", "eligible_oz", "registered_ratio", "pledged_oz",
               "total_previous_oz", "received_oz", "withdrawn_oz", "net_change_oz", "adjustment_oz",
               "source", "source_url", "captured_at_utc", "sha256", "raw_path", "provenance_method"]
+    fields += ["archive_url", "archive_timestamp_utc", "cdx_sha1_base32", "cdx_digest_verified"]
     writer = csv.DictWriter(buffer, fieldnames=fields)
     writer.writeheader()
     for o in observations:
@@ -305,6 +333,8 @@ def publish(data_dir, fetch=None, as_of=None):
                "pledged_oz": oz(o["summary"]["pledged"]["balances"]["today"]) if "pledged" in o["summary"] else None,
                "source": "CME", "provenance_method": o["provenance"]["method"],
                **{k: o["provenance"][k] for k in ("source_url", "captured_at_utc", "sha256", "raw_path")}}
+        row.update({k: o["provenance"].get(k, "") for k in
+                    ("archive_url", "archive_timestamp_utc", "cdx_sha1_base32", "cdx_digest_verified")})
         movement = o["summary"]["total"]["balances"]
         row["total_previous_oz"] = oz(movement["previous"])
         for k in ("received", "withdrawn", "net_change", "adjustment"):

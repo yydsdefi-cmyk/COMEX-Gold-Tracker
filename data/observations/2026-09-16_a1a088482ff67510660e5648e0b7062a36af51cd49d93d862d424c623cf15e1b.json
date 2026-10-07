@@ -1,0 +1,1362 @@
+{
+  "report_date": "2026-09-17",
+  "date": "2026-09-16",
+  "unit": "troy_oz",
+  "scope": "CME Gold Stocks official combined report (GC and 4GC)",
+  "pledged_accounting": "subset_of_registered_verified_by_reconciliation",
+  "summary": {
+    "registered": {
+      "row": 133,
+      "balances": {
+        "previous": 15155521022,
+        "received": 0,
+        "withdrawn": 0,
+        "net_change": 0,
+        "adjustment": 771624,
+        "today": 15156292646
+      }
+    },
+    "pledged": {
+      "row": 134,
+      "balances": {
+        "previous": 1732993643,
+        "received": null,
+        "withdrawn": null,
+        "net_change": null,
+        "adjustment": null,
+        "today": 1732993643
+      }
+    },
+    "eligible": {
+      "row": 135,
+      "balances": {
+        "previous": 12228297319,
+        "received": 0,
+        "withdrawn": 0,
+        "net_change": 0,
+        "adjustment": -771624,
+        "today": 12227525695
+      }
+    },
+    "total": {
+      "row": 136,
+      "balances": {
+        "previous": 27383818341,
+        "received": 0,
+        "withdrawn": 0,
+        "net_change": 0,
+        "adjustment": 0,
+        "today": 27383818341
+      }
+    }
+  },
+  "depositories": [
+    {
+      "name": "ASAHI DEPOSITORY LLC",
+      "row": 13,
+      "enhanced_delivery": false,
+      "categories": {
+        "registered": {
+          "row": 14,
+          "balances": {
+            "previous": 1676374969,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 1676374969
+          }
+        },
+        "pledged": {
+          "row": 15,
+          "balances": {
+            "previous": 96563084,
+            "received": null,
+            "withdrawn": null,
+            "net_change": null,
+            "adjustment": null,
+            "today": 96563084
+          }
+        },
+        "eligible": {
+          "row": 16,
+          "balances": {
+            "previous": 145598159,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 145598159
+          }
+        },
+        "total": {
+          "row": 17,
+          "balances": {
+            "previous": 1821973128,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 1821973128
+          }
+        }
+      }
+    },
+    {
+      "name": "ASAHI DEPOSITORY LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)",
+      "row": 19,
+      "enhanced_delivery": true,
+      "categories": {
+        "registered": {
+          "row": 20,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        },
+        "eligible": {
+          "row": 21,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        },
+        "total": {
+          "row": 22,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "BRINK'S, INC.",
+      "row": 24,
+      "enhanced_delivery": false,
+      "categories": {
+        "registered": {
+          "row": 25,
+          "balances": {
+            "previous": 5840702295,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 5840702295
+          }
+        },
+        "pledged": {
+          "row": 26,
+          "balances": {
+            "previous": 632064018,
+            "received": null,
+            "withdrawn": null,
+            "net_change": null,
+            "adjustment": null,
+            "today": 632064018
+          }
+        },
+        "eligible": {
+          "row": 27,
+          "balances": {
+            "previous": 1213371814,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 1213371814
+          }
+        },
+        "total": {
+          "row": 28,
+          "balances": {
+            "previous": 7054074109,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 7054074109
+          }
+        }
+      }
+    },
+    {
+      "name": "BRINK'S, INC.- ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)",
+      "row": 30,
+      "enhanced_delivery": true,
+      "categories": {
+        "registered": {
+          "row": 31,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        },
+        "eligible": {
+          "row": 32,
+          "balances": {
+            "previous": 15197193,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 15197193
+          }
+        },
+        "total": {
+          "row": 33,
+          "balances": {
+            "previous": 15197193,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 15197193
+          }
+        }
+      }
+    },
+    {
+      "name": "DELAWARE DEPOSITORY",
+      "row": 35,
+      "enhanced_delivery": false,
+      "categories": {
+        "registered": {
+          "row": 36,
+          "balances": {
+            "previous": 63924510,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 63924510
+          }
+        },
+        "pledged": {
+          "row": 37,
+          "balances": {
+            "previous": 9783520,
+            "received": null,
+            "withdrawn": null,
+            "net_change": null,
+            "adjustment": null,
+            "today": 9783520
+          }
+        },
+        "eligible": {
+          "row": 38,
+          "balances": {
+            "previous": 118089240,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 118089240
+          }
+        },
+        "total": {
+          "row": 39,
+          "balances": {
+            "previous": 182013750,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 182013750
+          }
+        }
+      }
+    },
+    {
+      "name": "DELAWARE DEPOSITORY - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)",
+      "row": 41,
+      "enhanced_delivery": true,
+      "categories": {
+        "registered": {
+          "row": 42,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        },
+        "eligible": {
+          "row": 43,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        },
+        "total": {
+          "row": 44,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "HSBC BANK, USA",
+      "row": 46,
+      "enhanced_delivery": false,
+      "categories": {
+        "registered": {
+          "row": 47,
+          "balances": {
+            "previous": 1421879576,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 1421879576
+          }
+        },
+        "pledged": {
+          "row": 48,
+          "balances": {
+            "previous": 164206694,
+            "received": null,
+            "withdrawn": null,
+            "net_change": null,
+            "adjustment": null,
+            "today": 164206694
+          }
+        },
+        "eligible": {
+          "row": 49,
+          "balances": {
+            "previous": 3633245823,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 3633245823
+          }
+        },
+        "total": {
+          "row": 50,
+          "balances": {
+            "previous": 5055125399,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 5055125399
+          }
+        }
+      }
+    },
+    {
+      "name": "HSBC BANK, USA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)",
+      "row": 52,
+      "enhanced_delivery": true,
+      "categories": {
+        "registered": {
+          "row": 53,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        },
+        "eligible": {
+          "row": 54,
+          "balances": {
+            "previous": 334582300,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 334582300
+          }
+        },
+        "total": {
+          "row": 55,
+          "balances": {
+            "previous": 334582300,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 334582300
+          }
+        }
+      }
+    },
+    {
+      "name": "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE",
+      "row": 57,
+      "enhanced_delivery": false,
+      "categories": {
+        "registered": {
+          "row": 58,
+          "balances": {
+            "previous": 65748508,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 65748508
+          }
+        },
+        "pledged": {
+          "row": 59,
+          "balances": {
+            "previous": 975189,
+            "received": null,
+            "withdrawn": null,
+            "net_change": null,
+            "adjustment": null,
+            "today": 975189
+          }
+        },
+        "eligible": {
+          "row": 60,
+          "balances": {
+            "previous": 1850392,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 1850392
+          }
+        },
+        "total": {
+          "row": 61,
+          "balances": {
+            "previous": 67598900,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 67598900
+          }
+        }
+      }
+    },
+    {
+      "name": "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE -ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)",
+      "row": 63,
+      "enhanced_delivery": true,
+      "categories": {
+        "registered": {
+          "row": 64,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        },
+        "eligible": {
+          "row": 65,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        },
+        "total": {
+          "row": 66,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "JP MORGAN CHASE BANK NA",
+      "row": 68,
+      "enhanced_delivery": false,
+      "categories": {
+        "registered": {
+          "row": 69,
+          "balances": {
+            "previous": 2297435470,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 2297435470
+          }
+        },
+        "pledged": {
+          "row": 70,
+          "balances": {
+            "previous": 561407047,
+            "received": null,
+            "withdrawn": null,
+            "net_change": null,
+            "adjustment": null,
+            "today": 561407047
+          }
+        },
+        "eligible": {
+          "row": 71,
+          "balances": {
+            "previous": 2299499747,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 2299499747
+          }
+        },
+        "total": {
+          "row": 72,
+          "balances": {
+            "previous": 4596935217,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 4596935217
+          }
+        }
+      }
+    },
+    {
+      "name": "JP MORGAN CHASE BANK NA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)",
+      "row": 74,
+      "enhanced_delivery": true,
+      "categories": {
+        "registered": {
+          "row": 75,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        },
+        "eligible": {
+          "row": 76,
+          "balances": {
+            "previous": 3704394102,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 3704394102
+          }
+        },
+        "total": {
+          "row": 77,
+          "balances": {
+            "previous": 3704394102,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 3704394102
+          }
+        }
+      }
+    },
+    {
+      "name": "LOOMIS INTERNATIONAL (US) LLC",
+      "row": 79,
+      "enhanced_delivery": false,
+      "categories": {
+        "registered": {
+          "row": 80,
+          "balances": {
+            "previous": 580449528,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 580449528
+          }
+        },
+        "pledged": {
+          "row": 81,
+          "balances": {
+            "previous": 103911594,
+            "received": null,
+            "withdrawn": null,
+            "net_change": null,
+            "adjustment": null,
+            "today": 103911594
+          }
+        },
+        "eligible": {
+          "row": 82,
+          "balances": {
+            "previous": 84265311,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 84265311
+          }
+        },
+        "total": {
+          "row": 83,
+          "balances": {
+            "previous": 664714839,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 664714839
+          }
+        }
+      }
+    },
+    {
+      "name": "LOOMIS INTERNATIONAL (US) LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)",
+      "row": 85,
+      "enhanced_delivery": true,
+      "categories": {
+        "registered": {
+          "row": 86,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        },
+        "eligible": {
+          "row": 87,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        },
+        "total": {
+          "row": 88,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "MALCA-AMIT USA, LLC",
+      "row": 90,
+      "enhanced_delivery": false,
+      "categories": {
+        "registered": {
+          "row": 91,
+          "balances": {
+            "previous": 1561948551,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 1561948551
+          }
+        },
+        "pledged": {
+          "row": 92,
+          "balances": {
+            "previous": 23296389,
+            "received": null,
+            "withdrawn": null,
+            "net_change": null,
+            "adjustment": null,
+            "today": 23296389
+          }
+        },
+        "eligible": {
+          "row": 93,
+          "balances": {
+            "previous": 7821028,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 7821028
+          }
+        },
+        "total": {
+          "row": 94,
+          "balances": {
+            "previous": 1569769579,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 1569769579
+          }
+        }
+      }
+    },
+    {
+      "name": "MALCA-AMIT USA, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)",
+      "row": 96,
+      "enhanced_delivery": true,
+      "categories": {
+        "registered": {
+          "row": 97,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        },
+        "eligible": {
+          "row": 98,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        },
+        "total": {
+          "row": 99,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "MANFRA, TORDELLA & BROOKES, LLC",
+      "row": 101,
+      "enhanced_delivery": false,
+      "categories": {
+        "registered": {
+          "row": 102,
+          "balances": {
+            "previous": 1461935780,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 771624,
+            "today": 1462707404
+          }
+        },
+        "pledged": {
+          "row": 103,
+          "balances": {
+            "previous": 137883828,
+            "received": null,
+            "withdrawn": null,
+            "net_change": null,
+            "adjustment": null,
+            "today": 137883828
+          }
+        },
+        "eligible": {
+          "row": 104,
+          "balances": {
+            "previous": 643907448,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": -771624,
+            "today": 643135824
+          }
+        },
+        "total": {
+          "row": 105,
+          "balances": {
+            "previous": 2105843228,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 2105843228
+          }
+        }
+      }
+    },
+    {
+      "name": "MANFRA, TORDELLA & BROOKES, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)",
+      "row": 107,
+      "enhanced_delivery": true,
+      "categories": {
+        "registered": {
+          "row": 108,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        },
+        "eligible": {
+          "row": 109,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        },
+        "total": {
+          "row": 110,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "STONEX PRECIOUS METALS LLC",
+      "row": 112,
+      "enhanced_delivery": false,
+      "categories": {
+        "registered": {
+          "row": 113,
+          "balances": {
+            "previous": 149820037,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 149820037
+          }
+        },
+        "pledged": {
+          "row": 114,
+          "balances": {
+            "previous": 2902280,
+            "received": null,
+            "withdrawn": null,
+            "net_change": null,
+            "adjustment": null,
+            "today": 2902280
+          }
+        },
+        "eligible": {
+          "row": 115,
+          "balances": {
+            "previous": 16268406,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 16268406
+          }
+        },
+        "total": {
+          "row": 116,
+          "balances": {
+            "previous": 166088443,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 166088443
+          }
+        }
+      }
+    },
+    {
+      "name": "STONEX PRECIOUS METALS LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)",
+      "row": 118,
+      "enhanced_delivery": true,
+      "categories": {
+        "registered": {
+          "row": 119,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        },
+        "eligible": {
+          "row": 120,
+          "balances": {
+            "previous": 3981000,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 3981000
+          }
+        },
+        "total": {
+          "row": 121,
+          "balances": {
+            "previous": 3981000,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 3981000
+          }
+        }
+      }
+    },
+    {
+      "name": "TEXAS PRECIOUS METALS, LLC",
+      "row": 123,
+      "enhanced_delivery": false,
+      "categories": {
+        "registered": {
+          "row": 124,
+          "balances": {
+            "previous": 35301798,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 35301798
+          }
+        },
+        "eligible": {
+          "row": 125,
+          "balances": {
+            "previous": 5015556,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 5015556
+          }
+        },
+        "total": {
+          "row": 126,
+          "balances": {
+            "previous": 40317354,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 40317354
+          }
+        }
+      }
+    },
+    {
+      "name": "TEXAS PRECIOUS METALS, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)",
+      "row": 128,
+      "enhanced_delivery": true,
+      "categories": {
+        "registered": {
+          "row": 129,
+          "balances": {
+            "previous": 0,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 0
+          }
+        },
+        "eligible": {
+          "row": 130,
+          "balances": {
+            "previous": 1209800,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 1209800
+          }
+        },
+        "total": {
+          "row": 131,
+          "balances": {
+            "previous": 1209800,
+            "received": 0,
+            "withdrawn": 0,
+            "net_change": 0,
+            "adjustment": 0,
+            "today": 1209800
+          }
+        }
+      }
+    }
+  ],
+  "checks": [
+    "summary/registered: net movement",
+    "summary/registered: balance bridge",
+    "summary/eligible: net movement",
+    "summary/eligible: balance bridge",
+    "summary/total: net movement",
+    "summary/total: balance bridge",
+    "summary: registered + eligible / previous",
+    "summary: registered + eligible / received",
+    "summary: registered + eligible / withdrawn",
+    "summary: registered + eligible / net_change",
+    "summary: registered + eligible / adjustment",
+    "summary: registered + eligible / today",
+    "ASAHI DEPOSITORY LLC/registered: net movement",
+    "ASAHI DEPOSITORY LLC/registered: balance bridge",
+    "ASAHI DEPOSITORY LLC/eligible: net movement",
+    "ASAHI DEPOSITORY LLC/eligible: balance bridge",
+    "ASAHI DEPOSITORY LLC/total: net movement",
+    "ASAHI DEPOSITORY LLC/total: balance bridge",
+    "ASAHI DEPOSITORY LLC: registered + eligible / previous",
+    "ASAHI DEPOSITORY LLC: registered + eligible / received",
+    "ASAHI DEPOSITORY LLC: registered + eligible / withdrawn",
+    "ASAHI DEPOSITORY LLC: registered + eligible / net_change",
+    "ASAHI DEPOSITORY LLC: registered + eligible / adjustment",
+    "ASAHI DEPOSITORY LLC: registered + eligible / today",
+    "ASAHI DEPOSITORY LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: net movement",
+    "ASAHI DEPOSITORY LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: balance bridge",
+    "ASAHI DEPOSITORY LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: net movement",
+    "ASAHI DEPOSITORY LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: balance bridge",
+    "ASAHI DEPOSITORY LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: net movement",
+    "ASAHI DEPOSITORY LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: balance bridge",
+    "ASAHI DEPOSITORY LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / previous",
+    "ASAHI DEPOSITORY LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / received",
+    "ASAHI DEPOSITORY LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / withdrawn",
+    "ASAHI DEPOSITORY LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / net_change",
+    "ASAHI DEPOSITORY LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / adjustment",
+    "ASAHI DEPOSITORY LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / today",
+    "BRINK'S, INC./registered: net movement",
+    "BRINK'S, INC./registered: balance bridge",
+    "BRINK'S, INC./eligible: net movement",
+    "BRINK'S, INC./eligible: balance bridge",
+    "BRINK'S, INC./total: net movement",
+    "BRINK'S, INC./total: balance bridge",
+    "BRINK'S, INC.: registered + eligible / previous",
+    "BRINK'S, INC.: registered + eligible / received",
+    "BRINK'S, INC.: registered + eligible / withdrawn",
+    "BRINK'S, INC.: registered + eligible / net_change",
+    "BRINK'S, INC.: registered + eligible / adjustment",
+    "BRINK'S, INC.: registered + eligible / today",
+    "BRINK'S, INC.- ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: net movement",
+    "BRINK'S, INC.- ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: balance bridge",
+    "BRINK'S, INC.- ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: net movement",
+    "BRINK'S, INC.- ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: balance bridge",
+    "BRINK'S, INC.- ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: net movement",
+    "BRINK'S, INC.- ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: balance bridge",
+    "BRINK'S, INC.- ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / previous",
+    "BRINK'S, INC.- ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / received",
+    "BRINK'S, INC.- ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / withdrawn",
+    "BRINK'S, INC.- ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / net_change",
+    "BRINK'S, INC.- ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / adjustment",
+    "BRINK'S, INC.- ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / today",
+    "DELAWARE DEPOSITORY/registered: net movement",
+    "DELAWARE DEPOSITORY/registered: balance bridge",
+    "DELAWARE DEPOSITORY/eligible: net movement",
+    "DELAWARE DEPOSITORY/eligible: balance bridge",
+    "DELAWARE DEPOSITORY/total: net movement",
+    "DELAWARE DEPOSITORY/total: balance bridge",
+    "DELAWARE DEPOSITORY: registered + eligible / previous",
+    "DELAWARE DEPOSITORY: registered + eligible / received",
+    "DELAWARE DEPOSITORY: registered + eligible / withdrawn",
+    "DELAWARE DEPOSITORY: registered + eligible / net_change",
+    "DELAWARE DEPOSITORY: registered + eligible / adjustment",
+    "DELAWARE DEPOSITORY: registered + eligible / today",
+    "DELAWARE DEPOSITORY - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: net movement",
+    "DELAWARE DEPOSITORY - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: balance bridge",
+    "DELAWARE DEPOSITORY - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: net movement",
+    "DELAWARE DEPOSITORY - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: balance bridge",
+    "DELAWARE DEPOSITORY - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: net movement",
+    "DELAWARE DEPOSITORY - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: balance bridge",
+    "DELAWARE DEPOSITORY - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / previous",
+    "DELAWARE DEPOSITORY - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / received",
+    "DELAWARE DEPOSITORY - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / withdrawn",
+    "DELAWARE DEPOSITORY - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / net_change",
+    "DELAWARE DEPOSITORY - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / adjustment",
+    "DELAWARE DEPOSITORY - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / today",
+    "HSBC BANK, USA/registered: net movement",
+    "HSBC BANK, USA/registered: balance bridge",
+    "HSBC BANK, USA/eligible: net movement",
+    "HSBC BANK, USA/eligible: balance bridge",
+    "HSBC BANK, USA/total: net movement",
+    "HSBC BANK, USA/total: balance bridge",
+    "HSBC BANK, USA: registered + eligible / previous",
+    "HSBC BANK, USA: registered + eligible / received",
+    "HSBC BANK, USA: registered + eligible / withdrawn",
+    "HSBC BANK, USA: registered + eligible / net_change",
+    "HSBC BANK, USA: registered + eligible / adjustment",
+    "HSBC BANK, USA: registered + eligible / today",
+    "HSBC BANK, USA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: net movement",
+    "HSBC BANK, USA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: balance bridge",
+    "HSBC BANK, USA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: net movement",
+    "HSBC BANK, USA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: balance bridge",
+    "HSBC BANK, USA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: net movement",
+    "HSBC BANK, USA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: balance bridge",
+    "HSBC BANK, USA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / previous",
+    "HSBC BANK, USA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / received",
+    "HSBC BANK, USA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / withdrawn",
+    "HSBC BANK, USA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / net_change",
+    "HSBC BANK, USA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / adjustment",
+    "HSBC BANK, USA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / today",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE/registered: net movement",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE/registered: balance bridge",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE/eligible: net movement",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE/eligible: balance bridge",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE/total: net movement",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE/total: balance bridge",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE: registered + eligible / previous",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE: registered + eligible / received",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE: registered + eligible / withdrawn",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE: registered + eligible / net_change",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE: registered + eligible / adjustment",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE: registered + eligible / today",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE -ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: net movement",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE -ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: balance bridge",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE -ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: net movement",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE -ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: balance bridge",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE -ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: net movement",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE -ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: balance bridge",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE -ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / previous",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE -ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / received",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE -ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / withdrawn",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE -ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / net_change",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE -ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / adjustment",
+    "INTERNATIONAL DEPOSITORY SERVICES OF DELAWARE -ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / today",
+    "JP MORGAN CHASE BANK NA/registered: net movement",
+    "JP MORGAN CHASE BANK NA/registered: balance bridge",
+    "JP MORGAN CHASE BANK NA/eligible: net movement",
+    "JP MORGAN CHASE BANK NA/eligible: balance bridge",
+    "JP MORGAN CHASE BANK NA/total: net movement",
+    "JP MORGAN CHASE BANK NA/total: balance bridge",
+    "JP MORGAN CHASE BANK NA: registered + eligible / previous",
+    "JP MORGAN CHASE BANK NA: registered + eligible / received",
+    "JP MORGAN CHASE BANK NA: registered + eligible / withdrawn",
+    "JP MORGAN CHASE BANK NA: registered + eligible / net_change",
+    "JP MORGAN CHASE BANK NA: registered + eligible / adjustment",
+    "JP MORGAN CHASE BANK NA: registered + eligible / today",
+    "JP MORGAN CHASE BANK NA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: net movement",
+    "JP MORGAN CHASE BANK NA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: balance bridge",
+    "JP MORGAN CHASE BANK NA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: net movement",
+    "JP MORGAN CHASE BANK NA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: balance bridge",
+    "JP MORGAN CHASE BANK NA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: net movement",
+    "JP MORGAN CHASE BANK NA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: balance bridge",
+    "JP MORGAN CHASE BANK NA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / previous",
+    "JP MORGAN CHASE BANK NA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / received",
+    "JP MORGAN CHASE BANK NA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / withdrawn",
+    "JP MORGAN CHASE BANK NA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / net_change",
+    "JP MORGAN CHASE BANK NA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / adjustment",
+    "JP MORGAN CHASE BANK NA - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / today",
+    "LOOMIS INTERNATIONAL (US) LLC/registered: net movement",
+    "LOOMIS INTERNATIONAL (US) LLC/registered: balance bridge",
+    "LOOMIS INTERNATIONAL (US) LLC/eligible: net movement",
+    "LOOMIS INTERNATIONAL (US) LLC/eligible: balance bridge",
+    "LOOMIS INTERNATIONAL (US) LLC/total: net movement",
+    "LOOMIS INTERNATIONAL (US) LLC/total: balance bridge",
+    "LOOMIS INTERNATIONAL (US) LLC: registered + eligible / previous",
+    "LOOMIS INTERNATIONAL (US) LLC: registered + eligible / received",
+    "LOOMIS INTERNATIONAL (US) LLC: registered + eligible / withdrawn",
+    "LOOMIS INTERNATIONAL (US) LLC: registered + eligible / net_change",
+    "LOOMIS INTERNATIONAL (US) LLC: registered + eligible / adjustment",
+    "LOOMIS INTERNATIONAL (US) LLC: registered + eligible / today",
+    "LOOMIS INTERNATIONAL (US) LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: net movement",
+    "LOOMIS INTERNATIONAL (US) LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: balance bridge",
+    "LOOMIS INTERNATIONAL (US) LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: net movement",
+    "LOOMIS INTERNATIONAL (US) LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: balance bridge",
+    "LOOMIS INTERNATIONAL (US) LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: net movement",
+    "LOOMIS INTERNATIONAL (US) LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: balance bridge",
+    "LOOMIS INTERNATIONAL (US) LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / previous",
+    "LOOMIS INTERNATIONAL (US) LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / received",
+    "LOOMIS INTERNATIONAL (US) LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / withdrawn",
+    "LOOMIS INTERNATIONAL (US) LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / net_change",
+    "LOOMIS INTERNATIONAL (US) LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / adjustment",
+    "LOOMIS INTERNATIONAL (US) LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / today",
+    "MALCA-AMIT USA, LLC/registered: net movement",
+    "MALCA-AMIT USA, LLC/registered: balance bridge",
+    "MALCA-AMIT USA, LLC/eligible: net movement",
+    "MALCA-AMIT USA, LLC/eligible: balance bridge",
+    "MALCA-AMIT USA, LLC/total: net movement",
+    "MALCA-AMIT USA, LLC/total: balance bridge",
+    "MALCA-AMIT USA, LLC: registered + eligible / previous",
+    "MALCA-AMIT USA, LLC: registered + eligible / received",
+    "MALCA-AMIT USA, LLC: registered + eligible / withdrawn",
+    "MALCA-AMIT USA, LLC: registered + eligible / net_change",
+    "MALCA-AMIT USA, LLC: registered + eligible / adjustment",
+    "MALCA-AMIT USA, LLC: registered + eligible / today",
+    "MALCA-AMIT USA, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: net movement",
+    "MALCA-AMIT USA, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: balance bridge",
+    "MALCA-AMIT USA, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: net movement",
+    "MALCA-AMIT USA, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: balance bridge",
+    "MALCA-AMIT USA, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: net movement",
+    "MALCA-AMIT USA, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: balance bridge",
+    "MALCA-AMIT USA, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / previous",
+    "MALCA-AMIT USA, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / received",
+    "MALCA-AMIT USA, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / withdrawn",
+    "MALCA-AMIT USA, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / net_change",
+    "MALCA-AMIT USA, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / adjustment",
+    "MALCA-AMIT USA, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / today",
+    "MANFRA, TORDELLA & BROOKES, LLC/registered: net movement",
+    "MANFRA, TORDELLA & BROOKES, LLC/registered: balance bridge",
+    "MANFRA, TORDELLA & BROOKES, LLC/eligible: net movement",
+    "MANFRA, TORDELLA & BROOKES, LLC/eligible: balance bridge",
+    "MANFRA, TORDELLA & BROOKES, LLC/total: net movement",
+    "MANFRA, TORDELLA & BROOKES, LLC/total: balance bridge",
+    "MANFRA, TORDELLA & BROOKES, LLC: registered + eligible / previous",
+    "MANFRA, TORDELLA & BROOKES, LLC: registered + eligible / received",
+    "MANFRA, TORDELLA & BROOKES, LLC: registered + eligible / withdrawn",
+    "MANFRA, TORDELLA & BROOKES, LLC: registered + eligible / net_change",
+    "MANFRA, TORDELLA & BROOKES, LLC: registered + eligible / adjustment",
+    "MANFRA, TORDELLA & BROOKES, LLC: registered + eligible / today",
+    "MANFRA, TORDELLA & BROOKES, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: net movement",
+    "MANFRA, TORDELLA & BROOKES, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: balance bridge",
+    "MANFRA, TORDELLA & BROOKES, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: net movement",
+    "MANFRA, TORDELLA & BROOKES, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: balance bridge",
+    "MANFRA, TORDELLA & BROOKES, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: net movement",
+    "MANFRA, TORDELLA & BROOKES, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: balance bridge",
+    "MANFRA, TORDELLA & BROOKES, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / previous",
+    "MANFRA, TORDELLA & BROOKES, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / received",
+    "MANFRA, TORDELLA & BROOKES, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / withdrawn",
+    "MANFRA, TORDELLA & BROOKES, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / net_change",
+    "MANFRA, TORDELLA & BROOKES, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / adjustment",
+    "MANFRA, TORDELLA & BROOKES, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / today",
+    "STONEX PRECIOUS METALS LLC/registered: net movement",
+    "STONEX PRECIOUS METALS LLC/registered: balance bridge",
+    "STONEX PRECIOUS METALS LLC/eligible: net movement",
+    "STONEX PRECIOUS METALS LLC/eligible: balance bridge",
+    "STONEX PRECIOUS METALS LLC/total: net movement",
+    "STONEX PRECIOUS METALS LLC/total: balance bridge",
+    "STONEX PRECIOUS METALS LLC: registered + eligible / previous",
+    "STONEX PRECIOUS METALS LLC: registered + eligible / received",
+    "STONEX PRECIOUS METALS LLC: registered + eligible / withdrawn",
+    "STONEX PRECIOUS METALS LLC: registered + eligible / net_change",
+    "STONEX PRECIOUS METALS LLC: registered + eligible / adjustment",
+    "STONEX PRECIOUS METALS LLC: registered + eligible / today",
+    "STONEX PRECIOUS METALS LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: net movement",
+    "STONEX PRECIOUS METALS LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: balance bridge",
+    "STONEX PRECIOUS METALS LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: net movement",
+    "STONEX PRECIOUS METALS LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: balance bridge",
+    "STONEX PRECIOUS METALS LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: net movement",
+    "STONEX PRECIOUS METALS LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: balance bridge",
+    "STONEX PRECIOUS METALS LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / previous",
+    "STONEX PRECIOUS METALS LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / received",
+    "STONEX PRECIOUS METALS LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / withdrawn",
+    "STONEX PRECIOUS METALS LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / net_change",
+    "STONEX PRECIOUS METALS LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / adjustment",
+    "STONEX PRECIOUS METALS LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / today",
+    "TEXAS PRECIOUS METALS, LLC/registered: net movement",
+    "TEXAS PRECIOUS METALS, LLC/registered: balance bridge",
+    "TEXAS PRECIOUS METALS, LLC/eligible: net movement",
+    "TEXAS PRECIOUS METALS, LLC/eligible: balance bridge",
+    "TEXAS PRECIOUS METALS, LLC/total: net movement",
+    "TEXAS PRECIOUS METALS, LLC/total: balance bridge",
+    "TEXAS PRECIOUS METALS, LLC: registered + eligible / previous",
+    "TEXAS PRECIOUS METALS, LLC: registered + eligible / received",
+    "TEXAS PRECIOUS METALS, LLC: registered + eligible / withdrawn",
+    "TEXAS PRECIOUS METALS, LLC: registered + eligible / net_change",
+    "TEXAS PRECIOUS METALS, LLC: registered + eligible / adjustment",
+    "TEXAS PRECIOUS METALS, LLC: registered + eligible / today",
+    "TEXAS PRECIOUS METALS, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: net movement",
+    "TEXAS PRECIOUS METALS, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/registered: balance bridge",
+    "TEXAS PRECIOUS METALS, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: net movement",
+    "TEXAS PRECIOUS METALS, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/eligible: balance bridge",
+    "TEXAS PRECIOUS METALS, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: net movement",
+    "TEXAS PRECIOUS METALS, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS)/total: balance bridge",
+    "TEXAS PRECIOUS METALS, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / previous",
+    "TEXAS PRECIOUS METALS, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / received",
+    "TEXAS PRECIOUS METALS, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / withdrawn",
+    "TEXAS PRECIOUS METALS, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / net_change",
+    "TEXAS PRECIOUS METALS, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / adjustment",
+    "TEXAS PRECIOUS METALS, LLC - ENHANCED DELIVERY (400 OZ AND ELIGIBLE BRANDS): registered + eligible / today",
+    "all depositories = summary / registered/previous",
+    "all depositories = summary / registered/received",
+    "all depositories = summary / registered/withdrawn",
+    "all depositories = summary / registered/net_change",
+    "all depositories = summary / registered/adjustment",
+    "all depositories = summary / registered/today",
+    "all depositories = summary / pledged/previous",
+    "all depositories = summary / pledged/today",
+    "all depositories = summary / eligible/previous",
+    "all depositories = summary / eligible/received",
+    "all depositories = summary / eligible/withdrawn",
+    "all depositories = summary / eligible/net_change",
+    "all depositories = summary / eligible/adjustment",
+    "all depositories = summary / eligible/today",
+    "all depositories = summary / total/previous",
+    "all depositories = summary / total/received",
+    "all depositories = summary / total/withdrawn",
+    "all depositories = summary / total/net_change",
+    "all depositories = summary / total/adjustment",
+    "all depositories = summary / total/today"
+  ],
+  "parser_version": "0.1.0",
+  "sheet": "Daily Metal Stocks Report",
+  "file_type": "xls",
+  "provenance": {
+    "source": "CME",
+    "source_url": "https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls",
+    "source_page": "https://www.cmegroup.com/solutions/clearing/operations-and-deliveries/nymex-delivery-notices.html",
+    "captured_at_utc": "2026-10-07T09:58:45.347229+00:00",
+    "raw_path": "raw/2026-09-16/a1a088482ff67510660e5648e0b7062a36af51cd49d93d862d424c623cf15e1b.xls",
+    "sha256": "a1a088482ff67510660e5648e0b7062a36af51cd49d93d862d424c623cf15e1b",
+    "bytes": 23552,
+    "method": "internet_archive_original_cme",
+    "http_status": 200,
+    "archive_url": "https://web.archive.org/web/20260917220001id_/https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls",
+    "archive_timestamp_utc": "20260917220001",
+    "cdx_sha1_base32": "NUNI6NX36ZVYCMUCMVYZIHFNCGJNZU3H",
+    "cdx_digest_verified": true,
+    "origin_note": "Original CME URL captured by Internet Archive; historical source is an archive replay, not a current direct CME HTTP response."
+  }
+}
