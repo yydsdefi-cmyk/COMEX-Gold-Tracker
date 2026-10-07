@@ -204,7 +204,7 @@ def make_latest(observations, fetch, as_of=None):
                freshness_rule="Report Date age <= 1 weekday; conservative, not a confirmed CME publication calendar",
                is_latest_confirmed=False)
     windows = {}
-    for n in (1, 5, 20):
+    for n in (1, 5, 10, 20):
         if n == 1:
             baseline, reason = {"baseline": previous, "current": current, "baseline_date": None}, "CME_PREV_TOTAL"
         else:
@@ -282,10 +282,21 @@ def chat_report(latest, validation):
         lines += ["", "Registered Ratio：" + (f"{ratio:.6f}%" if ratio is not None else "不可计算"),
                   f"库存变化分级：{latest['status']}（用户阈值，非 CME 风险评级）。", "",
                   "单日变化直接核对 CME PREV TOTAL 与 TOTAL TODAY；不补造前一个日期的历史记录。"]
-        for n in (5, 20):
+        for n in (5, 10, 20):
             value = latest[f"change_{n}d_pct"]
             lines.append(f"{n}D 变化：" + (f"{value:+.6f}%" if value is not None else "暂不可计算") +
                          f"（{latest['change_windows'][f'{n}d']['status']}）。")
+        lines += ["", "| 库存分类 | 5D 变化 | 10D 变化 | 20D 变化 |",
+                  "|---|---:|---:|---:|"]
+        for key, title in [("registered", "Registered"), ("eligible", "Eligible")]:
+            values = []
+            for n in (5, 10, 20):
+                absolute = latest[f"{key}_change_{n}d_oz"]
+                percentage = latest[f"{key}_change_{n}d_pct"]
+                values.append("暂不可计算" if absolute is None else
+                              f"{absolute:+,.3f} oz / " +
+                              (f"{percentage:+.6f}%" if percentage is not None else "百分比不可计算"))
+            lines.append("| " + title + " | " + " | ".join(values) + " |")
         if latest.get("history_continuity_issues"):
             lines.append("历史余额衔接异常：" + "；".join(
                 f"{item['prior_activity_date']} → {item['next_activity_date']}"
@@ -303,7 +314,7 @@ def chat_report(latest, validation):
               f"来源：[CME Gold Stocks 原始文件]({SOURCE_URL})；[官方入口]({SOURCE_PAGE})。", "",
               "## 交给日报对话的约束", "",
               "请引用上面的真实数值，并同时保留 Activity Date 与 Report Date。若更新失败或数据过旧，明确写上次可得数据及日期；",
-              "缺失的 5D/20D 不估算、不写成 0；NORMAL 仅表示本报告总库存单日变化未触发用户阈值，不能表示不存在市场风险。",
+              "5D/10D/20D 按已核验的连续工作日候选报告计算，不是自然日；每个窗口保留实际基准日期。缺失的变化不估算、不写成 0；NORMAL 仅表示本报告总库存单日变化未触发用户阈值，不能表示不存在市场风险。",
               "这份文件是一次数据快照，未来日报需要新下载并核验的版本。"]
     return "\n".join(lines) + "\n"
 

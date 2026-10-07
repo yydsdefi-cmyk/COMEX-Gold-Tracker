@@ -50,8 +50,8 @@ COMEX Gold 必须实际打开 DATA_BASE_URL/latest.json，并以 DATA_BASE_URL/l
 不能使用上一轮对话中的数字或搜索摘要作为本次最新数据。若工具拿不到上述内容，明确写“云端数据无法读取”，不猜数值。
 读取 last_update.attempted_at_utc，和本次运行的当前 UTC 时间比较；超过 26 小时写“云端更新逾期”，不得引用静态 health 正常来覆盖。
 update_status 为 FAILED、available 为 false、freshness 为 STALE，或者报告日期已明显过旧时明确标注。
-始终显示 Activity Date、Report Date、Total、Registered、Eligible、Registered Ratio、1D、5D、20D 与实际来源链接。
-null 或不可计算保持“暂不可计算”，不能写成 0；旧数据只能写成“上次可得数据（日期）”。
+始终显示 Activity Date、Report Date、Total、Registered、Eligible、Registered Ratio、1D、5D、10D、20D 与实际来源链接，Registered 与 Eligible 的多日变化分别列出。
+null 或不可计算保持“暂不可计算”，不能写成 0；旧数据只能写成“上次可得数据（日期）”。变化由采集器按连续核验报告计算，不是自然日；读取 change_windows 的状态、基准日期和 history_continuity_issues，不自行跨异常相减。
 Pledged 已包含在 Registered，不重复加。Eligible 单独下降不等于可交割黄金短缺。
 NORMAL 仅指总库存单日变化未触发库存阈值，不是黄金市场风险判断。
 ```

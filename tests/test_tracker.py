@@ -295,9 +295,21 @@ class DatasetTests(unittest.TestCase):
         self.assertIsNone(latest["change_20d_pct"])
         self.assertEqual(latest["change_windows"]["20d"]["status"], "PREVIOUS_BALANCE_MISMATCH_OR_REVISION")
         self.assertIsNotNone(latest["change_5d_pct"])
+        self.assertIsNotNone(latest["change_10d_pct"])
         self.assertEqual(latest["change_1d_pct"], -0.357143)
         self.assertEqual(latest["history_continuity_issues"][0]["series"]["eligible"],
                          {"prior_total_today_oz": 200.0, "next_prev_total_oz": 199.0})
+
+    def test_ten_day_change_requires_eleven_observations_and_preserves_baseline(self):
+        ten = make_latest(observation_sequence(10), {"status": "OK"}, date(2026, 9, 1))
+        self.assertIsNone(ten["change_10d_pct"])
+        self.assertEqual(ten["change_windows"]["10d"]["status"], "INSUFFICIENT_HISTORY")
+        eleven = make_latest(observation_sequence(11), {"status": "OK"}, date(2026, 9, 1))
+        self.assertEqual(eleven["change_windows"]["10d"]["baseline_date"], "2026-08-03")
+        self.assertEqual(eleven["change_10d_oz"], -10.0)
+        self.assertEqual(eleven["registered_change_10d_oz"], -10.0)
+        self.assertEqual(eleven["eligible_change_10d_pct"], 0.0)
+        self.assertIsNone(eleven["change_20d_pct"])
 
     def test_archived_cme_provenance_survives_csv_and_validation_export(self):
         with tempfile.TemporaryDirectory() as temp:

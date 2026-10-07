@@ -11,7 +11,8 @@ COMEX Gold 使用已部署的官方数据采集结果。
 每次运行都重新读取文件，不用上一轮数字、搜索摘要或历史上传代替。不能读取时写“COMEX 云端数据无法读取”，不要猜。
 检查 last_update.attempted_at_utc 与本次当前 UTC 时间；超过 26 小时明确标注“云端更新逾期”。
 同时检查 available、update_status、Report Date 时效。更新 FAILED、数据 STALE 或报告日期已明显过旧时，明确写“上次可得数据（日期）”。
-显示 Activity Date / Report Date、Total、Registered、Eligible、Registered Ratio、1D、5D、20D、库存阈值状态及实际来源链接。
+显示 Activity Date / Report Date、Total、Registered、Eligible、Registered Ratio、Total 的 1D/5D/10D/20D、Registered 与 Eligible 各自的 5D/10D/20D 变化、库存阈值状态及实际来源链接。正常紧凑展示，异常附原因。
+全部变化直接读取 JSON 已计算字段；按连续核验报告计算，不是自然日。保留实际基准日期；每个窗口是否可计算由 change_windows 判断。history_continuity_issues 涉及的窗口不能擅自重算为正常下降。
 null 表示暂不可计算，不是 0。Pledged 已包含在 Registered，不重复加。
 Eligible 的单独下降不能解释为可交割黄金短缺；NORMAL 只表示 Total 单日变化未触发库存阈值。
 Registered 快速或持续下降标记分别披露，不据此断言市场短缺。
@@ -23,4 +24,3 @@ Registered 快速或持续下降标记分别披露，不据此断言市场短缺
 
 原“市场反向指标晨报”任务的 COMEX 章节已更新并保存。重新加载后配置保持一致；单次 Run now 试运行成功展示了云端核验时间 09:28 UTC、真实库存与来源链接。
 下一次夜间云端采集及原排程自动推送仍需由后续真实执行验证。
-
