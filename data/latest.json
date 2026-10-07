@@ -3,10 +3,10 @@
   "source": "CME",
   "as_of_local_date": "2026-10-07",
   "as_of_timezone": "Asia/Kuala_Lumpur",
-  "generated_at_utc": "2026-10-07T10:05:55.607660+00:00",
+  "generated_at_utc": "2026-10-07T10:18:50.329873+00:00",
   "update_status": "UNCHANGED",
   "last_update": {
-    "attempted_at_utc": "2026-10-07T10:05:55.131470+00:00",
+    "attempted_at_utc": "2026-10-07T10:18:49.662522+00:00",
     "source_url": "https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls",
     "status": "UNCHANGED",
     "imported_reports": 1,
@@ -44,11 +44,11 @@
     "headers": {
       "Content-Type": "application/vnd.ms-excel",
       "Content-Length": "16896",
-      "Last-Modified": "Tue, 06 Oct 2026 19:04:41 GMT",
+      "Last-Modified": "Tue, 06 Oct 2026 19:05:00 GMT",
       "ETag": "\"a0ab80591686b013530103682f2d71a6\"",
-      "Date": "Wed, 07 Oct 2026 10:05:55 GMT"
+      "Date": "Wed, 07 Oct 2026 10:18:50 GMT"
     },
-    "last_verified_at_utc": "2026-10-07T10:05:55.438384+00:00"
+    "last_verified_at_utc": "2026-10-07T10:18:50.087508+00:00"
   },
   "observation_count": 26,
   "reconciliation_checks_passed": 164,
@@ -86,6 +86,12 @@
   "registered_change_5d_pct": -0.114493,
   "eligible_change_5d_oz": 89632.07,
   "eligible_change_5d_pct": 1.079455,
+  "change_10d_oz": 123228.149,
+  "change_10d_pct": 0.527599,
+  "registered_change_10d_oz": -99096.763,
+  "registered_change_10d_pct": -0.65257,
+  "eligible_change_10d_oz": 222324.912,
+  "eligible_change_10d_pct": 2.72098,
   "change_20d_oz": null,
   "change_20d_pct": null,
   "registered_change_20d_oz": null,
@@ -100,6 +106,10 @@
     "5d": {
       "status": "AVAILABLE_CONSECUTIVE_WEEKDAYS",
       "baseline_date": "2026-09-28"
+    },
+    "10d": {
+      "status": "AVAILABLE_CONSECUTIVE_WEEKDAYS",
+      "baseline_date": "2026-09-21"
     },
     "20d": {
       "status": "MISSING_WEEKDAY_OR_UNCONFIRMED_HOLIDAY",
