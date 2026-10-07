@@ -70,7 +70,10 @@ def export_public(data_dir, output_dir):
               "note": "Static health expires. Compare attempted_at_utc with the current time on EVERY read."}
     write_json(output_dir / "health.json", health)
     brief = (data_dir / "daily_brief.md").read_text(encoding="utf-8")
-    atomic_write(output_dir / "latest.txt", brief + "\n消费时必须检查 last_update.attempted_at_utc：距当前时间超过 26 小时应标记云端更新逾期。\n")
+    read_rule = ("最后采集尝试（UTC）：" + str(latest.get("last_update", {}).get("attempted_at_utc"))
+                 + "\n消费时检查此时间：距当前时间超过 26 小时应标记云端更新逾期；静态正常状态不能代替此检查。\n\n")
+    brief = read_rule + brief
+    atomic_write(output_dir / "latest.txt", brief)
     # Plain HTML mirrors the text for browsing tools that cannot open JSON/text.
     atomic_write(output_dir / "index.html", '<!doctype html><meta charset="utf-8"><title>COMEX Gold data</title>'
                  '<p><a href="latest.json">JSON</a> | <a href="latest.txt">Text</a> | '
@@ -91,3 +94,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
