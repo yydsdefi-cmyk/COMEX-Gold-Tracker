@@ -776,7 +776,8 @@
       "Content-Length": "16896",
       "Last-Modified": "Fri, 09 Oct 2026 19:04:55 GMT",
       "ETag": "\"740c8e1d966de9e2a290d0a7a56d9be1\"",
-      "Date": "Fri, 09 Oct 2026 21:29:48 GMT"
-    }
+      "Date": "Fri, 09 Oct 2026 23:28:28 GMT"
+    },
+    "last_verified_at_utc": "2026-10-09T23:28:28.301585+00:00"
   }
 }
