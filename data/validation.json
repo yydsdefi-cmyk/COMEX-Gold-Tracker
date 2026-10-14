@@ -3,7 +3,6 @@
   "target_count": 20,
   "verified_report_count": 20,
   "candidate_dates": [
-    "2026-09-15",
     "2026-09-16",
     "2026-09-17",
     "2026-09-18",
@@ -22,25 +21,10 @@
     "2026-10-07",
     "2026-10-08",
     "2026-10-09",
-    "2026-10-12"
+    "2026-10-12",
+    "2026-10-13"
   ],
   "verified": [
-    {
-      "activity_date": "2026-09-15",
-      "report_date": "2026-09-16",
-      "sha256": "7cba166782d2ee539816bc59848adc7f9a1e4fa35a50ad226169b1c4dd4e11d5",
-      "source_url": "https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls",
-      "archive_url": "https://web.archive.org/web/20260916234546id_/https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls",
-      "archive_timestamp_utc": "20260916234546",
-      "cdx_digest_verified": true,
-      "checks_passed": 296,
-      "verified_values_oz": {
-        "total": 27383818.341,
-        "registered": 15155521.022,
-        "eligible": 12228297.319
-      },
-      "provenance_method": "internet_archive_original_cme"
-    },
     {
       "activity_date": "2026-09-16",
       "report_date": "2026-09-17",
@@ -344,10 +328,26 @@
         "eligible": 8426463.187
       },
       "provenance_method": "official_https_download"
+    },
+    {
+      "activity_date": "2026-10-13",
+      "report_date": "2026-10-14",
+      "sha256": "562b590c3c118640a39a73d2713fbba899fd138d8d7d6392bda08387dd535d32",
+      "source_url": "https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls",
+      "archive_url": null,
+      "archive_timestamp_utc": null,
+      "cdx_digest_verified": null,
+      "checks_passed": 164,
+      "verified_values_oz": {
+        "total": 23476095.53,
+        "registered": 14876916.734,
+        "eligible": 8599178.796
+      },
+      "provenance_method": "official_https_download"
     }
   ],
   "not_obtained_dates": [],
-  "total_observation_count": 31,
+  "total_observation_count": 32,
   "history_continuity_issues": [
     {
       "prior_activity_date": "2026-09-18",
