@@ -1,35 +1,35 @@
 # COMEX Gold — 官方库存数据
 
-数据生成时间：2026-10-14T23:57:31.141403+00:00
-更新状态：UNCHANGED；数据时效：WITHIN_AGE_LIMIT
-库存日期（Activity Date）：**2026-10-13**；报告日期：2026-10-14
+数据生成时间：2026-10-15T21:42:57.809804+00:00
+更新状态：OK；数据时效：WITHIN_AGE_LIMIT
+库存日期（Activity Date）：**2026-10-14**；报告日期：2026-10-15
 
 单位：troy oz（金衡盎司）；保持 CME Gold Stocks 原始 Combined Total 口径（GC/4GC）。
 
 | 项目 | 库存 | 单日变化 | 单日变化 % |
 |---|---:|---:|---:|
-| Combined Total | 23,476,095.530 | -1,015.220 | -0.004324% |
-| Registered | 14,876,916.734 | -173,730.829 | -1.154308% |
-| Eligible | 8,599,178.796 | +172,715.609 | 2.049681% |
+| Combined Total | 23,459,459.851 | -16,635.679 | -0.070862% |
+| Registered | 14,816,969.006 | -59,947.728 | -0.402958% |
+| Eligible | 8,642,490.845 | +43,312.049 | 0.503677% |
 
-Registered Ratio：63.370490%
+Registered Ratio：63.159890%
 库存变化分级：NORMAL（用户阈值，非 CME 风险评级）。
 
 单日变化直接核对 CME PREV TOTAL 与 TOTAL TODAY；不补造前一个日期的历史记录。
-5D 变化：-0.015004%（AVAILABLE_CONSECUTIVE_WEEKDAYS）。
-10D 变化：+0.157160%（AVAILABLE_CONSECUTIVE_WEEKDAYS）。
+5D 变化：-0.076962%（AVAILABLE_CONSECUTIVE_WEEKDAYS）。
+10D 变化：-0.035683%（AVAILABLE_CONSECUTIVE_WEEKDAYS）。
 20D 变化：暂不可计算（PREVIOUS_BALANCE_MISMATCH_OR_REVISION）。
 
 | 库存分类 | 5D 变化 | 10D 变化 | 20D 变化 |
 |---|---:|---:|---:|
-| Registered | -197,940.532 oz / -1.313051% | -261,287.563 oz / -1.726014% | 暂不可计算 |
-| Eligible | +194,417.540 oz / +2.313183% | +298,124.761 oz / +3.591409% | 暂不可计算 |
+| Registered | -250,172.020 oz / -1.660381% | -269,559.073 oz / -1.786754% | 暂不可计算 |
+| Eligible | +232,103.164 oz / +2.759720% | +261,185.028 oz / +3.116281% | 暂不可计算 |
 历史余额衔接异常：2026-09-18 → 2026-09-21。相邻报告前后余额不一致，原因未确认，不能解读为同量实物出库。
 
 Pledged 已在 Registered 内，不另加；Eligible 单独下降不等于交割黄金短缺。
 Registered 快速下降标记：False；连续下降标记：False
-原始报告 SHA-256：`562b590c3c118640a39a73d2713fbba899fd138d8d7d6392bda08387dd535d32`
-原始文件：`raw/2026-10-13/562b590c3c118640a39a73d2713fbba899fd138d8d7d6392bda08387dd535d32.xls`
+原始报告 SHA-256：`5b6d9eaf8949c33ef9f4f7e71ced424846b2fa686acdfb65261a15adbd021150`
+原始文件：`raw/2026-10-14/5b6d9eaf8949c33ef9f4f7e71ced424846b2fa686acdfb65261a15adbd021150.xls`
 
 20 日核验进度：20/20（COMPLETE_20_OBSERVATIONS）。
 未取得日期只是工作日候选，不代表已确认的 CME 交易日。
