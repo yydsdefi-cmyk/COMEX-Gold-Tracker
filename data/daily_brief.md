@@ -1,35 +1,35 @@
 # COMEX Gold — 官方库存数据
 
-数据生成时间：2026-10-18T23:55:37.190297+00:00
-更新状态：UNCHANGED；数据时效：WITHIN_AGE_LIMIT
-库存日期（Activity Date）：**2026-10-15**；报告日期：2026-10-16
+数据生成时间：2026-10-19T21:42:22.875833+00:00
+更新状态：OK；数据时效：WITHIN_AGE_LIMIT
+库存日期（Activity Date）：**2026-10-16**；报告日期：2026-10-19
 
 单位：troy oz（金衡盎司）；保持 CME Gold Stocks 原始 Combined Total 口径（GC/4GC）。
 
 | 项目 | 库存 | 单日变化 | 单日变化 % |
 |---|---:|---:|---:|
-| Combined Total | 23,426,323.294 | -33,136.557 | -0.141250% |
+| Combined Total | 23,409,669.081 | -16,654.213 | -0.071092% |
 | Registered | 14,816,969.006 | +0.000 | 0.000000% |
-| Eligible | 8,609,354.288 | -33,136.557 | -0.383414% |
+| Eligible | 8,592,700.075 | -16,654.213 | -0.193443% |
 
-Registered Ratio：63.249230%
+Registered Ratio：63.294227%
 库存变化分级：NORMAL（用户阈值，非 CME 风险评级）。
 
 单日变化直接核对 CME PREV TOTAL 与 TOTAL TODAY；不补造前一个日期的历史记录。
-5D 变化：-0.217831%（AVAILABLE_CONSECUTIVE_WEEKDAYS）。
-10D 变化：-0.227532%（AVAILABLE_CONSECUTIVE_WEEKDAYS）。
+5D 变化：-0.287948%（AVAILABLE_CONSECUTIVE_WEEKDAYS）。
+10D 变化：-0.297916%（AVAILABLE_CONSECUTIVE_WEEKDAYS）。
 20D 变化：暂不可计算（PREVIOUS_BALANCE_MISMATCH_OR_REVISION）。
 
 | 库存分类 | 5D 变化 | 10D 变化 | 20D 变化 |
 |---|---:|---:|---:|
 | Registered | -250,172.020 oz / -1.660381% | -269,559.073 oz / -1.786754% | 暂不可计算 |
-| Eligible | +199,030.909 oz / +2.366507% | +216,135.241 oz / +2.575117% | 暂不可计算 |
+| Eligible | +182,569.578 oz / +2.170829% | +199,609.632 oz / +2.378261% | 暂不可计算 |
 历史余额衔接异常：2026-09-18 → 2026-09-21。相邻报告前后余额不一致，原因未确认，不能解读为同量实物出库。
 
 Pledged 已在 Registered 内，不另加；Eligible 单独下降不等于交割黄金短缺。
 Registered 快速下降标记：False；连续下降标记：False
-原始报告 SHA-256：`f3b03133d6918329aa0b965208c68569cc66f79e5ea1337483901eda38e78694`
-原始文件：`raw/2026-10-15/f3b03133d6918329aa0b965208c68569cc66f79e5ea1337483901eda38e78694.xls`
+原始报告 SHA-256：`91b2d6f78f3ade7bf855eab9abfbfcbbf7cde465eb7e99fd409ccffd04282793`
+原始文件：`raw/2026-10-16/91b2d6f78f3ade7bf855eab9abfbfcbbf7cde465eb7e99fd409ccffd04282793.xls`
 
 20 日核验进度：20/20（COMPLETE_20_OBSERVATIONS）。
 未取得日期只是工作日候选，不代表已确认的 CME 交易日。
