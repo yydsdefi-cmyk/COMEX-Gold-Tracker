@@ -1,0 +1,30 @@
+{
+  "source": "Actual hosted Pages, expanded weekly table and future calendar",
+  "status": "PASS",
+  "checks": [
+    {
+      "width": 360,
+      "rows": 17,
+      "status": 200,
+      "viewport": 360,
+      "body": 360,
+      "eci": true,
+      "bp": true,
+      "tableWidth": 310,
+      "containerWidth": 310,
+      "scrollWidth": 310
+    },
+    {
+      "width": 390,
+      "rows": 17,
+      "status": 200,
+      "viewport": 390,
+      "body": 390,
+      "eci": true,
+      "bp": true,
+      "tableWidth": 340,
+      "containerWidth": 340,
+      "scrollWidth": 340
+    }
+  ]
+}

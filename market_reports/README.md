@@ -7,7 +7,7 @@
 - 周报: https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/weekly.html
 - 工作流: https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/workflows/market-reports.yml
 
-当前v1.2.0，2026-10-24已实际发布并验收（111项本地/云端测试、真实manual both及360/390px手机检查通过）；基础设施PASS，数据覆盖DEGRADED，完整原报告语义不等价。详见 [部署状态](DEPLOYMENT_STATUS.json) 和 [HANDOFF](HANDOFF.md)。
+当前v1.3.0，2026-10-24已实际发布并条件验收（150项云端测试、真实manual both、360/390px手机与展开周表检查通过）；基础设施PASS，数据覆盖DEGRADED，完整原报告语义不等价。详见 [部署状态](DEPLOYMENT_STATUS.json) 和 [HANDOFF](HANDOFF.md)。
 
 完整原提示词在 `specs/original_missions.json`；2026-10-24两份原任务输出在相邻文件。原任务保持启用，没有调用自动化修改接口。
 
@@ -83,7 +83,7 @@ COMEX仍使用原采集器的真实报告窗口，不按自然日重算。每次
 |机器证据|[v1.2手动触发](evidence/v1.2-manual-dispatch.json)，[手机页面](evidence/v1.2-mobile-pages.json)，[逐份时效](evidence/v1.2-clock-pages.json)，[云端验证](evidence/v1.2-cloud-validation.json)，[隔离恢复](evidence/v1.2-isolated-recovery.json)，[独立复算](evidence-independent-calculations.json)|
 |文件完整性/变更|[MANIFEST.json](MANIFEST.json)，[CHANGELOG.md](CHANGELOG.md)|
 
-目标为MYT每日08:00和周六10:00；首次新schedule尚未到时，实际延迟以GitHub为准。原两项ChatGPT任务仍保留。
+目标为MYT每日08:00和周六10:00。临时诊断schedule已成功，延迟22分20秒；其both模式不代表正式due排程已通过。首次正式目标尚未到时，实际延迟以GitHub为准。原两项ChatGPT任务仍保留。
 
 ## v1.1：监管覆盖与故障记录
 
@@ -99,6 +99,8 @@ COMEX仍使用原采集器的真实报告窗口，不按自然日重算。每次
 
 目标前的健康手动预览不会抑制到时重新生成；111项本地与云端测试及手机实际日期状态已验收。浏览器时效提示以设备时钟为准，不是主动推送。原任务、数据缺项及首次真正schedule未到时的限制保持。
 
-## v1.3 升级候选
+## v1.3 已部署，条件验收
 
 新增NYFed公开日历旁证、SRF完整度保护、有单位的周变化和只读Decimal审计；实际状态见DEPLOYMENT_STATUS.json。BLS/ICI/CNN的云端限制不因本地可读而消失。Pages保留近180天及每类最新报告，更旧记录从按月导航打开仓库Markdown，完整CSV/JSON及修订保留。
+
+最新验收见[HANDOFF v1.3](HANDOFF.md)及[机器证据](evidence/v1.3-cloud-validation.json)；[最终展开周表](evidence/v1.3-expanded-mobile.json)和[独立数值审计](evidence/v1.3-numeric-audit.json)已长期归档。两个临时验收workflow已移除，不再循环等待时间或重复生成。

@@ -1,0 +1,62 @@
+{
+  "source": "nyfed_calendar",
+  "status": "OK",
+  "events": [
+    {
+      "id": "fomc",
+      "at_myt": "2026-10-29T02:00:00+08:00",
+      "evidence": [
+        {
+          "calendar_url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+          "release_url": null,
+          "source": "Fed calendar"
+        }
+      ]
+    },
+    {
+      "id": "gdp",
+      "at_myt": "2026-10-29T20:30:00+08:00",
+      "evidence": [
+        {
+          "calendar_url": "https://www.bea.gov/news/schedule",
+          "release_url": null,
+          "source": "BEA"
+        },
+        {
+          "calendar_url": "https://www.newyorkfed.org/research/calendars/nationalecon_cal",
+          "release_url": "https://www.bea.gov/data/gdp/gross-domestic-product",
+          "source": "NYFed calendar"
+        }
+      ]
+    },
+    {
+      "id": "pce",
+      "at_myt": "2026-10-29T20:30:00+08:00",
+      "evidence": [
+        {
+          "calendar_url": "https://www.bea.gov/news/schedule",
+          "release_url": null,
+          "source": "BEA"
+        },
+        {
+          "calendar_url": "https://www.newyorkfed.org/research/calendars/nationalecon_cal",
+          "release_url": "https://www.bea.gov/newsreleases/news_release_sort_national.htm",
+          "source": "NYFed calendar"
+        }
+      ]
+    },
+    {
+      "id": "eci",
+      "at_myt": "2026-10-30T20:30:00+08:00",
+      "evidence": [
+        {
+          "calendar_url": "https://www.newyorkfed.org/research/calendars/nationalecon_cal",
+          "release_url": "https://www.bls.gov/news.release/eci.toc.htm",
+          "source": "NYFed calendar"
+        }
+      ]
+    }
+  ],
+  "numeric_verified": 13,
+  "not_calculable": 3
+}

@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "verified_repository_head": "312c6e28a16d82c824d6a61ac475e456588e22d8",
+  "scope": "Read existing completed GitHub runs; no duplicate report collection or test reruns during takeover",
+  "runs": [
+    {
+      "id": 40093283415,
+      "name": "One-time expanded mobile report validation",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "312c6e28a16d82c824d6a61ac475e456588e22d8",
+      "created_at": "2026-10-24T12:16:56Z",
+      "html_url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40093283415"
+    },
+    {
+      "id": 40093211984,
+      "name": "Market reports (daily and weekly)",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eea7abcc59b3c0010024ff2fb3066ee413c1e50a",
+      "created_at": "2026-10-24T12:15:52Z",
+      "html_url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40093211984"
+    },
+    {
+      "id": 40092628091,
+      "name": "Market reports (daily and weekly)",
+      "event": "schedule",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "3b0e98aad7bc2cc9ecd63c1ec07adb049414e62d",
+      "created_at": "2026-10-24T12:07:20Z",
+      "html_url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40092628091"
+    },
+    {
+      "id": 40090946882,
+      "name": "Market reports (daily and weekly)",
+      "event": "workflow_dispatch",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "2558a3e874236b8c4641e090b8b6487427f0e25d",
+      "created_at": "2026-10-24T11:42:01Z",
+      "html_url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40090946882"
+    },
+    {
+      "id": 40090629411,
+      "name": "Market reports (daily and weekly)",
+      "event": "workflow_dispatch",
+      "status": "completed",
+      "conclusion": "failure",
+      "head_sha": "716d0a704a4614fd68891362d8a8890fca6b8d81",
+      "created_at": "2026-10-24T11:37:11Z",
+      "html_url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40090629411"
+    },
+    {
+      "id": 40090620469,
+      "name": "One-time market migration acceptance",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "716d0a704a4614fd68891362d8a8890fca6b8d81",
+      "created_at": "2026-10-24T11:37:04Z",
+      "html_url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40090620469"
+    },
+    {
+      "id": 40090501862,
+      "name": "Market reports (daily and weekly)",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "failure",
+      "head_sha": "a7a8b42f735a7524e83ea17768b5d63d517d4ee2",
+      "created_at": "2026-10-24T11:35:18Z",
+      "html_url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40090501862"
+    }
+  ],
+  "log_evidence": [
+    {
+      "job_id": 120869979937,
+      "lines": [
+        "2026-10-24T12:15:58.9305629Z   REPORT_KIND: both",
+        "2026-10-24T12:16:00.4490613Z   REPORT_KIND: both",
+        "2026-10-24T12:16:02.1191454Z   REPORT_KIND: both",
+        "2026-10-24T12:16:03.7216501Z   REPORT_KIND: both",
+        "2026-10-24T12:16:09.5082283Z Ran 150 tests in 5.250s",
+        "2026-10-24T12:16:09.5082567Z OK",
+        "2026-10-24T12:16:09.5452465Z   REPORT_KIND: both",
+        "2026-10-24T12:16:10.3633077Z Verified/recovered archive objects: 47",
+        "2026-10-24T12:16:10.3846647Z   REPORT_KIND: both",
+        "2026-10-24T12:16:21.4548298Z   REPORT_KIND: both",
+        "2026-10-24T12:16:22.0238383Z   \"status\": \"PASS_CALCULABLE_ONLY\",",
+        "2026-10-24T12:16:22.0240322Z   \"verified\": 13,",
+        "2026-10-24T12:16:22.0240848Z   \"not_calculable\": 3,",
+        "2026-10-24T12:16:22.0512043Z   REPORT_KIND: both",
+        "2026-10-24T12:16:23.4314294Z   REPORT_KIND: both",
+        "2026-10-24T12:16:24.2688703Z   REPORT_KIND: both",
+        "2026-10-24T12:16:24.7409101Z   REPORT_KIND: both",
+        "2026-10-24T12:16:24.7508456Z   REPORT_KIND: both",
+        "2026-10-24T12:16:24.7665989Z   REPORT_KIND: both",
+        "2026-10-24T12:16:25.8838511Z   REPORT_KIND: both",
+        "2026-10-24T12:16:53.6753788Z   REPORT_KIND: both",
+        "2026-10-24T12:16:53.7046056Z ##[warning]bls unavailable/stale/unverified. See market/quality.json",
+        "2026-10-24T12:16:53.7054019Z ##[warning]cnn unavailable/stale/unverified. See market/quality.json",
+        "2026-10-24T12:16:53.7055823Z ##[warning]ici unavailable/stale/unverified. See market/quality.json"
+      ]
+    },
+    {
+      "job_id": 120868263435,
+      "lines": [
+        "2026-10-24T12:07:27.3680431Z   REPORT_KIND: both",
+        "2026-10-24T12:07:28.9900087Z   REPORT_KIND: both",
+        "2026-10-24T12:07:30.0681099Z   REPORT_KIND: both",
+        "2026-10-24T12:07:31.0760805Z   REPORT_KIND: both",
+        "2026-10-24T12:07:33.0294028Z Ran 150 tests in 1.384s",
+        "2026-10-24T12:07:33.0294237Z OK",
+        "2026-10-24T12:07:33.0736275Z   REPORT_KIND: both",
+        "2026-10-24T12:07:33.7247777Z Verified/recovered archive objects: 44",
+        "2026-10-24T12:07:33.7483505Z   REPORT_KIND: both",
+        "2026-10-24T12:07:47.0479909Z   REPORT_KIND: both",
+        "2026-10-24T12:07:47.4863352Z   \"status\": \"PASS_CALCULABLE_ONLY\",",
+        "2026-10-24T12:07:47.4864996Z   \"verified\": 13,",
+        "2026-10-24T12:07:47.4865372Z   \"not_calculable\": 3,",
+        "2026-10-24T12:07:47.5159556Z   REPORT_KIND: both",
+        "2026-10-24T12:07:48.9975420Z   REPORT_KIND: both",
+        "2026-10-24T12:07:49.6155760Z   REPORT_KIND: both",
+        "2026-10-24T12:07:50.0149211Z   REPORT_KIND: both",
+        "2026-10-24T12:07:50.0238293Z   REPORT_KIND: both",
+        "2026-10-24T12:07:50.0375313Z   REPORT_KIND: both",
+        "2026-10-24T12:07:51.1532112Z   REPORT_KIND: both",
+        "2026-10-24T12:07:57.6780978Z   REPORT_KIND: both",
+        "2026-10-24T12:07:57.7058299Z ##[warning]bls unavailable/stale/unverified. See market/quality.json",
+        "2026-10-24T12:07:57.7065608Z ##[warning]cnn unavailable/stale/unverified. See market/quality.json",
+        "2026-10-24T12:07:57.7066800Z ##[warning]ici unavailable/stale/unverified. See market/quality.json"
+      ]
+    },
+    {
+      "job_id": 120870196891,
+      "lines": [
+        "2026-10-24T12:17:41.0187567Z [{\"width\":360,\"rows\":17,\"status\":200,\"viewport\":360,\"body\":360,\"eci\":true,\"bp\":true,\"tableWidth\":310,\"containerWidth\":310,\"scrollWidth\":310},{\"width\":390,\"rows\":17,\"status\":200,\"viewport\":390,\"body\":390,\"eci\":true,\"bp\":true,\"tableWidth\":340,\"containerWidth\":340,\"scrollWidth\":340}]"
+      ]
+    },
+    {
+      "job_id": 120863306761,
+      "lines": [
+        "2026-10-24T11:42:09.5738065Z   REPORT_KIND: both",
+        "2026-10-24T11:42:11.1248684Z   REPORT_KIND: both",
+        "2026-10-24T11:42:13.2134609Z   REPORT_KIND: both",
+        "2026-10-24T11:42:14.3337610Z   REPORT_KIND: both",
+        "2026-10-24T11:42:16.6802117Z Ran 150 tests in 1.911s",
+        "2026-10-24T11:42:16.6826164Z OK",
+        "2026-10-24T11:42:16.7164922Z   REPORT_KIND: both",
+        "2026-10-24T11:42:17.6195185Z Verified/recovered archive objects: 41",
+        "2026-10-24T11:42:17.6741746Z   REPORT_KIND: both",
+        "2026-10-24T11:42:29.6597224Z   REPORT_KIND: both",
+        "2026-10-24T11:42:30.2916120Z   \"status\": \"PASS_CALCULABLE_ONLY\",",
+        "2026-10-24T11:42:30.2918402Z   \"verified\": 13,",
+        "2026-10-24T11:42:30.2918937Z   \"not_calculable\": 3,",
+        "2026-10-24T11:42:30.3209200Z   REPORT_KIND: both",
+        "2026-10-24T11:42:31.9724509Z   REPORT_KIND: both",
+        "2026-10-24T11:42:32.8890654Z   REPORT_KIND: both",
+        "2026-10-24T11:42:33.3511757Z   REPORT_KIND: both",
+        "2026-10-24T11:42:33.3631205Z   REPORT_KIND: both",
+        "2026-10-24T11:42:33.3823345Z   REPORT_KIND: both",
+        "2026-10-24T11:42:35.0969235Z   REPORT_KIND: both",
+        "2026-10-24T11:42:42.0418477Z   REPORT_KIND: both",
+        "2026-10-24T11:42:42.0763439Z ##[warning]bls unavailable/stale/unverified. See market/quality.json",
+        "2026-10-24T11:42:42.0774594Z ##[warning]cnn unavailable/stale/unverified. See market/quality.json",
+        "2026-10-24T11:42:42.0776889Z ##[warning]ici unavailable/stale/unverified. See market/quality.json"
+      ]
+    }
+  ],
+  "schedule_diagnostic": {
+    "cron": "45 11 24 10 *",
+    "nominal_utc": "2026-10-24T11:45:00Z",
+    "actual_created_at_utc": "2026-10-24T12:07:20Z",
+    "start_delay_seconds": 1340,
+    "event": "schedule",
+    "report_kind": "both",
+    "conclusion": "success",
+    "proves": "Real GitHub scheduled delivery and end-to-end diagnostic generation, archive and Pages publication",
+    "does_not_prove": "First regular daily/weekly due-mode execution or on-time delivery; no 08:00/10:00 schedule has occurred yet",
+    "temporary_cron_removed_in_commit": "eea7abcc59b3c0010024ff2fb3066ee413c1e50a"
+  },
+  "limitations": [
+    "CNN418; ICI403; BLS403 on actual GitHub runner",
+    "Full original legal-effect interpretation not equivalent",
+    "Phone notification delivery unverified",
+    "Original ChatGPT missions unchanged"
+  ],
+  "artifact_provenance": [
+    {
+      "id": 12559117326,
+      "run_id": 40090620469,
+      "sha256": "895a69293e9606ea54f1a78fa4bd030f2b9c070245b2f8f6dcb47c4b3a471e21"
+    },
+    {
+      "id": 12559358174,
+      "run_id": 40093283415,
+      "sha256": "a799b21261fe7b3e97bf399038ed6e257b3403a6dd27794038bc1de086e30ae8"
+    }
+  ]
+}

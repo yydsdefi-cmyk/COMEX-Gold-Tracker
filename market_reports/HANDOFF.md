@@ -1,6 +1,8 @@
 # HANDOFF — Market Reports Migration
 
-Version 1.2.0, 2026-10-24.
+Version 1.3.0, 2026-10-24.
+
+当前状态以本文末尾“v1.3 最终验收与线程接续”及DEPLOYMENT_STATUS.json为准；先前版本段落为历史记录。
 
 原始任务、完整原文、实际历史样本已恢复并保存在specs。原ChatGPT任务保持启用。唯一已授权目标仓库为 https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker ，GitHub连接确认账号有admin/push，实际写入及部署结果另以证据确认，不能从权限字段推定成功。
 
@@ -48,3 +50,16 @@ Version 1.2.0, 2026-10-24.
 29来源中26 OK，CNN418/ICI403/BLS403仍明确缺失；没有用本地可读值冒充云端。法律语义等价仍NOT ACHIEVED。首个新schedule尚未到时，真实执行仍UNKNOWN：下一目标2026-10-25 08:00 MYT、周报2026-10-31 10:00 MYT。配置及workflow active已核对，不能以模拟日期或manual代替真实schedule。health-notice正常分支成功，未制造生产故障；手机通知送达未验证。
 
 临时验收/探测workflow已移除，只保留原Gold与market-reports两个生产workflow；无永久actions:write权限扩张。预计新增订阅费USD0/月，仍无需ChatGPT或常开电脑。最新机器证据在evidence/v1.2-*.json；旧证据原样保留。原两个ChatGPT任务未修改。
+
+
+## v1.3 最终验收与线程接续（2026-10-24）
+
+已部署，条件验收。接续基线为main `312c6e28a16d82c824d6a61ac475e456588e22d8`；已完成的工作不重复采集或重跑。核对GitHub完成记录：真实manual both [40090946882](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40090946882)、综合验收最新成功attempt [40090620469](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40090620469)、最终发布[40093211984](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40093211984)通过。云端150项测试通过、无跳过；独立Decimal复核13项通过、0失败、3项数据不足。早先因上传payload截断而失败的生产运行与验收attempt仍保留，修复后结果不抹去失败历史。
+
+360/390px三页与七条原Gold/市场数据路径、COMEX展开、七个日期边界通过。最终展开周变化表与日历[40093283415](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40093283415)通过：17行、表宽310/340px，分别等于容器宽，无水平滚动，bp等单位可见。机器JSON与选取的原始截图保存在`evidence/v1.3-*`，从原1天artifact下载并按其官方ZIP digest核对；旧证据保留。
+
+**实际临时schedule已成功，但正式due排程仍待首跑。** [40092628091](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40092628091)事件为schedule；名义2026-10-24 19:45 MYT，实际20:07:20 MYT启动，延迟22分20秒。该诊断明确以`both`生成并归档发布，不能证明正式`due`门控、08:00/周六10:00准点执行。临时cron已在`eea7abcc`移除；正式cron与due表达式保留。下一正式目标为2026-10-25 08:00 MYT及2026-10-31 10:00 MYT。无需让Work反复查询时间等待这些时刻。
+
+接续时干净远端clone：65项原MANIFEST哈希全部一致；只读verify通过50个档案对象，独立审计再次13通过/0失败/3不可算，未修改任何market_data历史。此次收尾仅保存既有验收证据、更新文档/清单、移除两项已完成临时验收workflow；保留两个生产workflow，去掉临时actions:write。
+
+当前30来源中27 OK：CNN418、ICI403、BLS403仍缺失；NYFed日历旁证已通过，但不是BLS直连恢复。完整监管法律影响未等价、手机通知送达未验证；原两项ChatGPT任务保持原状。后续只需在正式排程自然发生后查看运行与报告日期；来源接口或语义缺口有可验证方案时再修。当前不引入收费API、不新增第二套系统、不依赖常开电脑或ChatGPT运行。

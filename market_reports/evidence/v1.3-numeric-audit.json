@@ -1,0 +1,142 @@
+{
+  "status": "PASS_CALCULABLE_ONLY",
+  "scope": "Numeric comparisons and archived observation binding only; not full source coverage or legal semantics",
+  "capture_id": "00c0a2ff165c85b4b3091aed0f8b4267b1d677f8a52b3962aeeb3f81e5020924",
+  "verified": 13,
+  "failed": 0,
+  "not_calculable": 3,
+  "checks": [
+    {
+      "metric": "sp500",
+      "status": "PASS",
+      "baseline_date": "2026-10-16",
+      "end_date": "2026-10-23",
+      "expected_change": "-0.4668718065362180412969519779",
+      "actual_change": -0.4668718065362176,
+      "unit": "%"
+    },
+    {
+      "metric": "nasdaq",
+      "status": "PASS",
+      "baseline_date": "2026-10-16",
+      "end_date": "2026-10-23",
+      "expected_change": "-0.7065388145799795945738452647",
+      "actual_change": -0.7065388145799822,
+      "unit": "%"
+    },
+    {
+      "metric": "us10y",
+      "status": "PASS",
+      "baseline_date": "2026-10-16",
+      "end_date": "2026-10-23",
+      "expected_change": "-11.0000133514404500",
+      "actual_change": -11.00001335144043,
+      "unit": "bp"
+    },
+    {
+      "metric": "dxy",
+      "status": "PASS",
+      "baseline_date": "2026-10-16",
+      "end_date": "2026-10-23",
+      "expected_change": "-0.02945677570268003343814455609",
+      "actual_change": -0.029456775702685345,
+      "unit": "%"
+    },
+    {
+      "metric": "wti",
+      "status": "PASS",
+      "baseline_date": "2026-10-16",
+      "end_date": "2026-10-23",
+      "expected_change": "1.834131657419497615709606416",
+      "actual_change": 1.8341316574195021,
+      "unit": "%"
+    },
+    {
+      "metric": "gold",
+      "status": "PASS",
+      "baseline_date": "2026-10-16",
+      "end_date": "2026-10-23",
+      "expected_change": "-4.142455125855245417640977179",
+      "actual_change": -4.142455125855249,
+      "unit": "%"
+    },
+    {
+      "metric": "btc",
+      "status": "PASS",
+      "baseline_date": "2026-10-17",
+      "end_date": "2026-10-24",
+      "expected_change": "-1.065526597845907353568690922",
+      "actual_change": -1.0655265978459116,
+      "unit": "%"
+    },
+    {
+      "metric": "aaii_spread",
+      "status": "PASS",
+      "baseline_date": "2026-10-14",
+      "end_date": "2026-10-21",
+      "expected_change": "-6.0000000000000004",
+      "actual_change": -6.0,
+      "unit": "pp"
+    },
+    {
+      "metric": "cnn_fg",
+      "status": "NOT_CALCULABLE",
+      "reason": "INSUFFICIENT"
+    },
+    {
+      "metric": "vix",
+      "status": "PASS",
+      "baseline_date": "2026-10-16",
+      "end_date": "2026-10-23",
+      "expected_change": "-0.54",
+      "actual_change": -0.5399999999999991,
+      "unit": "点"
+    },
+    {
+      "metric": "vix3m",
+      "status": "PASS",
+      "baseline_date": "2026-10-16",
+      "end_date": "2026-10-23",
+      "expected_change": "-0.02",
+      "actual_change": -0.019999999999999574,
+      "unit": "点"
+    },
+    {
+      "metric": "vix_ratio",
+      "status": "PASS",
+      "baseline_date": "2026-10-16",
+      "end_date": "2026-10-23",
+      "expected_change": "-0.0254149199695121951219512195",
+      "actual_change": -0.025414919969512173,
+      "unit": "倍"
+    },
+    {
+      "metric": "crypto_fg",
+      "status": "PASS",
+      "baseline_date": "2026-10-17",
+      "end_date": "2026-10-24",
+      "expected_change": "-4.0",
+      "actual_change": -4.0,
+      "unit": "点"
+    },
+    {
+      "metric": "srf_usd",
+      "status": "PASS",
+      "baseline_date": "2026-10-16",
+      "end_date": "2026-10-23",
+      "expected_change": "0.0",
+      "actual_change": 0.0,
+      "unit": "B USD"
+    },
+    {
+      "metric": "mmf_assets_usd",
+      "status": "NOT_CALCULABLE",
+      "reason": "INSUFFICIENT"
+    },
+    {
+      "metric": "comex_registered_ratio",
+      "status": "NOT_CALCULABLE",
+      "reason": "INSUFFICIENT"
+    }
+  ]
+}

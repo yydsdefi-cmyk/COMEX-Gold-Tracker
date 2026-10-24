@@ -1,6 +1,6 @@
 # Test results — 2026-10-24
 
-当前v1.2：111项本地/云端测试通过，0跳过；最新验收在本文末尾，早期结果保留为历史。
+当前v1.3：150项云端测试通过，0跳过；接续复用已完成测试，未重复采集或重跑。最新验收在本文末尾，早期结果保留为历史。
 
 实际命令：`python -m unittest discover -q`，v1.0.1本地最终运行70项、0失败。原Gold40项+新market_tests30个测试方法；不把用例内多个assert重复计数。网络端到端与远端部署不算离线测试通过。
 
@@ -75,3 +75,16 @@
 150个方法通过、0跳过（既有111+新增39）。新增覆盖SRF缩写/误排/时区/完整场次/未知操作/部分不冒充Normal、未知首次发布时间、实际10/11月日历/DST/跨月/失败/错误页/陈旧/越界链接、事件去重与冲突、%/bp/pp/B USD、VIX同日输入、周内片段、来源失联/修订/0基准/未来与未核验点、provider数组和重复日期、独立Decimal故障注入以及Pages保留/源历史不删。
 
 本地真实两报30来源，仅CNN缺失；13项可算周变化独立复算通过、3不可算。ICI/BLS本地可读不代表云端可读，本地market_data不上传。云端公开日历探测两页200；新版集成端到端、手机和临时真实排程待验收。环境中断前已有150测试证据，恢复后重新检查，不能把之前版本云端成功冒充本版。
+
+
+## v1.3 最终验收与线程接续（2026-10-24）
+
+已部署，条件验收。接续基线为main `312c6e28a16d82c824d6a61ac475e456588e22d8`；已完成的工作不重复采集或重跑。核对GitHub完成记录：真实manual both [40090946882](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40090946882)、综合验收最新成功attempt [40090620469](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40090620469)、最终发布[40093211984](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40093211984)通过。云端150项测试通过、无跳过；独立Decimal复核13项通过、0失败、3项数据不足。早先因上传payload截断而失败的生产运行与验收attempt仍保留，修复后结果不抹去失败历史。
+
+360/390px三页与七条原Gold/市场数据路径、COMEX展开、七个日期边界通过。最终展开周变化表与日历[40093283415](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40093283415)通过：17行、表宽310/340px，分别等于容器宽，无水平滚动，bp等单位可见。机器JSON与选取的原始截图保存在`evidence/v1.3-*`，从原1天artifact下载并按其官方ZIP digest核对；旧证据保留。
+
+**实际临时schedule已成功，但正式due排程仍待首跑。** [40092628091](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40092628091)事件为schedule；名义2026-10-24 19:45 MYT，实际20:07:20 MYT启动，延迟22分20秒。该诊断明确以`both`生成并归档发布，不能证明正式`due`门控、08:00/周六10:00准点执行。临时cron已在`eea7abcc`移除；正式cron与due表达式保留。下一正式目标为2026-10-25 08:00 MYT及2026-10-31 10:00 MYT。无需让Work反复查询时间等待这些时刻。
+
+接续时干净远端clone：65项原MANIFEST哈希全部一致；只读verify通过50个档案对象，独立审计再次13通过/0失败/3不可算，未修改任何market_data历史。此次收尾仅保存既有验收证据、更新文档/清单、移除两项已完成临时验收workflow；保留两个生产workflow，去掉临时actions:write。
+
+当前30来源中27 OK：CNN418、ICI403、BLS403仍缺失；NYFed日历旁证已通过，但不是BLS直连恢复。完整监管法律影响未等价、手机通知送达未验证；原两项ChatGPT任务保持原状。后续只需在正式排程自然发生后查看运行与报告日期；来源接口或语义缺口有可验证方案时再修。当前不引入收费API、不新增第二套系统、不依赖常开电脑或ChatGPT运行。
