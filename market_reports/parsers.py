@@ -7,6 +7,7 @@ import xml.etree.ElementTree as XML
 from datetime import datetime, timedelta
 from email.utils import parsedate_to_datetime
 from html import unescape
+from zoneinfo import ZoneInfo
 from .core import ET, MYT, UTC, number, observation, srf_level
 
 
@@ -202,14 +203,15 @@ def parse_yahoo(body, now, metric='sp500'):
         raise ValueError('Yahoo chart error')
     js = js['result'][0]
     closes = js['indicators']['quote'][0]['close']
+    quote_zone=ZoneInfo(js['meta']['exchangeTimezoneName'])
     obs = []
     for t,v in zip(js.get('timestamp',[]),closes):
         if v is None:
             continue
         dt = datetime.fromtimestamp(t,UTC)
-        obs.append(observation(metric,v,dt.astimezone(ET).date().isoformat(),
+        obs.append(observation(metric,v,dt.astimezone(quote_zone).date().isoformat(),
                                'percent_yield' if metric=='us10y' else js['meta'].get('currency','USD'),
-                               None,quote_timestamp=dt.isoformat(),basis='Yahoo daily bars; latest bar may be intraday'))
+                               None,quote_timestamp=dt.isoformat(),basis='Yahoo daily bars in provider exchangeTimezoneName; latest bar may be intraday',observation_timezone=str(quote_zone)))
     if not obs:
         raise ValueError('Yahoo has no prices')
     return obs, {'secondary_source':True,'not_guaranteed_official_close':True}

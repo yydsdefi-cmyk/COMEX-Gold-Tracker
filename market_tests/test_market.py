@@ -112,6 +112,13 @@ class CollectionTests(unittest.TestCase):
         bad=collect_one(spec,NOW,fail)
         self.assertEqual(bad['status'],'MISSING');self.assertEqual(bad['observations'],[])
 
+    def test_btc_daily_date_uses_provider_utc_not_us_equity_timezone(self):
+        js={'chart':{'error':None,'result':[{'meta':{'exchangeTimezoneName':'UTC','currency':'USD'},'timestamp':[1792800000],
+             'indicators':{'quote':[{'close':[60000]}]}}]}}
+        obs,_=parsers.parse_yahoo(encoded(js),NOW,'btc')
+        self.assertEqual(obs[0]['observation_date'],'2026-10-24')
+        self.assertEqual(obs[0]['observation_timezone'],'UTC')
+
     def test_cnn_provider_epoch_is_not_invented_publication(self):
         data={'fear_and_greed':{'score':42,'rating':'fear','timestamp':1792713600000}}
         obs,_=parsers.parse_cnn(encoded(data),NOW)
