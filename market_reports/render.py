@@ -6,12 +6,20 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 from .core import atomic, encoded, digest, verify_bundle
+from .schedule import CLOCK_JS
 
 CSS='''
 :root{color-scheme:light;--ink:#16252e;--muted:#536975;--line:#dbe5e9;--accent:#087c75;--bg:#f3f7f8}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
 main{max-width:860px;margin:auto;padding:22px 18px 60px}header{border-bottom:3px solid var(--accent);padding:14px 0 22px}h1{font-size:26px;line-height:1.3;letter-spacing:-.5px}h2{font-size:18px;margin:30px 0 10px;padding-top:15px;border-top:1px solid var(--line)}a{color:#086a73;overflow-wrap:anywhere}p,li{overflow-wrap:anywhere}ul{padding-left:22px}nav{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0}nav a,.card{background:white;padding:12px 16px;border:1px solid var(--line);border-radius:12px;text-decoration:none}.card{margin:14px 0}.muted{color:var(--muted)}.warn{background:#fff0d6;border-left:4px solid #b7791f;padding:12px 14px;border-radius:5px}.table-scroll{max-width:100%;overflow-x:auto;margin:14px 0;background:white;border-radius:8px;border:1px solid var(--line)}table{border-collapse:collapse;font-size:13px;width:100%;min-width:380px}th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:normal}th{background:#e9f2f3}pre{white-space:pre-wrap;overflow-wrap:anywhere}small{color:var(--muted)}details{background:#fff;padding:12px;border-radius:8px;margin:12px 0}summary{cursor:pointer;font-weight:600}.overview p{margin:5px 0}@media(max-width:400px){main{padding:14px 12px 40px}h1{font-size:23px}body{font-size:14px}th,td{padding:7px 8px}}
 '''
+CSS+='\n.report-clock{font-size:13px}.report-clock[data-state="CURRENT"]{background:#e8f4f1;border-left-color:#087c75}\n'
+
+
+def freshness_banner(kind,day,generated):
+    fields={'kind':kind,'report-date':day,'generated':generated}
+    attrs=' '.join('data-'+k+'="'+html.escape(v,quote=True)+'"' for k,v in fields.items())
+    return '<div class="warn report-clock" role="status" '+attrs+'>报告日期 '+html.escape(day or '缺失')+'；MYT目标：每日08:00／周六10:00。启用JavaScript可按设备时钟检查本期是否到期；来源质量另列。</div>'
 
 
 def inline(s):
@@ -60,7 +68,8 @@ def markdown(s, compact=False):
 
 def page(title,body,base='../',generated=None):
     generated=html.escape(generated or '')
-    return '<!doctype html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>'+html.escape(title)+'</title><style>'+CSS+'</style></head><body><main><header><small>MARKET OBSERVATORY · 公开数据 / 可追溯</small><nav><a href="'+base+'index.html">报表首页</a><a href="'+base+'daily.html">晨报</a><a href="'+base+'weekly.html">周报</a><a href="'+base+'quality.json">质量</a></nav></header>'+body+'<footer><small>事实与解读分开 · 无付费API · 生成UTC '+generated+'</small></footer></main></body></html>'
+    script='<script>'+CLOCK_JS+'</script>' if 'class="warn report-clock"' in body else ''
+    return '<!doctype html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>'+html.escape(title)+'</title><style>'+CSS+'</style></head><body><main><header><small>MARKET OBSERVATORY · 公开数据 / 可追溯</small><nav><a href="'+base+'index.html">报表首页</a><a href="'+base+'daily.html">晨报</a><a href="'+base+'weekly.html">周报</a><a href="'+base+'quality.json">质量</a></nav></header>'+body+'<footer><small>事实与解读分开 · 无付费API · 生成UTC '+generated+'</small></footer></main>'+script+'</body></html>'
 
 
 def publish(data,site):
@@ -76,18 +85,20 @@ def publish(data,site):
         for name in ['report.md','report.json','quality.json','MANIFEST.json']:
             shutil.copyfile(bundle/name,destination/name)
         md=(bundle/'report.md').read_text()
-        atomic(destination/'index.html',page(kind+' '+day,markdown(md,compact=True),base='../../../',generated=ptr['generated_at_utc']))
+        atomic(destination/'index.html',page(kind+' '+day,'<p class="muted">历史档案：'+day+'，不是当前报告。</p>'+markdown(md,compact=True),base='../../../',generated=ptr['generated_at_utc']))
         pointers.append((kind,day,ptr,bundle))
     links=[]
     for kind in ['daily','weekly']:
         matches=[x for x in pointers if x[0]==kind]
-        if not matches:continue
+        if not matches:
+            links.append('<div class="card"><h2>'+('每日08:00 晨报' if kind=='daily' else '周六10:00 周报')+'</h2>'+freshness_banner(kind,'','')+'</div>');continue
         _,day,ptr,bundle=matches[-1]
         md=(bundle/'report.md').read_text()
-        atomic(target/(kind+'.html'),page(kind,markdown(md,compact=True),base='./',generated=ptr['generated_at_utc']))
+        banner=freshness_banner(kind,day,ptr['generated_at_utc'])
+        atomic(target/(kind+'.html'),page(kind,banner+markdown(md,compact=True),base='./',generated=ptr['generated_at_utc']))
         for ext in ['md','json']:
             shutil.copyfile(bundle/('report.'+ext),target/(kind+'.'+ext))
-        links.append(f'<div class="card"><h2>{"每日08:00 晨报" if kind=="daily" else "周六10:00 周报"}</h2><p>{day} · {"部分来源待确认" if ptr["degraded"] else "数据检查通过"}</p><a href="{kind}.html">阅读报告 →</a> · <a href="{kind}.md">Markdown</a> · <a href="{kind}.json">JSON</a></div>')
+        links.append(f'<div class="card"><h2>{"每日08:00 晨报" if kind=="daily" else "周六10:00 周报"}</h2><p>{day} · {"部分来源待确认" if ptr["degraded"] else "数据检查通过"}</p>'+banner+f'<a href="{kind}.html">阅读报告 →</a> · <a href="{kind}.md">Markdown</a> · <a href="{kind}.json">JSON</a></div>')
     for name in ['history.csv','quality.json','source_registry.json','health.json']:
         if (data/name).exists():shutil.copyfile(data/name,target/name)
     gen=json.loads((data/'health.json').read_text())['last_generated_at_utc'] if (data/'health.json').exists() else ''
@@ -97,8 +108,4 @@ def publish(data,site):
         body+=f'<p><a href="archive/{kind}/{day}/index.html">{day} {kind}</a></p>'
     body+='</details><p class="muted">监管：官方公告与Federal Register文种可核验；完整法律语义与资产影响仍须正文核验。CNN被拒时保持缺失。此系统不自动生成交易建议。</p>'
     atomic(target/'index.html',page('市场观察',body,base='./',generated=gen))
-    # A tiny local clock makes an old static publication visibly stale when opened later.
-    # No network call is needed for this check.
-    clock='<script>const t='+json.dumps(gen)+';if(t&&Date.now()-Date.parse(t)>26*3600000){document.getElementById("health").textContent="⚠ 最近发布已超过26小时，排程或数据可能中断，请检查Actions与报告日期。"}</script>'
-    atomic(target/'index.html',(target/'index.html').read_text().replace('</body>',clock+'</body>'))
     return len(pointers)

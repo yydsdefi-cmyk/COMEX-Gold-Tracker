@@ -43,5 +43,11 @@
     "regulatory_sources": "OCC and identified CLARITY/GENIUS official status; full FR bounded seven-day scan",
     "limits": "ICI/BLS/CNN missing; full legal-effect reasoning not equivalent; first actual schedule pending"
   },
-  "failure_issue_mechanism": "PASS healthy cloud branch: HEALTHY_NO_INCIDENT, no issue created. Create/dedup/recovery covered by mocks; no real failure induced."
+  "failure_issue_mechanism": "PASS healthy cloud branch: HEALTHY_NO_INCIDENT, no issue created. Create/dedup/recovery covered by mocks; no real failure induced.",
+  "continuation_v1_2": {
+    "status": "PENDING CLOUD ACCEPTANCE",
+    "local_tests": "109 PASS, no skips",
+    "legacy_archive": "26 objects PASS; schema1/2 bytes unchanged",
+    "changes": "Report/capture/pointer/quality/CSV linkage; independent MYT report freshness; recover derived CSV only"
+  }
 }

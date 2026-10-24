@@ -227,12 +227,12 @@ class IntegrityAndEndToEndTests(unittest.TestCase):
 
     def test_healthy_due_rerun_does_not_collect(self):
         with tempfile.TemporaryDirectory() as t:
-            run(['daily','weekly'],t,NOW,fake_sources,fake_comex)
-            for p in Path(t,'reports').glob('*/*/latest.json'):
-                x=json.loads(p.read_text());x['degraded']=False;p.write_bytes(encoded(x))
+            # A genuinely healthy fixture, rather than editing only its pointer flag.
+            healthy_comex=lambda now:receipt('comex')
+            run(['daily','weekly'],t,NOW,fake_sources,healthy_comex)
             self.assertEqual(due_reports(NOW,t),[])
             with patch('market_reports.__main__.collect') as c:
-                self.assertIsNone(run(['due'],t,NOW,fake_sources,fake_comex));c.assert_not_called()
+                self.assertIsNone(run(['due'],t,NOW,fake_sources,healthy_comex));c.assert_not_called()
 
     def test_gfm_tables_have_contiguous_rows(self):
         c={'generated_at_utc':NOW.isoformat(),'sources':[fake_comex(NOW)],'observations':[]}

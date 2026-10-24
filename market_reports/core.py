@@ -88,6 +88,9 @@ def observation(metric, value, date, unit, published=None, **kw):
 def verify_bundle(folder):
     folder = Path(folder)
     manifest = json.loads((folder / 'MANIFEST.json').read_text())
+    revision = digest(encoded(manifest['sha256']))[:20]
+    if folder.name != revision or manifest.get('revision') != revision:
+        raise ValueError('Report archive revision identity mismatch')
     actual = {p.relative_to(folder).as_posix() for p in folder.rglob('*') if p.is_file() and p.name != 'MANIFEST.json'}
     if actual != set(manifest['sha256']):
         raise ValueError('Report archive file set mismatch')
@@ -110,7 +113,7 @@ def commit_bundle(folder, files):
     return revision
 
 
-def rebuild_history(data):
+def history_view(data):
     """CSV is a derived view; immutable captures keep every revision of every value."""
     data = Path(data)
     rows = {}
@@ -126,8 +129,13 @@ def rebuild_history(data):
     w = csv.DictWriter(stream, fieldnames=fields)
     w.writeheader()
     w.writerows(rows[k] for k in sorted(rows))
-    atomic(data / 'history.csv', stream.getvalue())
-    return len(rows)
+    return stream.getvalue().encode(), len(rows)
+
+
+def rebuild_history(data):
+    body, count = history_view(data)
+    atomic(Path(data) / 'history.csv', body)
+    return count
 
 
 def due_reports(now, data=DATA):

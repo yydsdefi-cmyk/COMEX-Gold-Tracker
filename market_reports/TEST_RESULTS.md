@@ -49,3 +49,9 @@
 云端29来源receipt，26 OK；CNN418、ICI/BLS403保持缺失。FR完整窗口469份/5页中4份相关；OCC公告与指定CLARITY/GENIUS状态成功读取，未将历史成法或cloture误标本周新成法。health-notice实际运行HEALTHY_NO_INCIDENT，没有制造真实故障issue；创建/去重/恢复/人工issue保护仅模拟测试通过，手机通知送达UNKNOWN。
 
 清单独立核对发现OCC XML fixture在文本上传时CRLF转LF；测试语义相同，但旧hash不一致。已按远端实际字节重新生成MANIFEST，不修改真实数据。首个schedule仍未到时，真实调度UNKNOWN；完整法律语义等价仍NOT ACHIEVED，不能因93项通过而抹去限制。
+
+## v1.2 本地候选验证
+
+109个方法通过（原109中包括既有93+新增16），无跳过。新增覆盖CSV篡改、pointer错误capture/quality/time、路径越界、revision改名、内嵌capture不匹配、缺失capture、report目录/类型、quality漂移、来源观察遗漏、CSV中断无网络恢复且旧档案字节不改、坏capture阻止恢复、当前/历史页面分离、MYT日/周到期与4小时窗口、两报告独立时效、设备时间异常、实际Node执行浏览器脚本。
+
+首次新回归2项旧fixture失败：健康due测试仅改pointer.degraded，旧capture测试缺派生CSV。分别改为真正全OK的合成receipt及从原始capture建立CSV，保留原测试目的，不取消新校验。真实v1/v2旧档案26对象通过增强核验。云端新版及浏览器日期状态尚待验收，旧版成功不代替新版结果。

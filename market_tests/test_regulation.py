@@ -8,7 +8,7 @@ from pathlib import Path
 from unittest.mock import patch
 from urllib.error import HTTPError
 from market_reports import parsers
-from market_reports.core import UTC,encoded,digest
+from market_reports.core import UTC,encoded,digest,rebuild_history
 from market_reports.sources import collect_one,registry
 from market_reports.regulation import collect_register,fr_page_url,status_from_title,timeline_day
 from market_reports.report import timeline,regulatory_upcoming,weekly
@@ -173,6 +173,7 @@ class AvailabilityAndHistoryTests(unittest.TestCase):
         original=old.read_bytes()
         with tempfile.TemporaryDirectory() as t:
             p=Path(t,'captures',old.name);p.parent.mkdir();p.write_bytes(original)
+            rebuild_history(t)
             self.assertEqual(validate_archive(t),1)
             self.assertEqual(p.read_bytes(),original)
 

@@ -19,6 +19,7 @@ Python 3.12，安装根目录 `requirements.txt`。新报表模块仅使用标�
 python -m pip install -r requirements.txt
 python -m unittest discover -q
 python -m market_reports verify
+python -m market_reports recover  # only rebuild derived CSV after immutable archive checks
 python -m market_reports run --report both
 python -m comex_gold.cloud --output-dir public-data
 python -m market_reports publish --site public-data
@@ -34,7 +35,7 @@ UTC `00:00/00:17/00:47` 每日，对应MYT08:00/08:17/08:47。周六UTC `02:00/0
 
 正常已完成的due运行不重复采集；降级报告在目标时间后4小时内允许重试。每日/每周分别以MYT日期建立指针，数据与报告内容使用不可变hash/revision保存；CSV对相同源/指标/日期/值/发布日期去重，并保留修订值。新revision完整验证后才更新指针。中断后允许未引用的半成品，禁止发布；已有内容冲突或hash不符则中止，绝不静默覆盖。
 
-两个工作流共享 `comex-cloud` 并发组，不互相取消。Gold每次发布也叠加已归档市场报表，避免下一次Gold运行擦掉dashboard。写Git成功后才部署Pages；推送冲突时停止，不force push。每天真实归档提交使仓库保持活动；如果平台/账号长期停机，仍可能触发60天无活动停用，不能自证从未调度的任务。页面打开时会检查26小时发布年龄。
+两个工作流共享 `comex-cloud` 并发组，不互相取消。Gold每次发布也叠加已归档市场报表，避免下一次Gold运行擦掉dashboard。写Git成功后才部署Pages；推送冲突时停止，不force push。每天真实归档提交使仓库保持活动；如果平台/账号长期停机，仍可能触发60天无活动停用，不能自证从未调度的任务。页面打开时按MYT目标分别检查日报与周报：目标后4小时内标排队/补跑，之后标逾期；不使用另一份报告的生成时间掩盖漏更。
 
 ## 数据质量与限制
 
@@ -90,3 +91,7 @@ COMEX仍使用原采集器的真实报告窗口，不按自然日重算。每次
 真实失败会在本仓库维护一个带标记的bot故障issue，恢复后关闭；不更改人工issue，不发测试假故障。仅health-notice job有issues:write，报表job权限不扩大；是否手机收到通知仍未核验。若仓库禁用Issues/拒绝token写入，health-notice会失败并保留Actions日志，报表和Pages的已发布结果不会回滚。
 
 云端ICI/BLS/CNN限制仍存在。ICI工作簿适配器本地成功不是云端成功，不能把fixture或本地旧数据当作云端新值。
+
+## v1.2 档案验证与恢复
+
+`verify`只读核对capture、完整报告revision、最新指针及CSV派生视图。`recover`先核验不可变档案，只重建缺失/不一致CSV，不修改旧capture或报告；不可变档案损坏时停止。工作流联网前执行recover，成功后按原有顺序归档及发布。不要手动改pointer或quality来把降级报告涂成正常。
