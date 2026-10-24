@@ -52,6 +52,8 @@
 
 ## v1.2 本地候选验证
 
-109个方法通过（原109中包括既有93+新增16），无跳过。新增覆盖CSV篡改、pointer错误capture/quality/time、路径越界、revision改名、内嵌capture不匹配、缺失capture、report目录/类型、quality漂移、来源观察遗漏、CSV中断无网络恢复且旧档案字节不改、坏capture阻止恢复、当前/历史页面分离、MYT日/周到期与4小时窗口、两报告独立时效、设备时间异常、实际Node执行浏览器脚本。
+111个方法通过（既有93+新增18），无跳过。新增覆盖CSV篡改、pointer错误capture/quality/time、路径越界、revision改名、内嵌capture不匹配、缺失capture、report目录/类型、quality漂移、来源观察遗漏、CSV中断无网络恢复且旧档案字节不改、坏capture阻止恢复、当前/历史页面分离、MYT日/周到期与4小时窗口、两报告独立时效、设备时间异常、实际Node执行浏览器脚本。
 
 首次新回归2项旧fixture失败：健康due测试仅改pointer.degraded，旧capture测试缺派生CSV。分别改为真正全OK的合成receipt及从原始capture建立CSV，保留原测试目的，不取消新校验。真实v1/v2旧档案26对象通过增强核验。云端新版及浏览器日期状态尚待验收，旧版成功不代替新版结果。
+
+后续发现并修复提前健康手动预览会抑制到时due的边界；111项全部通过，并对浏览器相同日期但生成早于目标时刻的状态做真实脚本执行。前一候选109项/手机验收已通过，但不代替此修正的云端结果。

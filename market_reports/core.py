@@ -152,6 +152,11 @@ def due_reports(now, data=DATA):
         info = json.loads(pointer.read_text())
         bundle = pointer.parent / info['revision']
         verify_bundle(bundle)
+        target = local.replace(hour=hour, minute=0, second=0, microsecond=0)
+        if parse_time(info['generated_at_utc']).astimezone(MYT) < target:
+            # A healthy manual preview before the target cannot satisfy the scheduled run.
+            due.append(kind)
+            continue
         # Retry degraded reports within 4 hours; don't refetch healthy duplicate runs.
         if info['degraded'] and local.hour < hour + 4:
             due.append(kind)

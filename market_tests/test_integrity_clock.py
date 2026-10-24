@@ -11,7 +11,7 @@ from datetime import datetime
 from pathlib import Path
 
 from market_reports.__main__ import run,validate_archive
-from market_reports.core import UTC,encoded,digest,commit_bundle
+from market_reports.core import UTC,encoded,digest,commit_bundle,due_reports
 from market_reports.render import publish
 from market_reports.schedule import expected_period,period_state,CLOCK_JS
 from .test_market import NOW,fake_sources,fake_comex
@@ -147,10 +147,25 @@ class IndependentClockTests(unittest.TestCase):
         self.assertEqual(period_state('daily','',None,now),'OVERDUE')
         with self.assertRaises(ValueError):expected_period('monthly',now)
 
+    def test_early_manual_preview_does_not_satisfy_daily_or_weekly_schedule(self):
+        from .test_market import receipt
+        for at,want in [('2026-10-23T23:30:00+00:00',['daily','weekly']),('2026-10-24T01:59:00+00:00',['weekly'])]:
+            with tempfile.TemporaryDirectory() as t,contextlib.redirect_stdout(io.StringIO()):
+                run(['daily','weekly'],t,datetime.fromisoformat(at),fake_sources,lambda now:receipt('comex'))
+                self.assertEqual(due_reports(datetime(2026,10,24,2,tzinfo=UTC),t),want)
+
+    def test_same_date_preview_requires_generation_at_or_after_target(self):
+        for kind,day,generated,at in [
+            ('daily','2026-10-25','2026-10-24T23:30:00+00:00','2026-10-25T00:00:00+00:00'),
+            ('weekly','2026-10-31','2026-10-31T01:59:00+00:00','2026-10-31T02:00:00+00:00')]:
+            self.assertEqual(period_state(kind,day,generated,datetime.fromisoformat(at)),'PENDING')
+            self.assertEqual(period_state(kind,day,at,datetime.fromisoformat(at)),'CURRENT')
+
     @unittest.skipUnless(shutil.which('node'),'Node unavailable: browser equivalent not executed locally')
     def test_actual_javascript_against_independent_cases(self):
         cases=[{'kind':k,'now':int(datetime.fromisoformat(t).timestamp()*1000),'day':d,'want':w} for k,t,d,w in self.CASES]
         script="global.window={};global.document={querySelectorAll:()=>[]};global.setInterval=()=>{};"+CLOCK_JS
         script+='\nconst cases='+json.dumps(cases)+';for(const c of cases){const r=window.MarketReportClock.assess(c.kind,c.day,null,c.now);if(r.state!==c.want)throw Error(JSON.stringify({c,r}));}console.log(cases.length);'
+        script+="if(window.MarketReportClock.assess('daily','2026-10-25','2026-10-24T23:30:00Z',Date.parse('2026-10-25T00:00:00Z')).state!=='PENDING')throw Error('Early manual preview accepted');"
         result=subprocess.run(['node','-e',script],check=True,capture_output=True,text=True)
         self.assertEqual(int(result.stdout.strip()),len(cases))

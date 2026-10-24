@@ -90,6 +90,9 @@ jobs:
               ['daily','2026-11-01','2026-11-01T00:00:00Z','CURRENT']
             ];
             const clockResults=await clockPage.evaluate(cases=>cases.map(([kind,date,at,want])=>({kind,date,at,want,...window.MarketReportClock.assess(kind,date,null,Date.parse(at))})),cases);
+            const earlyPreview=await clockPage.evaluate(()=>window.MarketReportClock.assess('daily','2026-10-25','2026-10-24T23:30:00Z',Date.parse('2026-10-25T00:00:00Z')));
+            if(earlyPreview.state!=='PENDING')throw Error('Early manual preview accepted as scheduled publication');
+            clockResults.push({kind:'daily',date:'2026-10-25',at:'2026-10-25T00:00:00Z',want:'PENDING',...earlyPreview});
             if(clockResults.some(x=>x.state!==x.want))throw Error('Actual browser clock boundaries failed '+JSON.stringify(clockResults));
             fs.writeFileSync('evidence/clock-pages.json',JSON.stringify({simulated_at:'2026-10-25T04:00:00Z',clocks,checks:clockResults},null,2));
             await clockPage.screenshot({path:'evidence/independent-freshness-390.png',fullPage:true});
@@ -121,3 +124,5 @@ jobs:
 # v1.1 regulatory coverage and incident-handler acceptance.
 
 # v1.2 independent report freshness and archive-linkage acceptance.
+
+# v1.2 final early-manual-preview boundary acceptance.

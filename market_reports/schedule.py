@@ -22,7 +22,8 @@ def period_state(kind,report_date,generated_at,now):
     target=expected_period(kind,now)
     if generated_at and parse_time(generated_at)>now+timedelta(minutes=5):return 'CLOCK'
     if report_date and report_date>target.date().isoformat():return 'EARLY'
-    if report_date==target.date().isoformat():return 'CURRENT'
+    early=generated_at and parse_time(generated_at)<target
+    if report_date==target.date().isoformat() and not early:return 'CURRENT'
     return 'PENDING' if now<target+timedelta(hours=RECOVERY_HOURS) else 'OVERDUE'
 
 
@@ -41,7 +42,8 @@ function expected(kind,now){
 }
 function assess(kind,date,generated,now){
  const target=expected(kind,now);
- const state=generated&&Date.parse(generated)>now+5*60000?'CLOCK':date&&date>target.date?'EARLY':date===target.date?'CURRENT':now<target.at+4*H?'PENDING':'OVERDUE';
+ const early=generated&&Date.parse(generated)<target.at;
+ const state=generated&&Date.parse(generated)>now+5*60000?'CLOCK':date&&date>target.date?'EARLY':date===target.date&&!early?'CURRENT':now<target.at+4*H?'PENDING':'OVERDUE';
  return {state,expected_date:target.date};
 }
 function update(){

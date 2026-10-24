@@ -46,8 +46,9 @@
   "failure_issue_mechanism": "PASS healthy cloud branch: HEALTHY_NO_INCIDENT, no issue created. Create/dedup/recovery covered by mocks; no real failure induced.",
   "continuation_v1_2": {
     "status": "PENDING CLOUD ACCEPTANCE",
-    "local_tests": "109 PASS, no skips",
+    "local_tests": "111 PASS, no skips",
     "legacy_archive": "26 objects PASS; schema1/2 bytes unchanged",
-    "changes": "Report/capture/pointer/quality/CSV linkage; independent MYT report freshness; recover derived CSV only"
+    "changes": "Report/capture/pointer/quality/CSV linkage; independent MYT report freshness; recover derived CSV only",
+    "early_manual_preview": "Fixed: healthy preview cannot suppress scheduled generation"
   }
 }
