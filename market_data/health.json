@@ -1,22 +1,22 @@
 {
-  "historical_rows": 508,
-  "last_generated_at_utc": "2026-10-24T12:16:20.913829+00:00",
+  "historical_rows": 509,
+  "last_generated_at_utc": "2026-10-24T12:56:06.706867+00:00",
   "outputs": [
     {
-      "capture_id": "2581bfd0ff40cfbde1cb5cc1f14bbbf4924bb4e7646e85cb51e72a67d66c850e",
+      "capture_id": "fc17bc3127131865bc1b51c3953c1f0ea97321844f2574c3387ee9c8cf491a58",
       "date": "2026-10-24",
       "degraded": true,
-      "generated_at_utc": "2026-10-24T12:16:20.913829+00:00",
+      "generated_at_utc": "2026-10-24T12:56:06.706867+00:00",
       "kind": "daily",
-      "revision": "922c37f3cbbeeb9aae23"
+      "revision": "f586f3f4324e4b9f8784"
     },
     {
-      "capture_id": "2581bfd0ff40cfbde1cb5cc1f14bbbf4924bb4e7646e85cb51e72a67d66c850e",
+      "capture_id": "fc17bc3127131865bc1b51c3953c1f0ea97321844f2574c3387ee9c8cf491a58",
       "date": "2026-10-24",
       "degraded": true,
-      "generated_at_utc": "2026-10-24T12:16:20.913829+00:00",
+      "generated_at_utc": "2026-10-24T12:56:06.706867+00:00",
       "kind": "weekly",
-      "revision": "bc8edadd9f51ddca6d8b"
+      "revision": "858b2d7661398aed3883"
     }
   ],
   "quality": "DEGRADED",
