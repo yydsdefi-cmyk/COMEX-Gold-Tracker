@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-24T05:15:41.670458+00:00",
+  "generated_at_utc": "2026-10-24T05:58:11.644711+00:00",
   "sources": [
     {
       "id": "aaii",
@@ -106,6 +106,40 @@
       "url": "https://www.cftc.gov/RSS/RSSGP/rssgp.xml"
     },
     {
+      "id": "occ",
+      "kind": "primary",
+      "max_age_days": 4,
+      "note": "",
+      "parser": "rss",
+      "url": "https://www.occ.gov/rss/occ_news.xml"
+    },
+    {
+      "bill_identity": {
+        "congress": "119",
+        "number": "3633",
+        "type": "HR"
+      },
+      "id": "clarity_bill",
+      "kind": "primary",
+      "max_age_days": 4,
+      "note": "",
+      "parser": "bill",
+      "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/119/hr/BILLSTATUS-119hr3633.xml"
+    },
+    {
+      "bill_identity": {
+        "congress": "119",
+        "number": "1582",
+        "type": "S"
+      },
+      "id": "genius_bill",
+      "kind": "primary",
+      "max_age_days": 4,
+      "note": "",
+      "parser": "bill",
+      "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/119/s/BILLSTATUS-119s1582.xml"
+    },
+    {
       "id": "fed",
       "kind": "primary",
       "max_age_days": 4,
@@ -141,9 +175,9 @@
       "id": "federal_register",
       "kind": "primary",
       "max_age_days": 4,
-      "note": "Rule/Proposed Rule/Notice types authoritative; effective_on may be absent.",
+      "note": "Full bounded seven-day document window, local topic filtering, official PDF and effective-date metadata.",
       "parser": "federal_register",
-      "url": "https://www.federalregister.gov/api/v1/documents.json?conditions%5Bterm%5D=cryptocurrency+OR+stablecoin+OR+%22digital+asset%22+OR+tokenization&conditions%5Bpublication_date%5D%5Bgte%5D=2026-10-17&per_page=100&order=newest"
+      "url": "https://www.federalregister.gov/api/v1/documents.json?conditions%5Bpublication_date%5D%5Bgte%5D=2026-10-17&conditions%5Bpublication_date%5D%5Blte%5D=2026-10-23&order=oldest&per_page=100&page=1"
     },
     {
       "id": "sp500",
