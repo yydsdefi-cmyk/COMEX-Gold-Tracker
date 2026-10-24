@@ -1,0 +1,210 @@
+{
+  "generated_at_utc": "2026-10-24T05:02:36.923967+00:00",
+  "sources": [
+    {
+      "id": "aaii",
+      "kind": "primary",
+      "max_age_days": 10,
+      "note": "Weekly. Full historical member dataset not required.",
+      "parser": "aaii",
+      "url": "https://www.aaii.com/sentimentsurvey"
+    },
+    {
+      "id": "cnn",
+      "kind": "primary",
+      "max_age_days": 4,
+      "note": "Official CNN origin; undocumented endpoint may refuse requests. No access-control bypass.",
+      "parser": "cnn",
+      "url": "https://production.dataviz.cnn.io/index/fearandgreed/graphdata"
+    },
+    {
+      "id": "vix",
+      "kind": "primary",
+      "max_age_days": 4,
+      "note": "",
+      "parser": "cboe",
+      "url": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv"
+    },
+    {
+      "id": "vix3m",
+      "kind": "primary",
+      "max_age_days": 4,
+      "note": "",
+      "parser": "cboe",
+      "url": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX3M_History.csv"
+    },
+    {
+      "id": "crypto",
+      "kind": "primary",
+      "max_age_days": 1,
+      "note": "",
+      "parser": "crypto",
+      "url": "https://api.alternative.me/fng/?limit=31&format=json"
+    },
+    {
+      "id": "srf",
+      "kind": "primary",
+      "max_age_days": 4,
+      "note": "",
+      "parser": "srf",
+      "url": "https://markets.newyorkfed.org/api/rp/repo/all/results/lastTwoWeeks.json"
+    },
+    {
+      "id": "treasury",
+      "kind": "primary",
+      "max_age_days": 10,
+      "note": "Official 30-day announcements endpoint; client filters auction dates. Unannounced future supply unknown; tail needs WI yield.",
+      "parser": "auctions",
+      "url": "https://www.treasurydirect.gov/TA_WS/securities/announced?format=json&days=30"
+    },
+    {
+      "id": "ici",
+      "kind": "primary",
+      "max_age_days": 10,
+      "note": "USD billions table. Asset change is not net flow.",
+      "parser": "ici",
+      "url": "https://www.ici.org/research/stats/mmf"
+    },
+    {
+      "id": "bls",
+      "kind": "primary",
+      "max_age_days": 4,
+      "note": "",
+      "parser": "bls",
+      "url": "https://www.bls.gov/schedule/news_release/bls.ics"
+    },
+    {
+      "id": "bea",
+      "kind": "primary",
+      "max_age_days": 4,
+      "note": "",
+      "parser": "bea",
+      "url": "https://www.bea.gov/news/schedule"
+    },
+    {
+      "id": "fomc",
+      "kind": "primary",
+      "max_age_days": 4,
+      "note": "",
+      "parser": "fomc",
+      "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+    },
+    {
+      "id": "sec",
+      "kind": "primary",
+      "max_age_days": 4,
+      "note": "",
+      "parser": "rss",
+      "url": "https://www.sec.gov/news/pressreleases.rss"
+    },
+    {
+      "id": "cftc",
+      "kind": "primary",
+      "max_age_days": 4,
+      "note": "",
+      "parser": "rss",
+      "url": "https://www.cftc.gov/RSS/RSSGP/rssgp.xml"
+    },
+    {
+      "id": "fed",
+      "kind": "primary",
+      "max_age_days": 4,
+      "note": "",
+      "parser": "rss",
+      "url": "https://www.federalreserve.gov/feeds/press_all.xml"
+    },
+    {
+      "id": "congress",
+      "kind": "primary",
+      "max_age_days": 4,
+      "note": "Official GPO bill publications, not comprehensive vote/amendment monitoring.",
+      "parser": "rss",
+      "url": "https://www.govinfo.gov/rss/bills.xml"
+    },
+    {
+      "id": "whitehouse",
+      "kind": "primary",
+      "max_age_days": 4,
+      "note": "",
+      "parser": "rss",
+      "url": "https://www.whitehouse.gov/presidential-actions/feed/"
+    },
+    {
+      "id": "treasury_news",
+      "kind": "primary",
+      "max_age_days": 4,
+      "note": "Official press-release index; linked release pages are the primary references.",
+      "parser": "treasury_news",
+      "url": "https://home.treasury.gov/news/press-releases"
+    },
+    {
+      "id": "federal_register",
+      "kind": "primary",
+      "max_age_days": 4,
+      "note": "Rule/Proposed Rule/Notice types authoritative; effective_on may be absent.",
+      "parser": "federal_register",
+      "url": "https://www.federalregister.gov/api/v1/documents.json?conditions%5Bterm%5D=cryptocurrency+OR+stablecoin+OR+%22digital+asset%22+OR+tokenization&conditions%5Bpublication_date%5D%5Bgte%5D=2026-10-17&per_page=100&order=newest"
+    },
+    {
+      "id": "sp500",
+      "kind": "secondary",
+      "max_age_days": 4,
+      "note": "Free Yahoo chart; futures for WTI/gold. May be intraday/delayed, never assert official close.",
+      "parser": "yahoo",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?range=1mo&interval=1d"
+    },
+    {
+      "id": "nasdaq",
+      "kind": "secondary",
+      "max_age_days": 4,
+      "note": "Free Yahoo chart; futures for WTI/gold. May be intraday/delayed, never assert official close.",
+      "parser": "yahoo",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EIXIC?range=1mo&interval=1d"
+    },
+    {
+      "id": "us10y",
+      "kind": "secondary",
+      "max_age_days": 4,
+      "note": "Free Yahoo chart; futures for WTI/gold. May be intraday/delayed, never assert official close.",
+      "parser": "yahoo",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5ETNX?range=1mo&interval=1d"
+    },
+    {
+      "id": "dxy",
+      "kind": "secondary",
+      "max_age_days": 4,
+      "note": "Free Yahoo chart; futures for WTI/gold. May be intraday/delayed, never assert official close.",
+      "parser": "yahoo",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/DX-Y.NYB?range=1mo&interval=1d"
+    },
+    {
+      "id": "wti",
+      "kind": "secondary",
+      "max_age_days": 4,
+      "note": "Free Yahoo chart; futures for WTI/gold. May be intraday/delayed, never assert official close.",
+      "parser": "yahoo",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/CL%3DF?range=1mo&interval=1d"
+    },
+    {
+      "id": "gold",
+      "kind": "secondary",
+      "max_age_days": 4,
+      "note": "Free Yahoo chart; futures for WTI/gold. May be intraday/delayed, never assert official close.",
+      "parser": "yahoo",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?range=1mo&interval=1d"
+    },
+    {
+      "id": "btc",
+      "kind": "secondary",
+      "max_age_days": 2,
+      "note": "Free Yahoo chart; futures for WTI/gold. May be intraday/delayed, never assert official close.",
+      "parser": "yahoo",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/BTC-USD?range=1mo&interval=1d"
+    },
+    {
+      "id": "comex",
+      "method": "commit-pinned latest.json plus collection workflow run verification",
+      "url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker"
+    }
+  ]
+}
