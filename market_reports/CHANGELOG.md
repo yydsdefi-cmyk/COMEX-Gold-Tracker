@@ -1,5 +1,11 @@
 # Changelog
 
+## Pages rerun repair — 2026-10-24
+
+- 用户要求立即补跑时，40093211984 attempt2的采集、150测试、归档和数值复核通过，但deploy-pages发现同一次run内两个默认github-pages artifact，拒绝发布。
+- 两个生产发布workflow的上传name与部署artifact_name改为相同的run_id/run_attempt组合，重跑保留旧产物而精确选择本次产物。正式cron、报告计算和不可变历史不改。
+- 修复后的首次运行与真实同run重跑验收记录见DEPLOYMENT_STATUS.json；失败attempt保留。
+
 ## 1.0.0 — 2026-10-24
 
 - 恢复原晨报/周报完整任务提示词和当天历史输出。
