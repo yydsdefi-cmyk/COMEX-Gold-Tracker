@@ -48,7 +48,9 @@ def parse_cboe(body, now, metric='vix'):
     out = []
     for r in rows[-90:]:
         date = datetime.strptime(r['DATE'].strip(), '%m/%d/%Y').date().isoformat()
-        out.append(observation(metric,r['CLOSE'],date,'index'))
+        v=number(r['CLOSE'])
+        if v<=0:raise ValueError('Non-positive Cboe volatility index')
+        out.append(observation(metric,v,date,'index'))
     if not out:
         raise ValueError('Empty Cboe CSV')
     return out, {'publication_note':'官方日收盘序列未提供逐行发布时间'}
@@ -76,10 +78,11 @@ def parse_cnn(body, now):
     value = number(js['score'])
     if not 0 <= value <= 100:
         raise ValueError('CNN score outside range')
-    d = datetime.fromisoformat(js['timestamp'].replace('Z','+00:00'))
+    raw_stamp=js['timestamp']
+    d = datetime.fromtimestamp(raw_stamp/(1000 if raw_stamp>1e11 else 1),UTC) if isinstance(raw_stamp,(float,int)) else datetime.fromisoformat(raw_stamp.replace('Z','+00:00'))
     if d.tzinfo is None:
         raise ValueError('CNN timestamp lacks zone')
-    return [observation('cnn_fg',value,d.date().isoformat(),'index',d.isoformat(),classification=js['rating'])], {}
+    return [observation('cnn_fg',value,d.date().isoformat(),'index',None,provider_updated_at=d.isoformat(),classification=js['rating'])], {'publication_note':'provider timestamp retained as update time; publication time not separately provided'}
 
 
 def parse_srf(body, now):
@@ -257,7 +260,10 @@ def parse_bls(body, now):
         title=re.search(r'SUMMARY:(.+)',chunk)
         if not m or not title:
             continue
-        raw=m[2]; dt=datetime.strptime(raw.rstrip('Z'),'%Y%m%dT%H%M%S')
+        raw=m[2]
+        if not raw.endswith('Z') and m[1] not in ('US-Eastern','America/New_York'):
+            raise ValueError('BLS timezone unrecognized')
+        dt=datetime.strptime(raw.rstrip('Z'),'%Y%m%dT%H%M%S')
         dt=dt.replace(tzinfo=UTC if raw.endswith('Z') else ET)
         if now-timedelta(days=7)<=dt<=now+timedelta(days=8):
             items.append({'name':title[1].strip(),'at_myt':dt.astimezone(MYT).isoformat(),'source':'BLS',

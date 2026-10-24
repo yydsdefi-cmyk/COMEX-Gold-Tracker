@@ -97,3 +97,5 @@ jobs:
           name: market-migration-acceptance
           path: evidence
           retention-days: 1
+
+# Final renderer and date-boundary acceptance revision 2.

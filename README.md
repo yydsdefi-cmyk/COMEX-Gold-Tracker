@@ -11,3 +11,13 @@ Free historical backfill: 26 original CME reports, Activity Dates 2026-08-28 thr
 5D and 10D are available for Total, Registered and Eligible, with separate absolute/percentage changes and baseline dates. Daily briefs read 1D/5D/10D/20D from the fresh cloud snapshot. 20D remains null because the window contains an unclassified holiday gap and a previous-balance discontinuity; the unexplained difference is not classified as physical withdrawal. Synthetic test dates never count as official reports.
 
 40 offline tests pass. Daily collection and the original morning brief's cloud-data reading have been tested. No paid data or billed APIs are permitted; see [OPERATING_POLICY.md](OPERATING_POLICY.md).
+
+## 市场晨报与Crypto监管周报
+
+新增的独立报表模块保留原Gold功能和全部根数据路径：
+
+- [手机Dashboard](https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/)
+- [实施、来源、测试及交接说明](market_reports/README.md)
+- [已部署与未完成边界](market_reports/DEPLOYMENT_STATUS.json)
+
+报表目标为每日08:00、周六10:00 MYT。数据缺失与完整法律语义研究的限制会明确披露，不依赖ChatGPT或付费模型API。

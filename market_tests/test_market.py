@@ -112,6 +112,13 @@ class CollectionTests(unittest.TestCase):
         bad=collect_one(spec,NOW,fail)
         self.assertEqual(bad['status'],'MISSING');self.assertEqual(bad['observations'],[])
 
+    def test_cnn_provider_epoch_is_not_invented_publication(self):
+        data={'fear_and_greed':{'score':42,'rating':'fear','timestamp':1792713600000}}
+        obs,_=parsers.parse_cnn(encoded(data),NOW)
+        self.assertEqual(obs[0]['observation_date'],'2026-10-23')
+        self.assertIsNone(obs[0]['publication_date'])
+        self.assertEqual(obs[0]['provider_updated_at'],'2026-10-23T00:00:00+00:00')
+
     def test_no_retry_access_denial(self):
         calls=[]
         def deny(req,timeout):
@@ -219,6 +226,12 @@ class IntegrityAndEndToEndTests(unittest.TestCase):
             self.assertEqual(due_reports(NOW,t),[])
             with patch('market_reports.__main__.collect') as c:
                 self.assertIsNone(run(['due'],t,NOW,fake_sources,fake_comex));c.assert_not_called()
+
+    def test_gfm_tables_have_contiguous_rows(self):
+        c={'generated_at_utc':NOW.isoformat(),'sources':[fake_comex(NOW)],'observations':[]}
+        md=weekly(c,[])
+        self.assertNotIn('\n\n|---',md)
+        self.assertIn('|资产|直接/间接影响|\n|---|---|',md)
 
     def test_html_escaping(self):
         h=markdown('<script>alert(1)</script> [bad](javascript:alert) **test**')

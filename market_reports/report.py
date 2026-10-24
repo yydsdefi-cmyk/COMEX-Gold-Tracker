@@ -4,6 +4,11 @@ from datetime import datetime, timedelta
 from .core import MYT, parse_time, number
 
 
+def compose(lines):
+    # GFM tables require adjacent rows, even though normal paragraphs use blank lines.
+    return re.sub(r'(?m)(\|[^\n]*\|)\n\n(?=\|)',r'\1\n','\n\n'.join(lines))+'\n'
+
+
 def fmt(v, digits=2, signed=False):
     if v is None:
         return '待确认'
@@ -192,7 +197,7 @@ def daily(capture):
               '本报告区分观察与解读；排除BTC seasonality、自选股、X讨论和普通财报清单。']
     for r in capture['sources']:
         lines.append('- '+source_link(r)+'｜'+r['status']+'｜抓取 '+r['fetched_at_utc']+(('｜'+r['error']) if r.get('error') else ''))
-    return '\n\n'.join(lines)+'\n'
+    return compose(lines)
 
 
 CRYPTO=re.compile(r'crypt|bitcoin|ether|stablecoin|tokeniz|tokenis|digital asset|GENIUS|CLARITY|24.?7|blockchain',re.I)
@@ -208,7 +213,7 @@ def timeline(capture):
                 continue
             day=item['publication_date'][:10]
             # Weekly publication timeline explicitly uses seven MYT calendar dates, including run day.
-            if not (now.astimezone(MYT).date()-timedelta(days=6)).isoformat()<=day<=now.astimezone(MYT).date().isoformat():
+            if not (now.astimezone(MYT).date()-timedelta(days=7)).isoformat()<=day<(now.astimezone(MYT).date()).isoformat():
                 continue
             items.setdefault(item['url'],{**item,'source':r['id']})
     return sorted(items.values(),key=lambda x:(x['publication_date'][:10],x['url']))
@@ -216,7 +221,7 @@ def timeline(capture):
 
 def weekly(capture, daily_captures):
     now=parse_time(capture['generated_at_utc']).astimezone(MYT)
-    lines=[f'# 每周市场与Crypto监管周报｜{now:%Y-%m-%d}',f'生成 {now:%H:%M} MYT｜目标周六10:00 MYT｜过去7个MYT日期（含今日）；延迟产生的事实按实际抓取时刻标注。',
+    lines=[f'# 每周市场与Crypto监管周报｜{now:%Y-%m-%d}',f'生成 {now:%H:%M} MYT｜目标周六10:00 MYT｜市场数据截至本次抓取；监管覆盖此前7个完整日期（来源发布日期口径），延迟抓取不冒充准点发布。',
            '## 一周市场变化',f'已累积 {len(daily_captures)} 个不同MYT日期的日报档案；少于7天时不冒充完整晨报周总结。',
            '|指标|可核验期初→期末|变化|','|---|---|---|']
     for metric,label in [('sp500','S&P 500'),('nasdaq','Nasdaq'),('aaii_spread','AAII Spread pp'),('cnn_fg','CNN F&G'),('vix','VIX'),('vix3m','VIX3M'),('crypto_fg','Crypto F&G'),('srf_usd','SRF USD'),('mmf_assets_usd','MMF资产 USD')]:
@@ -236,8 +241,35 @@ def weekly(capture, daily_captures):
     srf=series(capture,'srf_usd');srf=[o for o in srf if (now.date()-timedelta(days=6)).isoformat()<=o['observation_date']<=now.date().isoformat()]
     if srf:
         lines.append('SRF已取得日期的使用量合计 $'+fmt(sum(o['value'] for o in srf)/1e9,6)+'B；最大单日 $'+fmt(max(o['value'] for o in srf)/1e9,6)+'B。按操作日期去重，测试操作排除；缺日不补0，合计不是未偿存量。')
+    summary=[]
+    spread=series(capture,'aaii_spread')
+    if len(spread)>=2:
+        a,b=spread[-2],spread[-1];change=b['value']-a['value']
+        summary.append('AAII Bull-Bear Spread '+fmt(a['value'],1)+'→'+fmt(b['value'],1)+'pp，'+('悲观程度上升' if change<0 else '悲观程度下降' if change>0 else '没有变化')+'（调查情绪，非收益预测）。')
+    crypto=series(capture,'crypto_fg')
+    cutoff=(now.date()-timedelta(days=7)).isoformat()
+    past=[o for o in crypto if o['observation_date']<=cutoff]
+    if past and crypto:
+        a,b=past[-1],crypto[-1]
+        summary.append('Crypto F&G '+fmt(a['value'],0)+'→'+fmt(b['value'],0)+'；最新 '+b.get('classification','')+'，'+('风险偏好降温' if b['value']<a['value'] else '风险偏好回升' if b['value']>a['value'] else '维持不变')+'（情绪解读）。')
+    cr=next((r for r in capture['sources'] if r['id']=='comex'),{})
+    cs=cr.get('details',{}).get('snapshot',{})
+    if cs.get('registered_change_20d_pct') is not None:
+        summary.append('Registered 20D '+fmt(cs['registered_change_20d_pct'],3,True)+'%；'+('持续观察库存收缩' if cs['registered_change_20d_pct']<0 else '观察库存增加')+'，不单独推断交割短缺。')
+    if summary:
+        lines += ['## 本周最重要变化']+['- '+x for x in summary[:3]]
     lines.append('趋势解释：变化方向可核验；“改善/恶化”不自动等同风险增减。三项情绪共振阈值未定义、拍卖后收益率反应未建立可核验事件窗口，均待确认。')
-    lines += ['## Gold库存与现金流动性']+comex_lines(capture)
+    lines += ['## Gold库存与现金流动性']
+    if cs.get('available'):
+        lines.append('Activity '+str(cs.get('activity_date'))+' / Report '+str(cs.get('report_date'))+'｜Ratio '+fmt(cs.get('registered_ratio'),3)+'%｜读取 '+cr.get('status','待确认')+'｜库存风险 '+str(cs.get('status')))
+        lines += ['|分类|当前 M oz|5D|20D|','|---|---:|---:|---:|']
+        for label,key,prefix in [('Total','total_oz',''),('Registered','registered_oz','registered_'),('Eligible','eligible_oz','eligible_')]:
+            changes=[cs.get(prefix+f'change_{n}d_pct') for n in (5,20)]
+            lines.append('|'+label+'|'+fmt(cs[key]/1e6,3)+'|'+'|'.join(fmt(x,3,True)+'%' if x is not None else '暂不可算' for x in changes)+'|')
+        lines.append('四窗口、基准日与衔接异常见当天晨报和JSON。官方最新发布状态'+('已确认' if cs.get('is_latest_confirmed') else '未独立确认')+'；Pledged已包含Registered，Eligible下降不证明短缺。')
+        lines.append('[本次COMEX同提交快照]('+cr['details']['source_json']+')')
+    else:
+        lines.append('COMEX待确认；缺失不填0。')
     a=latest(capture,'mmf_assets_usd');delta=value(capture,'mmf_weekly_asset_change_usd')
     lines.append('ICI总资产 $'+fmt(a['value']/1e12 if a else None,5)+'T；周资产变化 $'+fmt(delta/1e9 if delta is not None else None,2,True)+'B。'+dates(a)+'。资产变化不等于净流入；3个月流趋势待积累。')
     lines += ['## Treasury / Fed']+treasury_lines(capture)
@@ -260,7 +292,7 @@ def weekly(capture, daily_captures):
     for asset in ['BTC','ETH','Stablecoin','Tokenized Securities']:
         related=any(re.search({'BTC':r'bitcoin|crypto|digital asset','ETH':r'ether|crypto|digital asset','Stablecoin':r'stablecoin|GENIUS','Tokenized Securities':r'tokeniz|tokenis'}[asset],i['title'],re.I) for i in items)
         lines.append('|'+asset+'|'+('主题直接相关（基于标题的推断）；具体权利义务待正文核验' if related else '本次筛选未确认直接影响；不能据此断言无实质影响')+'|')
-    lines.append('本周最重要2–3项变化：只在有可比序列时阅读上表；结构性监管变化和下周监管截止日须正文核验，目前保留待确认。')
+    lines.append('结构性监管变化以已列文种和生效日期为事实基础；标题主题关联不是完整法律影响评估，下周监管截止日缺少可核验信息时保留待确认。')
     lines.append('方法变更：免费确定性系统提供可审计数据与公告线索；不冒充原LLM的完整法律语义研究。详见METHOD_CHANGES.md。')
     lines += ['## 来源与质量','[完整来源登记](https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/source_registry.json)｜[数据质量](https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/quality.json)；各条目附原始官方链接。']
-    return '\n\n'.join(lines)+'\n'
+    return compose(lines)

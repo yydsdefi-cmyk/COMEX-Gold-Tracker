@@ -1,6 +1,6 @@
 # Test results — 2026-10-24
 
-实际命令：`python -m unittest discover -q`，最后一次预部署运行67项、0失败。原Gold40项+新market_tests27个测试方法；不把用例内多个assert重复计数。网络端到端与远端部署不算离线测试通过。
+实际命令：`python -m unittest discover -q`，最后一次本地最终运行69项、0失败。原Gold40项+新market_tests29个测试方法；不把用例内多个assert重复计数。网络端到端与远端部署不算离线测试通过。
 
 |要求|结果|实际证据/边界|
 |---|---|---|

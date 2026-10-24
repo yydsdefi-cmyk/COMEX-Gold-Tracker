@@ -22,3 +22,16 @@
 免费LLM不是本系统的必要依赖：免费API配额/模型/地区/条款随时变，可能需要新账号、key或计费项目；GitHub standard runner不保证足够RAM/时限运行能可靠完成中英文法规分析的本地模型；低质量小模型也会引入无法验证的法律断言。因此本版不依赖任何免费试用、Google赠款、GitHub Models token或ChatGPT订阅额度。模板足够生成数字比较与监控等级；完整监管研究不足以仅凭模板等价替代。若以后接可选LLM，必须保留无LLM运行路径及单独预算/权限审计。
 
 公开政策核验（2026-10-24）：GitHub官方说明公开仓库标准托管runner免费、Pages支持GitHub Free公开仓库，schedule可能高负荷延迟/丢失、60天无活动自动停用。相关官方链接列在SOURCE_REGISTRY.md。免费政策不是永久承诺。
+
+
+## 免费LLM替代比较（2026-10-24直接读取官方页面）
+
+|选项|当前官方证据|适用判断|
+|---|---|---|
+|GitHub Models|官方文档已改为retired：2026-07-30起playground、catalog、inference API、BYOK全部停用。旧2025年“免费GITHUB_TOKEN models:read”文章不适用。|排除；不是可部署的免费路径。来源 https://docs.github.com/en/github-models |
+|Hugging Face Inference Providers|当前官方定价Free Users月credit为None，需要购买credits或升级；旧搜索摘要$0.10已过时。|排除；不满足新增成本为零。来源 https://huggingface.co/docs/inference-providers/pricing |
+|Gemini API Free Tier|官方billing说明新账户有部分模型Free Tier与限额；需要合资格project/key，付费升级要关联billing，不代表所有模型/grounding免费。未读取用户AI Studio项目资格，也未激活或请求key。|可选试验候选；限额、可用模型和服务保证不足以成为永久无成本承诺，不作为本版依赖。来源 https://ai.google.dev/gemini-api/docs/billing 和 https://ai.google.dev/gemini-api/docs/pricing |
+|GitHub runner本地小模型|无需模型API费用，但模型下载、CPU时间/内存、许可证和质量需独立测试；没有完成能可靠读法规的能力验证。|UNKNOWN；不冒充已验证替代，本次不安装模型。|
+|确定性Python规则|当前已部署实测：数字对比、监控等级、中文模板、来源/状态/日历/Timeline候选可生成。|采用；完整法律语义判断仍是明确缺口，不把缺口藏在模型输出中。|
+
+这个比较不创建任何新计费项目或令牌，也不把用户的Google赠款/AI订阅额度算成永久免费资源。

@@ -31,7 +31,7 @@ def markdown(s, compact=False):
             while i<len(lines) and (lines[i].strip().startswith('|') or not lines[i].strip()):
                 if lines[i].strip():rows.append(lines[i].strip())
                 i+=1
-            out.append('<div class="table-scroll"><table>')
+            out.append('<small>表格可左右滑动查看全部列</small><div class="table-scroll"><table>')
             for n,row in enumerate(rows):
                 if re.fullmatch(r'[|:\-\s]+',row):continue
                 tag='th' if n==0 else 'td'
