@@ -1,0 +1,88 @@
+{
+  "checks": [
+    {
+      "name": "index",
+      "width": 360,
+      "status": 200,
+      "viewport": 360,
+      "body": 360,
+      "title": "市场观察",
+      "details": 1
+    },
+    {
+      "name": "daily",
+      "width": 360,
+      "status": 200,
+      "viewport": 360,
+      "body": 360,
+      "title": "daily",
+      "details": 9
+    },
+    {
+      "name": "weekly",
+      "width": 360,
+      "status": 200,
+      "viewport": 360,
+      "body": 360,
+      "title": "weekly",
+      "details": 10
+    },
+    {
+      "name": "index",
+      "width": 390,
+      "status": 200,
+      "viewport": 390,
+      "body": 390,
+      "title": "市场观察",
+      "details": 1
+    },
+    {
+      "name": "daily",
+      "width": 390,
+      "status": 200,
+      "viewport": 390,
+      "body": 390,
+      "title": "daily",
+      "details": 9
+    },
+    {
+      "name": "weekly",
+      "width": 390,
+      "status": 200,
+      "viewport": 390,
+      "body": 390,
+      "title": "weekly",
+      "details": 10
+    },
+    {
+      "path": "latest.json",
+      "status": 200
+    },
+    {
+      "path": "history.csv",
+      "status": 200
+    },
+    {
+      "path": "market/daily.json",
+      "status": 200
+    },
+    {
+      "path": "market/weekly.json",
+      "status": 200
+    },
+    {
+      "path": "market/history.csv",
+      "status": 200
+    },
+    {
+      "path": "market/source_registry.json",
+      "status": 200
+    },
+    {
+      "path": "market/quality.json",
+      "status": 200
+    }
+  ],
+  "capture_id": "bc893225ba196b577b20133bc7b9ad1759decd7ab7b9eb24815829064e20bdcb",
+  "quality": "DEGRADED"
+}

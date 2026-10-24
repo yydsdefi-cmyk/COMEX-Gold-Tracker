@@ -7,7 +7,7 @@
 - 周报: https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/weekly.html
 - 工作流: https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/workflows/market-reports.yml
 
-以上地址已在2026-10-24实际发布并验收；基础设施PASS，数据覆盖DEGRADED，完整原报告语义不等价。详见 [部署状态](DEPLOYMENT_STATUS.json) 和 [HANDOFF](HANDOFF.md)。
+当前v1.1.0，2026-10-24已实际发布并验收（93项本地/云端测试、真实manual both及360/390px手机检查通过）；基础设施PASS，数据覆盖DEGRADED，完整原报告语义不等价。详见 [部署状态](DEPLOYMENT_STATUS.json) 和 [HANDOFF](HANDOFF.md)。
 
 完整原提示词在 `specs/original_missions.json`；2026-10-24两份原任务输出在相邻文件。原任务保持启用，没有调用自动化修改接口。
 
@@ -78,7 +78,7 @@ COMEX仍使用原采集器的真实报告窗口，不按自然日重算。每次
 |方法与免费LLM比较|[METHOD_CHANGES.md](METHOD_CHANGES.md)|
 |来源说明|[SOURCE_REGISTRY.md](SOURCE_REGISTRY.md)|
 |测试及验收|[TEST_RESULTS.md](TEST_RESULTS.md)，[DEPLOYMENT_STATUS.json](DEPLOYMENT_STATUS.json)|
-|机器证据|[手动触发](evidence-manual-dispatch.json)，[手机页面](evidence-mobile-pages.json)，[独立复算](evidence-independent-calculations.json)|
+|机器证据|[v1.1手动触发](evidence/v1.1-manual-dispatch.json)，[v1.1手机页面](evidence/v1.1-mobile-pages.json)，[云端验证](evidence/v1.1-cloud-validation.json)，[独立复算](evidence-independent-calculations.json)|
 |文件完整性/变更|[MANIFEST.json](MANIFEST.json)，[CHANGELOG.md](CHANGELOG.md)|
 
 目标为MYT每日08:00和周六10:00；首次新schedule尚未到时，实际延迟以GitHub为准。原两项ChatGPT任务仍保留。

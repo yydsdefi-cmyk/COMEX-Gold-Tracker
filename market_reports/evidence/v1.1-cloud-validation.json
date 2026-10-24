@@ -1,0 +1,41 @@
+{
+  "version": "1.1.0",
+  "source_commit": "9136230f5628d3e1a2aabd8a3f6100d3673b75e7",
+  "manual_both_run": 40068302153,
+  "mobile_acceptance_run": 40068297391,
+  "manual_conclusion": "success",
+  "local_clean_checkout_tests": {
+    "methods": 93,
+    "failures": 0
+  },
+  "cloud_tests": {
+    "methods": 93,
+    "failures": 0,
+    "job_id": 120796211423
+  },
+  "archive_verified_objects": 26,
+  "historical_csv_rows": 459,
+  "capture_schemas": {
+    "1": 6,
+    "2": 2
+  },
+  "source_receipts": 29,
+  "source_ok": 26,
+  "missing_sources": {
+    "cnn": "HTTP418",
+    "ici": "HTTP403",
+    "bls": "HTTP403"
+  },
+  "capture_id": "bc893225ba196b577b20133bc7b9ad1759decd7ab7b9eb24815829064e20bdcb",
+  "health_notice": {
+    "job_id": 120796327690,
+    "result": "HEALTHY_NO_INCIDENT",
+    "open_issues": 0,
+    "real_incident_not_induced": true,
+    "delivery": "UNKNOWN"
+  },
+  "manifest_fix": "OCC XML source fixture CRLF was normalized to LF during text upload; regenerate SHA256 against actual Git checkout. Parser tests passed both; no report archive rewritten.",
+  "full_semantic_equivalence": "NOT ACHIEVED",
+  "future_schedule_execution": "UNKNOWN",
+  "verified_at_utc": "2026-10-24T05:59:52Z"
+}

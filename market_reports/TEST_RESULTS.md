@@ -1,6 +1,6 @@
 # Test results — 2026-10-24
 
-实际命令：`python -m unittest discover -q`，最后一次本地最终运行70项、0失败。原Gold40项+新market_tests30个测试方法；不把用例内多个assert重复计数。网络端到端与远端部署不算离线测试通过。
+实际命令：`python -m unittest discover -q`，v1.0.1本地最终运行70项、0失败。原Gold40项+新market_tests30个测试方法；不把用例内多个assert重复计数。网络端到端与远端部署不算离线测试通过。
 
 |要求|结果|实际证据/边界|
 |---|---|---|
@@ -38,4 +38,14 @@
 
 共93个回归方法通过，较v1.0.1新增23个方法；旧70个不算新增。新增覆盖：OCC实际公告状态、GovInfo两个法案身份/法律记录、cloture非成法、国会行动日与未知发布日期、美东周边界、FR5类分页/重复/失败/元数据错配、明确未来监管截止日、普通clarity/whether非Crypto信号、BTC/ETH直接与间接主题区分、ICI20周单位/类别/13周资产差、BLS错误HTML拒绝、旧capture字节不改、bot故障去重/恢复/人工issue保护。
 
-实际本地端到端生成v2 daily/weekly（29来源）并保持旧档案通过。FR扫469份/5页，4份相关；此为本地证据，新增源码的云端端到端和手机验收尚待完成，不与v1.0.1云端成功混算。
+实际本地端到端生成v2 daily/weekly（29来源）并保持旧档案通过。FR扫469份/5页，4份相关；此段为部署前本地证据；下节单独记录v1.1的真实云端验收。
+
+## v1.1 最终云端验收
+
+源码9136230f5628d3e1a2aabd8a3f6100d3673b75e7，真实manual both运行[40068302153](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40068302153)成功。云端93项测试0失败；独立新建远端worktree也93项通过，26个归档对象核验，CSV459条；六个v1 capture与两个v2 capture并存，旧档案未重写。
+
+手机验收[40068297391](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40068297391)成功：360/390px首页、日报、周报全部HTTP200，无页面横向溢出，COMEX展开成功；原Gold和市场共七条数据路径HTTP200。实际托管截图已下载并人工检查。永久JSON证据见evidence/v1.1-mobile-pages.json和v1.1-manual-dispatch.json。
+
+云端29来源receipt，26 OK；CNN418、ICI/BLS403保持缺失。FR完整窗口469份/5页中4份相关；OCC公告与指定CLARITY/GENIUS状态成功读取，未将历史成法或cloture误标本周新成法。health-notice实际运行HEALTHY_NO_INCIDENT，没有制造真实故障issue；创建/去重/恢复/人工issue保护仅模拟测试通过，手机通知送达UNKNOWN。
+
+清单独立核对发现OCC XML fixture在文本上传时CRLF转LF；测试语义相同，但旧hash不一致。已按远端实际字节重新生成MANIFEST，不修改真实数据。首个schedule仍未到时，真实调度UNKNOWN；完整法律语义等价仍NOT ACHIEVED，不能因93项通过而抹去限制。
