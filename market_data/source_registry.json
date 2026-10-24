@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-24T06:39:30.028467+00:00",
+  "generated_at_utc": "2026-10-24T11:41:37.165542+00:00",
   "sources": [
     {
       "id": "aaii",
@@ -88,6 +88,14 @@
       "note": "",
       "parser": "fomc",
       "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+    },
+    {
+      "id": "nyfed_calendar",
+      "kind": "official_editorial_calendar",
+      "max_age_days": 4,
+      "note": "Supplementary public NYFed calendar; linked next month only when needed. BLS direct availability stays separate.",
+      "parser": "nyfed_calendar",
+      "url": "https://www.newyorkfed.org/research/calendars/nationalecon_cal"
     },
     {
       "id": "sec",
