@@ -1,0 +1,52 @@
+name: One-time public source verification
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/market-source-probe.yml']
+permissions:
+  contents: read
+jobs:
+  public-sources:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify documented official public downloads from the hosted runner
+        run: |
+          python3 - <<'PY'
+          from urllib.request import Request,urlopen
+          from urllib.error import HTTPError
+          from pathlib import Path
+          from concurrent.futures import ThreadPoolExecutor
+          from datetime import datetime,timezone
+          import json,hashlib
+          urls={
+            'ici_workbook':'https://www.ici.org/mm_summary_data_2025.xls',
+            'bls_public_calendar':'https://www.bls.gov/schedule/news_release/current_year.asp',
+            'cnn_public_page':'https://www.cnn.com/markets/fear-and-greed',
+            'occ_rss':'https://www.occ.gov/rss/occ_news.xml',
+            'clarity_bill':'https://www.govinfo.gov/bulkdata/BILLSTATUS/119/hr/BILLSTATUS-119hr3633.xml',
+            'genius_bill':'https://www.govinfo.gov/bulkdata/BILLSTATUS/119/s/BILLSTATUS-119s1582.xml',
+            'sec_priorities':'https://www.sec.gov/newsroom/press-releases/2026-109-sec-announces-fiscal-year-2027-examination-priorities'}
+          out=Path('evidence');out.mkdir()
+          def get(item):
+              k,u=item
+              rec={'id':k,'url':u,'fetched_at_utc':datetime.now(timezone.utc).isoformat()}
+              try:
+                  with urlopen(Request(u,headers={'User-Agent':'MarketReports/1.0 (+https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker)'}),timeout=20) as r:
+                      b=r.read(2*1024*1024+1)
+                      if len(b)>2*1024*1024:raise ValueError('Response too large')
+                      (out/k).write_bytes(b)
+                      rec.update(http_status=r.status,bytes=len(b),sha256=hashlib.sha256(b).hexdigest(),content_type=r.headers.get('Content-Type'),final_url=r.url)
+              except HTTPError as exc:
+                  rec.update(http_status=exc.code,error=str(exc),site_error_excerpt=exc.read(400).decode('utf-8',errors='replace'))
+              except Exception as exc:rec['error']=type(exc).__name__+': '+str(exc)
+              print(json.dumps(rec),flush=True);return rec
+          with ThreadPoolExecutor(max_workers=4) as pool:results=list(pool.map(get,urls.items()))
+          (out/'source-verification.json').write_text(json.dumps(results,indent=2))
+          PY
+      - name: Retain bounded verification evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: market-public-source-verification
+          path: evidence
+          retention-days: 1
