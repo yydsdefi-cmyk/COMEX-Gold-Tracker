@@ -1,0 +1,257 @@
+{
+  "acceptance": "DEGRADED",
+  "generated_at_utc": "2026-10-24T13:00:33.834908+00:00",
+  "missing_or_unverified": [
+    "bls",
+    "cnn",
+    "ici"
+  ],
+  "semantic_limits": [
+    "Full regulatory legal-effect review is not automated",
+    "No paid economic consensus or WI Treasury quotes",
+    "Missing publication dates remain null; fetch/modified times not substituted",
+    "Calendar-day staleness limits are conservative; no holiday calendar claimed"
+  ],
+  "sources": [
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.077530+00:00",
+      "id": "aaii",
+      "response_sha256": "eb2ce9a619ab8a25b1411c8f3fa6365cf972db81434ab1aa025145e717bb91b4",
+      "status": "OK",
+      "url": "https://www.aaii.com/sentimentsurvey"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.353984+00:00",
+      "id": "bea",
+      "response_sha256": "b529f88d257c9cc0c971bb805bde84cef0d58bff388c719ad01cb956e56cdaba",
+      "status": "OK",
+      "url": "https://www.bea.gov/news/schedule"
+    },
+    {
+      "error": "HTTPError: HTTP Error 403: Forbidden",
+      "fetched_at_utc": "2026-10-24T13:00:22.490558+00:00",
+      "id": "bls",
+      "response_sha256": null,
+      "status": "MISSING",
+      "url": "https://www.bls.gov/schedule/news_release/bls.ics"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:25.234087+00:00",
+      "id": "btc",
+      "response_sha256": "4d394d3d761aa3e67556e8a16e8bbe4d8ade1768217b6e0919ee002a717cbe49",
+      "status": "OK",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/BTC-USD?range=1mo&interval=1d"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.477657+00:00",
+      "id": "cftc",
+      "response_sha256": "eb9cfc1965e233f6c8297954a5876df93dce22fe17b2caa950a3ddd892c72a0f",
+      "status": "OK",
+      "url": "https://www.cftc.gov/RSS/RSSGP/rssgp.xml"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.584099+00:00",
+      "id": "clarity_bill",
+      "response_sha256": "3a4361797b517b651ad365932965636ab353ed5f3795cf28b02f67031f2fdda6",
+      "status": "OK",
+      "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/119/hr/BILLSTATUS-119hr3633.xml"
+    },
+    {
+      "error": "HTTPError: HTTP Error 418: Unknown Error",
+      "fetched_at_utc": "2026-10-24T13:00:22.490558+00:00",
+      "id": "cnn",
+      "response_sha256": null,
+      "status": "MISSING",
+      "url": "https://production.dataviz.cnn.io/index/fearandgreed/graphdata"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.700613+00:00",
+      "id": "congress",
+      "response_sha256": "3fa227715d1b7ae6ce52395f1bffcf52fcbd271af5a03f32ace186e46f7bfb2c",
+      "status": "OK",
+      "url": "https://www.govinfo.gov/rss/bills.xml"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:23.874250+00:00",
+      "id": "crypto",
+      "response_sha256": "cb2f6ad8fcfb4eb64f579886a6834159865e8dde50e159e0149803f6caaf795e",
+      "status": "OK",
+      "url": "https://api.alternative.me/fng/?limit=31&format=json"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.996210+00:00",
+      "id": "dxy",
+      "response_sha256": "022abf2b72bf7b53d0696613f8bb4147ab209d9ec8ca1d2a30eaaab305225d20",
+      "status": "OK",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/DX-Y.NYB?range=1mo&interval=1d"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.693464+00:00",
+      "id": "fed",
+      "response_sha256": "529e889a916423a3979c1bebdd94c2b8d402889700d8c85cc4d125b7f538d327",
+      "status": "OK",
+      "url": "https://www.federalreserve.gov/feeds/press_all.xml"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.851767+00:00",
+      "id": "federal_register",
+      "response_sha256": "e1bfd215295983de56edf0f79ac929c74502e7036fce3acc57e8f5ab1723e0a0",
+      "status": "OK",
+      "url": "https://www.federalregister.gov/api/v1/documents.json?conditions%5Bpublication_date%5D%5Bgte%5D=2026-10-17&conditions%5Bpublication_date%5D%5Blte%5D=2026-10-23&order=oldest&per_page=100&page=1"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.350231+00:00",
+      "id": "fomc",
+      "response_sha256": "a622d4e3c1b11f1999708365c4e595f5e571761e50f41a1585bd2d9ff9f89e3e",
+      "status": "OK",
+      "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.604193+00:00",
+      "id": "genius_bill",
+      "response_sha256": "43ac5572487c0604f84292116caad45ade9e9f97153de0b77e94987eb4566559",
+      "status": "OK",
+      "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/119/s/BILLSTATUS-119s1582.xml"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:25.119871+00:00",
+      "id": "gold",
+      "response_sha256": "dd8be5dc3fa618de565ceca712466a57cf3f9ccc4c3899fa7339803222f06f9c",
+      "status": "OK",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?range=1mo&interval=1d"
+    },
+    {
+      "error": "HTTPError: HTTP Error 403: Forbidden",
+      "fetched_at_utc": "2026-10-24T13:00:22.490558+00:00",
+      "id": "ici",
+      "response_sha256": null,
+      "status": "MISSING",
+      "url": "https://www.ici.org/research/stats/mmf"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.867447+00:00",
+      "id": "nasdaq",
+      "response_sha256": "f727108a537fcc6cbbe8eabb217dca9b09cacaef23a6bdbce35fa0aeac6b13f0",
+      "status": "OK",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EIXIC?range=1mo&interval=1d"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.586880+00:00",
+      "id": "nyfed_calendar",
+      "response_sha256": "4af9f67c797b70e36075b32c813558dc12c4cbd003e6f427b06b3f299a738882",
+      "status": "OK",
+      "url": "https://www.newyorkfed.org/research/calendars/nationalecon_cal"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.668169+00:00",
+      "id": "occ",
+      "response_sha256": "2d9b3af71f60bd350a82a5ee7eb9bb0ee4900c09822917f81b5b8d44317c3258",
+      "status": "OK",
+      "url": "https://www.occ.gov/rss/occ_news.xml"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.447527+00:00",
+      "id": "sec",
+      "response_sha256": "9f4909071a1aee6bf8c70d2cf5521bee9ad4da9f727d5b48ff81dea4c9ef8407",
+      "status": "OK",
+      "url": "https://www.sec.gov/news/pressreleases.rss"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.873519+00:00",
+      "id": "sp500",
+      "response_sha256": "c2fddf6422986f424a234a2756f82e0a046e4054c996c5a0636d61f0294e2c38",
+      "status": "OK",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?range=1mo&interval=1d"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.177909+00:00",
+      "id": "srf",
+      "response_sha256": "ef9b1a68ae4a125bf5fdadd341b77e8dcfa88ccd2b2d640843adaf20cd55206c",
+      "status": "OK",
+      "url": "https://markets.newyorkfed.org/api/rp/repo/all/results/lastTwoWeeks.json"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.217057+00:00",
+      "id": "treasury",
+      "response_sha256": "daa8db22877733f6ef8c43c3ff995a3b05680f15f1877b06eab3292ee7d1b763",
+      "status": "OK",
+      "url": "https://www.treasurydirect.gov/TA_WS/securities/announced?format=json&days=30"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:32.893298+00:00",
+      "id": "treasury_news",
+      "response_sha256": "1d35e95d4879fef86c2213d9e7c4f385ea423962b5b8800da789a501385d48d6",
+      "status": "OK",
+      "url": "https://home.treasury.gov/news/press-releases"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.989976+00:00",
+      "id": "us10y",
+      "response_sha256": "9acc15ed4037f6759eb22a510e8953eec77812485a08ff6b22161585d09b96b3",
+      "status": "OK",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5ETNX?range=1mo&interval=1d"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:23.835254+00:00",
+      "id": "vix",
+      "response_sha256": "f94378e505b286168d8dd466cc3a30bb12606ba34084d7ac53de953c75ba2ecd",
+      "status": "OK",
+      "url": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:23.809900+00:00",
+      "id": "vix3m",
+      "response_sha256": "ff4cf6639eb68841c1efa8e7806c6cd1783da2527d0b5a5fe05f9f0e4237c6fb",
+      "status": "OK",
+      "url": "https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX3M_History.csv"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:24.738189+00:00",
+      "id": "whitehouse",
+      "response_sha256": "14039b136b3e1b78dad353f3be6ad9151846bb9f9358358dca1caf8e59e3ca8f",
+      "status": "OK",
+      "url": "https://www.whitehouse.gov/presidential-actions/feed/"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:25.122043+00:00",
+      "id": "wti",
+      "response_sha256": "0c219218ac166f766e247ecc246ee0b3cd3c771d51ff8aa28630f741761b6593",
+      "status": "OK",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/CL%3DF?range=1mo&interval=1d"
+    },
+    {
+      "error": null,
+      "fetched_at_utc": "2026-10-24T13:00:33.834602+00:00",
+      "id": "comex",
+      "response_sha256": "242d9c3e3b1359a7810640cf7933c7b3947ee5fab2f63a1e53dd3e986826d592",
+      "status": "OK",
+      "url": "https://api.github.com/repos/yydsdefi-cmyk/COMEX-Gold-Tracker"
+    }
+  ]
+}
