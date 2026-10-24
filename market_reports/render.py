@@ -7,6 +7,7 @@ from datetime import datetime,timedelta,date
 from pathlib import Path
 from .core import atomic, encoded, digest, verify_bundle
 from .schedule import CLOCK_JS
+from .imports import publish_imports
 
 CSS='''
 :root{color-scheme:light;--ink:#16252e;--muted:#536975;--line:#dbe5e9;--accent:#087c75;--bg:#f3f7f8}
@@ -80,6 +81,7 @@ def publish(data,site):
     data,site=Path(data),Path(site)
     target=site/'market'
     target.mkdir(parents=True,exist_ok=True)
+    imported_links=publish_imports(data,target,page)
     pointers=[]
     for p in sorted((data/'reports').glob('*/*/latest.json')):
         ptr=json.loads(p.read_text());bundle=p.parent/ptr['revision'];verify_bundle(bundle)
@@ -116,6 +118,7 @@ def publish(data,site):
     body='<h1>市场反向指标与监管观察</h1><p class="muted">Malaysia time · 每日08:00 / 周六10:00<br>公开数据、确定性中文分析，持续独立于ChatGPT运行。</p><div class="warn" id="health">生成状态是静态快照；请核对报告日期。调度可能延迟，缺失/未核验不表示风险为零。</div>'+''.join(links)
     body+='<details><summary>历史档案与数据</summary><p><a href="history.csv">CSV历史序列</a> · <a href="source_registry.json">来源登记</a> · <a href="quality.json">质量报告</a> · <a href="../latest.json">原Gold Tracker JSON</a></p>'
     body+='<p class="muted">页面保留近180天及每类最新报告；更早报告链接到仓库，所有修订和完整CSV保留。</p>'
+    body+=imported_links
     months=sorted({x[1][:7] for x in pointers},reverse=True)
     for month in months:
         body+='<details><summary>'+month+'</summary>'

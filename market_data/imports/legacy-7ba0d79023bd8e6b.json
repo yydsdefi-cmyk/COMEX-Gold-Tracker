@@ -1,0 +1,68 @@
+{
+  "csv_utf8": "index,日期,AAII多空差(pp),CNN恐惧贪婪,VIX,加密恐惧贪婪,COMEX Registered(M oz)\n0,2026-10-12,1.3,,15.21,69,15.067141026\n1,2026-10-13,1.3,,15.27,57,15.050647563\n2,2026-10-14,1.3,34.0,16.87,62,14.876916734\n3,2026-10-15,-2.9,30.0,16.46,53,14.816969006\n4,2026-10-16,-2.9,18.0,19.99,63,14.816969006\n",
+  "date_semantics": "snapshot_date_as_recorded_not_individual_observation_or_publication_date",
+  "import_id": "legacy-7ba0d79023bd8e6b",
+  "normalized_csv_sha256": "7ba0d79023bd8e6b4c21f136c23c2cc88097c823df9734372130dff1fd698ce4",
+  "notes": [
+    "日期沿用旧导出的每日快照日期，不能直接当作各指标的观测日或发布日期。",
+    "AAII是周度指标；每日重复值表示当时沿用的周值，不能当作每日调查。",
+    "COMEX日期与Activity Date/Report Date尚未逐行核对；M oz为百万盎司。",
+    "旧导出未逐项重新回源核验；空白保留为缺失，不填0；分析时优先采用可追溯的官方源历史。"
+  ],
+  "rows": [
+    {
+      "snapshot_date": "2026-10-12",
+      "values": {
+        "aaii_spread": "1.3",
+        "cnn_fg": null,
+        "comex_registered": "15.067141026",
+        "crypto_fg": "69",
+        "vix": "15.21"
+      }
+    },
+    {
+      "snapshot_date": "2026-10-13",
+      "values": {
+        "aaii_spread": "1.3",
+        "cnn_fg": null,
+        "comex_registered": "15.050647563",
+        "crypto_fg": "57",
+        "vix": "15.27"
+      }
+    },
+    {
+      "snapshot_date": "2026-10-14",
+      "values": {
+        "aaii_spread": "1.3",
+        "cnn_fg": "34.0",
+        "comex_registered": "14.876916734",
+        "crypto_fg": "62",
+        "vix": "16.87"
+      }
+    },
+    {
+      "snapshot_date": "2026-10-15",
+      "values": {
+        "aaii_spread": "-2.9",
+        "cnn_fg": "30.0",
+        "comex_registered": "14.816969006",
+        "crypto_fg": "53",
+        "vix": "16.46"
+      }
+    },
+    {
+      "snapshot_date": "2026-10-16",
+      "values": {
+        "aaii_spread": "-2.9",
+        "cnn_fg": "18.0",
+        "comex_registered": "14.816969006",
+        "crypto_fg": "63",
+        "vix": "19.99"
+      }
+    }
+  ],
+  "schema_version": 1,
+  "source_kind": "historical_user_export",
+  "source_name": "mobile_market_trend_data_2026-10-12_to_2026-10-16.csv",
+  "verification_status": "LEGACY_NOT_REVERIFIED"
+}
