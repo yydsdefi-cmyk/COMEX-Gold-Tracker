@@ -14,8 +14,8 @@
   "future_schedule_execution": "PARTIAL: real temporary diagnostic schedule succeeded (40092628091, both mode); first regular daily/weekly due execution remains UNKNOWN",
   "full_original_semantic_equivalence": "NOT ACHIEVED: see METHOD_CHANGES.md",
   "new_recurring_subscription_cost_usd": 0,
-  "verified_at_utc": "2026-10-24T12:38:08.989759+00:00",
-  "remote_offline_tests": "PASS: 150 tests, no skips; runs 40090946882, 40092628091 and 40093211984",
+  "verified_at_utc": "2026-10-24T13:04:44.085619+00:00",
+  "remote_offline_tests": "PASS: 150 tests, no skips, actual repaired rerun 40096226964 attempt2",
   "historical_archive_integrity": "PASS: takeover clean clone verify=50 objects; no immutable market_data files changed; this is a point-in-time count",
   "original_gold_preserved": "PASS: original Gold push run 40064686634 success after overlay; root latest.json and history.csv HTTP200",
   "schedule_configuration": "PASS: configured on main; daily UTC00:00/00:17/00:47 and Saturday UTC02:00/02:27/03:17",
@@ -39,7 +39,8 @@
     "v1_3_acceptance": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40090620469",
     "v1_3_actual_diagnostic_schedule": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40092628091",
     "v1_3_expanded_mobile": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40093283415",
-    "v1_3_final_report_publish": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40093211984"
+    "v1_3_final_report_publish": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40096226964",
+    "pages_rerun_repair": "market_reports/evidence/v1.3-pages-rerun.json"
   },
   "schedule_state_api": "PASS: GitHub workflow id 394836688 state=active read from public GitHub API",
   "continuation_v1_1": {
@@ -72,7 +73,7 @@
     "source_coverage": "27/30 OK; CNN/ICI/BLS missing",
     "first_regular_due_run": "UNKNOWN; next daily 2026-10-25 08:00 MYT, weekly 2026-10-31 10:00 MYT"
   },
-  "verified_source_head": "312c6e28a16d82c824d6a61ac475e456588e22d8",
+  "verified_source_head": "72232f5bea5c2e2f44bd8617dec024637673ed9c",
   "diagnostic_scheduler": {
     "run_id": 40092628091,
     "event": "schedule",
@@ -83,5 +84,7 @@
     "conclusion": "success",
     "scope": "Scheduler delivery, collection, archive and Pages; does not prove regular due-mode or on-time delivery",
     "temporary_cron": "Removed in eea7abcc59b3c0010024ff2fb3066ee413c1e50a"
-  }
+  },
+  "manual_immediate_trial": "PASS after repair: actual fresh generation plus same-run attempt2, 40096226964 success; both live Pages JSON capture IDs verified",
+  "pages_rerun_repair": "PASS: unique run_id/run_attempt artifact names on both production workflows; two artifacts retained, attempt2 selected and deployed; see evidence/v1.3-pages-rerun.json"
 }

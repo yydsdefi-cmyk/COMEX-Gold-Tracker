@@ -63,3 +63,7 @@ Version 1.3.0, 2026-10-24.
 接续时干净远端clone：65项原MANIFEST哈希全部一致；只读verify通过50个档案对象，独立审计再次13通过/0失败/3不可算，未修改任何market_data历史。此次收尾仅保存既有验收证据、更新文档/清单、移除两项已完成临时验收workflow；保留两个生产workflow，去掉临时actions:write。
 
 当前30来源中27 OK：CNN418、ICI403、BLS403仍缺失；NYFed日历旁证已通过，但不是BLS直连恢复。完整监管法律影响未等价、手机通知送达未验证；原两项ChatGPT任务保持原状。后续只需在正式排程自然发生后查看运行与报告日期；来源接口或语义缺口有可验证方案时再修。当前不引入收费API、不新增第二套系统、不依赖常开电脑或ChatGPT运行。
+
+## 立即补跑与重跑发布修复
+
+用户要求立即试跑。40093211984 attempt2采集/150测试/归档成功，但同run默认github-pages产物重名，Pages拒绝发布。已在两个生产workflow将上传name和部署artifact_name配对为run_id/run_attempt组合。修复源码72232f5bea5c2e2f44bd8617dec024637673ed9c；Gold40096226966成功，market40096226964首次及真实attempt2均成功。保留两份artifact且只部署第二份；云端150测试、13项数值复算通过，两个公开报告JSON核对为新capture。原失败记录保留。证据evidence/v1.3-pages-rerun.json；首个正式due排程和来源/语义限制不因手动试跑通过而改写。

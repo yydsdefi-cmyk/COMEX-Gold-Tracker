@@ -1,0 +1,86 @@
+{
+  "run_url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40096226964",
+  "source_commit": "72232f5bea5c2e2f44bd8617dec024637673ed9c",
+  "initial_user_trial": {
+    "run_id": 40093211984,
+    "attempt": 2,
+    "result": "FAILED_AT_PAGES_AFTER_SUCCESSFUL_ARCHIVE",
+    "error": "Multiple artifacts named \"github-pages\" were unexpectedly found for this workflow run. Artifact count is 2."
+  },
+  "repair": {
+    "uploader_input": "name",
+    "deployer_input": "artifact_name",
+    "value": "github-pages-${{ github.run_id }}-${{ github.run_attempt }}",
+    "workflows": [
+      "market-reports.yml",
+      "collect-and-publish.yml"
+    ],
+    "source_reference": [
+      "https://github.com/actions/upload-pages-artifact/blob/main/action.yml",
+      "https://github.com/actions/deploy-pages/blob/main/action.yml"
+    ]
+  },
+  "validation": {
+    "gold_run": 40096226966,
+    "gold_result": "success",
+    "market_run": 40096226964,
+    "first_attempt": "success",
+    "real_rerun_attempt": 2,
+    "real_rerun_result": "success",
+    "artifact_names": [
+      "github-pages-40096226964-1",
+      "github-pages-40096226964-2"
+    ],
+    "selected_artifact": "github-pages-40096226964-2",
+    "archive_count_seen_by_deployer": 2,
+    "cloud_tests": 150,
+    "verified_numeric": 13,
+    "failed_numeric": 0,
+    "not_calculable_numeric": 3,
+    "capture_id": "6a935c027fa964ba56d016144d09ed26dc663c7da3e5cfe106d144c77e16f300"
+  },
+  "log_evidence": [
+    "2026-10-24T13:01:34.1183450Z Ran 150 tests in 1.949s",
+    "2026-10-24T13:01:50.0020021Z   \"verified\": 13,",
+    "2026-10-24T13:01:50.0020325Z   \"failed\": 0,",
+    "2026-10-24T13:01:50.0020630Z   \"not_calculable\": 3,",
+    "2026-10-24T13:01:52.7962186Z   name: github-pages-40096226964-2",
+    "2026-10-24T13:01:52.8261750Z   name: github-pages-40096226964-2",
+    "2026-10-24T13:01:53.9996375Z   artifact_name: github-pages-40096226964-2",
+    "2026-10-24T13:01:54.4603970Z Found 2 artifact(s)",
+    "2026-10-24T13:02:00.8521216Z Reported success!"
+  ],
+  "limitations": [
+    "First regular scheduled due run remains unobserved",
+    "CNN/ICI/BLS unavailable on GitHub runner",
+    "Full legal-effect analysis not equivalent",
+    "Website has no native push delivery"
+  ],
+  "hosted_pages_verified": [
+    {
+      "kind": "daily",
+      "date": "2026-10-24",
+      "capture_id": "6a935c027fa964ba56d016144d09ed26dc663c7da3e5cfe106d144c77e16f300",
+      "generated_at_utc": "2026-10-24T13:01:48.426468+00:00",
+      "quality": "DEGRADED",
+      "missing": [
+        "bls",
+        "cnn",
+        "ici"
+      ]
+    },
+    {
+      "kind": "weekly",
+      "date": "2026-10-24",
+      "capture_id": "6a935c027fa964ba56d016144d09ed26dc663c7da3e5cfe106d144c77e16f300",
+      "generated_at_utc": "2026-10-24T13:01:48.426468+00:00",
+      "quality": "DEGRADED",
+      "missing": [
+        "bls",
+        "cnn",
+        "ici"
+      ]
+    }
+  ],
+  "verified_at_utc": "2026-10-24T13:04:44.085619+00:00"
+}

@@ -104,3 +104,7 @@ COMEX仍使用原采集器的真实报告窗口，不按自然日重算。每次
 新增NYFed公开日历旁证、SRF完整度保护、有单位的周变化和只读Decimal审计；实际状态见DEPLOYMENT_STATUS.json。BLS/ICI/CNN的云端限制不因本地可读而消失。Pages保留近180天及每类最新报告，更旧记录从按月导航打开仓库Markdown，完整CSV/JSON及修订保留。
 
 最新验收见[HANDOFF v1.3](HANDOFF.md)及[机器证据](evidence/v1.3-cloud-validation.json)；[最终展开周表](evidence/v1.3-expanded-mobile.json)和[独立数值审计](evidence/v1.3-numeric-audit.json)已长期归档。两个临时验收workflow已移除，不再循环等待时间或重复生成。
+
+## 手机查看
+
+打开Dashboard并收藏，选择晨报或周报；再次查看时刷新，核对报告日期及来源质量。支持有现代浏览器的手机、平板和电脑，阅读不需登录GitHub或安装App。GitHub云端按MYT每日08:00、周六10:00生成，关闭设备或网页不影响运行；准点受GitHub排队影响。网页本身不主动推送通知。
