@@ -1,25 +1,27 @@
 {
   "schema_version": 1,
   "version": "1.0.1",
+  "scope": "source, specs, tests, handoff and acceptance evidence; runtime market_data has independent manifests",
   "sha256": {
     ".github/workflows/collect-and-publish.yml": "b5d6df52234e3a198fe6c54ec59f7e4021358e4f3bf2d0bb65e2c07e7c1fbced",
     ".github/workflows/market-reports.yml": "d7b330a0880d05af49816f592e7b9bbbe098905fe601470d802cebcdabad60f9",
     ".gitignore": "9fadfc7dcc194bf3c9d8642565146474bf8dbffe0170be20616716670d75792c",
     "README.md": "6688b3d470160b67a45bcaea0502fb8d0398b2bd3a57eb28b946ff12d293a302",
-    "market_reports/CHANGELOG.md": "1c31f86086b3f51e6a362eb29894693549084e80ae7e2e3c549c0f9567d96b29",
-    "market_reports/DEPLOYMENT_STATUS.json": "bc353ee658ff2ff75d7d69a7ca6848383e12571014586ae12d398f6ed7717750",
-    "market_reports/HANDOFF.md": "7baecb7e4908d9839f8e60f3ce7dacdcf6e44762b2c813275cc94eb12a682afa",
+    "market_reports/CHANGELOG.md": "c4c607c171ed87f8d42d59c7491d7be05511952c8e8757f0a83b4fec1a68f295",
+    "market_reports/DEPLOYMENT_STATUS.json": "7b7778fe1b09c991a8d5353bf04dc4c4d105d43eaffcd1355fb9e010afbd024f",
+    "market_reports/HANDOFF.md": "d9f3102647c54e5d8a4ba504c5a6bf265260379561822e9f214cd332b907b33e",
     "market_reports/METHOD_CHANGES.md": "c28bfe9099ac5404affb47c3e6ae716f857d3d0a46bab4792e49da3399c7b382",
-    "market_reports/README.md": "d89270841d82e1825feeb87644d36223e37d8927a979c1eb2f181430787bb098",
+    "market_reports/README.md": "a44bac84eae14dd6f781d21143211900eed1db32434531f20fe3fafc8f1f209e",
     "market_reports/SOURCE_REGISTRY.md": "7ebad15cff294e5d2bebc55eca5573ffaac95fa10d7b1ab7879b6faa000fcc0f",
-    "market_reports/TEST_RESULTS.md": "14af430a15e3f8b08cf6fd25192c38ec86cb19286f6c058271e1639b62f1b2a0",
+    "market_reports/TEST_RESULTS.md": "a6655ea06801e318033725b84583346c46b3810ffc025ccf382dd1947ce70627",
     "market_reports/__init__.py": "d6cc701ecaddb8587314fe647538503b1b217eab9829ac238415843eee236239",
     "market_reports/__main__.py": "9fee751a4b0724d9cbe9a6cf516e18ca86ab5cac9a61f38eb2d41c9872f728d7",
     "market_reports/comex.py": "5690ca20fad13ec4c68085d2001ea51744a2dd43ad41058b3d590b686deb9169",
     "market_reports/core.py": "fb2fbd49d49979a18e77fa4267e99c49a9ed4444f0235dcea1a2b29432018c06",
-    "market_reports/evidence-manual-dispatch.json": "0f573665930c6762a68da46ef8c4c183d0b0bdb153457f9a9131cdbe2f164952",
-    "market_reports/evidence-mobile-pages.json": "6254da76a45e031305c0dd86f5b41043dba7b786bc827ae31f33390260e80601",
-    "market_reports/parsers.py": "76e0fc06fbd2bc29fb64613c3f513f2aca01d25685c08f9590ea9fb69666d29a",
+    "market_reports/evidence-independent-calculations.json": "edd43f6092da895f4349c93992923b0fd8e6e1e2b40d65ed9dd23af8506b59b6",
+    "market_reports/evidence-manual-dispatch.json": "20d71f057c3a667c9e2420a98de9418109f917e947dcee8a1425ee3511360727",
+    "market_reports/evidence-mobile-pages.json": "65ea0ac4831b0f8b2d6037d5f5d6d5599de81e7f3b0097caf6e6146d6ac139e4",
+    "market_reports/parsers.py": "edac830c5caf5004ec3fd4ee0b99570519f5a8d1cea663707abe6ade1f343a55",
     "market_reports/render.py": "4224935691cb1a3104c7ec76c7ec36a1d353e09010506040457590f48e34c7fd",
     "market_reports/report.py": "a2db8b61df553bf6654ec30f735ce2ad3de07eac0619fc6314b164af2bc7f877",
     "market_reports/sources.py": "5e5ebc7520128a91600609c0b855f3f9831ad6bd768fd84f13d25846057eb37b",
@@ -39,6 +41,6 @@
     "market_tests/fixtures/srf.json": "d6f77e9ec4b58ac6e20a8af1f8c35571d7cf7065332bc6788383be1b192d631a",
     "market_tests/fixtures/vix.txt": "66ca5401da80ba0b8b874c946a715c166e9845586d5e72de6cdc74abf6e3b7b2",
     "market_tests/fixtures/vix3m.txt": "a2ec20efd155a639e8a510a5092dd4b209a71be18c79132f1d49761a0f266269",
-    "market_tests/test_market.py": "4ba0cc5e84b0b468714b7c0d750489cdb2d359a3b9677bba1018c137d5acf3e7"
+    "market_tests/test_market.py": "1778a15df7aad99e160f81de8dd0a4a77ae0cda51ec18a67e4cd1961d0c018f6"
   }
 }

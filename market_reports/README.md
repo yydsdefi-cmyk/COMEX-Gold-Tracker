@@ -7,7 +7,7 @@
 - 周报: https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/weekly.html
 - 工作流: https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/workflows/market-reports.yml
 
-以上是部署目标地址；实际部署验收状态以 `DEPLOYMENT_STATUS.json` / `HANDOFF.md` 为准，文件存在不等于部署成功。
+以上地址已在2026-10-24实际发布并验收；基础设施PASS，数据覆盖DEGRADED，完整原报告语义不等价。详见 [部署状态](DEPLOYMENT_STATUS.json) 和 [HANDOFF](HANDOFF.md)。
 
 完整原提示词在 `specs/original_missions.json`；2026-10-24两份原任务输出在相邻文件。原任务保持启用，没有调用自动化修改接口。
 
@@ -63,3 +63,22 @@ COMEX仍使用原采集器的真实报告窗口，不按自然日重算。每次
 - 时间/源schema变化：修改适配器并运行真实fixture及边界测试，保留方法版本和CHANGELOG。
 
 维护：每月看一次source quality与定时记录，按需更新已固定SHA的Actions和依赖；不需要本机常开。完整无人值守仍受外部数据和GitHub可用性约束。
+
+
+## 交付入口
+
+|交付|地址/文件|
+|---|---|
+|仓库|https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker |
+|Dashboard / 报告样本|[首页](https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/) / [晨报](https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/daily.html) / [周报](https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/weekly.html)|
+|运行时来源登记|[source_registry.json](https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/source_registry.json)|
+|数据质量|[quality.json](https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/quality.json)|
+|交接/排障|[HANDOFF.md](HANDOFF.md)，上文维护和失败排查|
+|原始任务与历史样本|[原完整prompts](specs/original_missions.json)，[历史晨报](specs/historical_daily_2026-10-24.md)，[历史周报](specs/historical_weekly_2026-10-24.md)|
+|方法与免费LLM比较|[METHOD_CHANGES.md](METHOD_CHANGES.md)|
+|来源说明|[SOURCE_REGISTRY.md](SOURCE_REGISTRY.md)|
+|测试及验收|[TEST_RESULTS.md](TEST_RESULTS.md)，[DEPLOYMENT_STATUS.json](DEPLOYMENT_STATUS.json)|
+|机器证据|[手动触发](evidence-manual-dispatch.json)，[手机页面](evidence-mobile-pages.json)，[独立复算](evidence-independent-calculations.json)|
+|文件完整性/变更|[MANIFEST.json](MANIFEST.json)，[CHANGELOG.md](CHANGELOG.md)|
+
+目标为MYT每日08:00和周六10:00；首次新schedule尚未到时，实际延迟以GitHub为准。原两项ChatGPT任务仍保留。

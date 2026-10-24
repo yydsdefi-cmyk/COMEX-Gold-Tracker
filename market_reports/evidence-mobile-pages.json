@@ -25,7 +25,7 @@
       "viewport": 360,
       "body": 360,
       "title": "weekly",
-      "details": 7
+      "details": 8
     },
     {
       "name": "index",
@@ -52,7 +52,7 @@
       "viewport": 390,
       "body": 390,
       "title": "weekly",
-      "details": 7
+      "details": 8
     },
     {
       "path": "latest.json",
@@ -83,6 +83,6 @@
       "status": 200
     }
   ],
-  "capture_id": "29ea81953cd0640e745fb1a3b25dbca9c06421d6406baa5e25b6360cdf0099b2",
+  "capture_id": "de148eafc75cb5d7fd250c01c3c5bcbaaf3d39f344ccb3d87da04ab868527ef0",
   "quality": "DEGRADED"
 }

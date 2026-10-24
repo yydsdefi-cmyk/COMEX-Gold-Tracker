@@ -1,0 +1,79 @@
+{
+  "method": "Decimal recomputation from frozen official-history baseline values; not collector function call",
+  "activity_date": "2026-10-22",
+  "report_date": "2026-10-23",
+  "checks": [
+    {
+      "series": "Total",
+      "window": 5,
+      "baseline_date": "2026-10-15",
+      "independent_decimal_pct": "-0.6119177354506802359678900800",
+      "collector_pct": "-0.611918",
+      "pass": true
+    },
+    {
+      "series": "Total",
+      "window": 10,
+      "baseline_date": "2026-10-08",
+      "independent_decimal_pct": "-0.8284154312617304125777461700",
+      "collector_pct": "-0.828415",
+      "pass": true
+    },
+    {
+      "series": "Total",
+      "window": 20,
+      "baseline_date": "2026-09-24",
+      "independent_decimal_pct": "-0.3140588283320682879842982000",
+      "collector_pct": "-0.314059",
+      "pass": true
+    },
+    {
+      "series": "Registered",
+      "window": 5,
+      "baseline_date": "2026-10-15",
+      "independent_decimal_pct": "-0.0181179497568829563899811300",
+      "collector_pct": "-0.018118",
+      "pass": true
+    },
+    {
+      "series": "Registered",
+      "window": 10,
+      "baseline_date": "2026-10-08",
+      "independent_decimal_pct": "-1.678198608240729690240572390",
+      "collector_pct": "-1.678199",
+      "pass": true
+    },
+    {
+      "series": "Registered",
+      "window": 20,
+      "baseline_date": "2026-09-24",
+      "independent_decimal_pct": "-2.256835825053231274753485730",
+      "collector_pct": "-2.256836",
+      "pass": true
+    },
+    {
+      "series": "Eligible",
+      "window": 5,
+      "baseline_date": "2026-10-15",
+      "independent_decimal_pct": "-1.633865807985900835307801190",
+      "collector_pct": "-1.633866",
+      "pass": true
+    },
+    {
+      "series": "Eligible",
+      "window": 10,
+      "baseline_date": "2026-10-08",
+      "independent_decimal_pct": "0.693975848131296926198728000",
+      "collector_pct": "0.693976",
+      "pass": true
+    },
+    {
+      "series": "Eligible",
+      "window": 20,
+      "baseline_date": "2026-09-24",
+      "independent_decimal_pct": "3.276847080655463994319122400",
+      "collector_pct": "3.276847",
+      "pass": true
+    }
+  ]
+}

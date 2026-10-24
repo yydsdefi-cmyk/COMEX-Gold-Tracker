@@ -19,7 +19,7 @@
 |本地真实daily端到端|PASS / DEGRADED|2026-10-24真实网络采集、Markdown/JSON/CSV、COMEX当前H/当天attempt；CNN418，AAII第二轮验证页|
 |本地真实weekly端到端|PASS / DEGRADED|官方feed与Fed/BEA/BLS下周日历、FR文种/单文档生效日期；冷启动未积满7份日报；完整法律语义未等价|
 |历史样本对比|PASS（核对并保留差异）|COMEX三库存、Ratio、四窗口与当天样本一致；今日Crypto取得51而早晨样本待确认；现货/期货、Treasury额外FRN、官方FR发布日期与公告日差异照实披露|
-|GitHub实际执行/手动dispatch/Pages|PENDING|以DEPLOYMENT_STATUS.json最终证据为准，不能从本地执行推定|
+|GitHub实际执行/手动dispatch/Pages|PASS / DEGRADED|40065487640实际manual both成功，70项测试通过，先归档再Pages；缺失源明确披露|
 |未来定时实际运行|UNKNOWN|配置可静态检查，必须未来真正schedule运行才可确认|
 |完整原报告语义等价|BLOCKED/NOT ACHIEVED|无付费LLM的确定性系统不能凭标题断言完整法律影响；未知项保留，不能捏造|
 
@@ -28,3 +28,8 @@
 复用范围：旧Gold采集、原报告历史、导出器及40测试；找到了未合并的一致性安全补丁，但本次不混入另一线程对Gold核心模块的额外变更；保持其候选证据供后续独立审阅。新报告档案自己的hash验证独立实现。
 
 双线程收敛：用户2026-10-24明确以本线程继续并停止另一个。检查到另一工作区存在未提交market_intel/intelligence实现，但远端main仍1ed12c3d；未发布第二套系统、未覆盖该工作区、未混算其测试结果。此处仅发布market_reports/market_data这一套，远端提交前后使用预期HEAD检查。
+
+
+最终补充证据：一次性验收run40065481203成功；360px与390px各检查首页、daily、weekly，body宽度等于viewport，无页面横向溢出，COMEX展开成功；Gold原latest.json/history.csv及market JSON/CSV/registry/quality共7路径HTTP200。下载的JSON证据存evidence-mobile-pages.json/evidence-manual-dispatch.json；截图来自同次真实托管Chromium测试并已人工视觉检查。独立干净远端worktree再跑70项测试通过、17个归档对象核验通过。Total/Registered/Eligible的5D/10D/20D独立Decimal复算9/9见evidence-independent-calculations.json。额外修复了BTC必须使用provider UTC日界（不能用美股ET日界），以及CNN epoch timestamp不代表独立发布时间。
+
+排程未来真实执行仍UNKNOWN；完整原报告语义等价仍NOT ACHIEVED，不因上述工程测试通过而改写。验证时云端CNN/ICI/BLS缺失；网站本身和数据入口正常，缺失不是正常值0。
