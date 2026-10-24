@@ -255,7 +255,34 @@ def weekly(capture, daily_captures):
     comparisons=weekly_changes(capture,daily_captures)
     lines=[f'# 每周市场与Crypto监管周报｜{now:%Y-%m-%d}',f'生成 {now:%H:%M} MYT｜目标周六10:00 MYT｜市场数据截至本次抓取；监管覆盖此前7个完整日期（来源发布日期口径），延迟抓取不冒充准点发布。',
            '## 一周市场变化',f'本次引用此前 {len(daily_captures)} 个不同MYT日期的日报档案，并使用本次采集；不足完整一周时不冒充7份晨报总结。',
- …720 tokens truncated…ries(capture,'aaii_spread')
+           '|指标|可核验期初→期末（实际日期）|变化|','|---|---|---|']
+    for row in comparisons:
+        a,b=row['baseline'],row['end'];label=row['label']+'（'+row['unit']+'）'
+        if row['change'] is None:
+            reason='基准为0，百分比不可算' if row['status']=='ZERO_BASELINE' else '已核验独立日期不足'
+            lines.append('|'+label+'|'+reason+'|待确认|');continue
+        points=a['observation_date']+' '+fmt(a['value']/row['scale'],row['digits'])+' → '+b['observation_date']+' '+fmt(b['value']/row['scale'],row['digits'])
+        delta=fmt(row['change'],2 if row['change_rule'] in ('percent','bp') else row['digits'],True)+' '+row['change_unit']
+        if row['status']=='PARTIAL_WEEK':delta+=' ⚠仅有周内片段，缺周初基准'
+        current=row['source_status_current'];available=all(v=='OK' for v in current.values()) if isinstance(current,dict) else current=='OK'
+        if not available:delta+=' ⚠当前来源未核验，末点可能来自历史档案'
+        lines.append('|'+label+'|'+points+'|'+delta+'|')
+    ratio=next(r for r in comparisons if r['metric']=='vix_ratio')
+    if ratio.get('regime_end') and ratio['change'] is not None:
+        lines.append('VIX/VIX3M同日配对：'+ratio['regime_start']+' → '+ratio['regime_end']+'；观察到 '+str(len(ratio['regime_changes']))+'次标签变化（区间内精确转折时刻未知；不是完整VIX期货曲线）。')
+    elif ratio.get('regime_end'):
+        lines.append('最新VIX/VIX3M同日配对 '+fmt(ratio['end']['value'],3)+' → '+ratio['regime_end']+'；比较基准不足，不报告一周转折。')
+    lines.append('基准取目标周初当日或之前最近可得日期；实际日期、缺基准和当前来源状态分开。历史点保留其旧时效标记，不拿它冒充今日数值；精确输入与单位见周报JSON analysis。')
+    srf=series(capture,'srf_usd');srf=[o for o in srf if (now.date()-timedelta(days=6)).isoformat()<=o['observation_date']<=now.date().isoformat()]
+    partial=[o for o in srf if not o.get('complete')];srf=[o for o in srf if o.get('complete')]
+    if srf:
+        peak=max(srf,key=lambda o:o['value'])
+        lines.append('SRF已取得完整日期的使用量合计 $'+fmt(sum(o['value'] for o in srf)/1e9,6)+'B；最大单日 '+peak['observation_date']+' $'+fmt(peak['value']/1e9,6)+'B → '+peak['level']+'。按操作日期去重，测试操作排除；缺日不补0，合计不是未偿存量。')
+    unknown=next((r for r in capture['sources'] if r['id']=='srf'),{}).get('details',{}).get('unclassified_operations',[])
+    if partial or unknown:
+        lines.append('⚠ SRF存在部分场次或未归类操作；部分日不纳入完整日比较/合计，不把小额部分值标为全天Normal。逐笔见JSON。')
+    summary=[]
+    spread=series(capture,'aaii_spread')
     if len(spread)>=2:
         a,b=spread[-2],spread[-1];change=b['value']-a['value']
         summary.append('AAII Bull-Bear Spread '+fmt(a['value'],1)+'→'+fmt(b['value'],1)+'pp，'+('悲观程度上升' if change<0 else '悲观程度下降' if change>0 else '没有变化')+'（调查情绪，非收益预测）。')

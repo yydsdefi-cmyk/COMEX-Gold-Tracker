@@ -362,115 +362,101 @@ def parse_treasury_news(body, now):
         link=re.search(r'<a\b[^>]*href=["\']?(/news/press-releases/[a-z]+\d+/?)["\']?[^>]*>(.*?)</a>',chunk,re.S)
         if link:
             items.append({'title':text(link[2]),'url':'https://home.treasury.gov'+link[1],
-                          'publication_date':pub.isoforma…2216 tokens truncated…   for n in range(100):
-              runs=api('/actions/workflows/market-reports.yml/runs?event=workflow_dispatch&per_page=5')['workflow_runs']
-              candidates=[r for r in runs if datetime.fromisoformat(r['created_at'].replace('Z','+00:00'))>=started-timedelta(seconds=2)]
-              if candidates:
-                  selected=candidates[0]
-                  print('Manual dispatch run',selected['id'],selected['status'],selected.get('conclusion'),flush=True)
-                  if selected['status']=='completed':break
-              time.sleep(5)
-          assert selected and selected['status']=='completed', 'Manual dispatch did not complete in time'
-          evidence={'dispatch_http':204,'report_input':'both','run_id':selected['id'],'run_url':selected['html_url'],'event':selected['event'],'conclusion':selected['conclusion'],'verified_at_utc':datetime.now(timezone.utc).isoformat()}
-          open('evidence/manual-dispatch.json','w').write(json.dumps(evidence,indent=2))
-          assert selected['conclusion']=='success',evidence
-          PY
-      - name: Read persisted archive and independently audit real weekly calculations
-        run: |
-          git fetch origin main
-          git checkout --detach FETCH_HEAD
-          python3 -m market_reports.audit > evidence/numeric-audit.json
-      - name: Install official browser test package for one-time mobile QA
-        run: |
-          npm install --no-save playwright@1.62.1
-          npx playwright install --with-deps chromium
-      - name: Verify public Pages, mobile layout, archives, and original Gold endpoint
-        run: |
-          node <<'JS'
-          const fs=require('fs');
-          const {chromium}=require('playwright');
-          const base='https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/';
-          (async()=>{
-            const b=await chromium.launch({headless:true});const evidence=[];
-            for(const width of [360,390]){
-              const p=await b.newPage({viewport:{width,height:844},deviceScaleFactor:1});
-              for(const name of ['index','daily','weekly']){
-                const response=await p.goto(base+'market/'+name+'.html',{waitUntil:'networkidle',timeout:45000});
-                if(response.status()!==200)throw new Error(name+' HTTP '+response.status());
-                const layout=await p.evaluate(()=>({viewport:innerWidth,body:document.body.scrollWidth,title:document.title,details:document.querySelectorAll('details').length}));
-                if(layout.body>width+1)throw new Error('Horizontal body overflow '+JSON.stringify(layout));
-                if(name==='daily' && !await p.getByText('7项总览',{exact:true}).count())throw new Error('Daily summary missing');
-                if(name==='weekly' && !await p.getByText(/Crypto Regulatory Timeline/).count())throw new Error('Weekly timeline missing');
-                if(name==='daily'){
-                  await p.getByText('COMEX Gold',{exact:true}).click();
-                  if(!await p.getByText(/Registered Ratio/).isVisible())throw new Error('COMEX detail does not expand');
-                }
-                await p.screenshot({path:'evidence/'+name+'-'+width+'.png',fullPage:true});
-                evidence.push({name,width,status:response.status(),...layout});
-              }
-              await p.close();
-            }
-            const clockPage=await b.newPage({viewport:{width:390,height:844}});
-            await clockPage.addInitScript(()=>{Date.now=()=>Date.parse('2026-10-25T04:00:00Z');});
-            await clockPage.goto(base+'market/index.html',{waitUntil:'networkidle',timeout:45000});
-            const clocks=await clockPage.locator('.report-clock').evaluateAll(els=>els.map(el=>({kind:el.dataset.kind,state:el.dataset.state,text:el.textContent})));
-            if(clocks.find(x=>x.kind==='daily')?.state!=='OVERDUE'||clocks.find(x=>x.kind==='weekly')?.state!=='CURRENT')throw Error('Independent report freshness failed '+JSON.stringify(clocks));
-            const cases=[
-              ['daily','2026-10-24','2026-10-25T00:00:00Z','PENDING'],
-              ['daily','2026-10-24','2026-10-25T04:00:00Z','OVERDUE'],
-              ['weekly','2026-10-24','2026-10-31T01:59:59Z','CURRENT'],
-              ['weekly','2026-10-24','2026-10-31T02:00:00Z','PENDING'],
-              ['weekly','2026-10-24','2026-10-31T06:00:00Z','OVERDUE'],
-              ['daily','2026-11-01','2026-11-01T00:00:00Z','CURRENT']
-            ];
-            const clockResults=await clockPage.evaluate(cases=>cases.map(([kind,date,at,want])=>({kind,date,at,want,...window.MarketReportClock.assess(kind,date,null,Date.parse(at))})),cases);
-            const earlyPreview=await clockPage.evaluate(()=>window.MarketReportClock.assess('daily','2026-10-25','2026-10-24T23:30:00Z',Date.parse('2026-10-25T00:00:00Z')));
-            if(earlyPreview.state!=='PENDING')throw Error('Early manual preview accepted as scheduled publication');
-            clockResults.push({kind:'daily',date:'2026-10-25',at:'2026-10-25T00:00:00Z',want:'PENDING',...earlyPreview});
-            if(clockResults.some(x=>x.state!==x.want))throw Error('Actual browser clock boundaries failed '+JSON.stringify(clockResults));
-            fs.writeFileSync('evidence/clock-pages.json',JSON.stringify({simulated_at:'2026-10-25T04:00:00Z',clocks,checks:clockResults},null,2));
-            await clockPage.screenshot({path:'evidence/independent-freshness-390.png',fullPage:true});
-            await clockPage.close();
-            const p=await b.newPage();
-            for(const path of ['latest.json','history.csv','market/daily.json','market/weekly.json','market/history.csv','market/source_registry.json','market/quality.json']){
-              const r=await p.request.get(base+path);if(r.status()!==200)throw new Error(path+' HTTP '+r.status());
-              evidence.push({path,status:r.status()});
-            }
-            const daily=await (await p.request.get(base+'market/daily.json')).json();
-            const weekly=await (await p.request.get(base+'market/weekly.json')).json();
-            if(daily.kind!=='daily'||weekly.kind!=='weekly')throw new Error('Wrong report types');
-            if(daily.capture_id!==weekly.capture_id)throw new Error('Manual both did not share an identical capture');
-            if(daily.method_version!=='1.3.0'||weekly.capture.schema_version!==3)throw Error('Wrong report method/schema');
-            const nyfed=weekly.capture.sources.find(x=>x.id==='nyfed_calendar');
-            if(nyfed?.status!=='OK')throw Error('Supplementary official calendar not verified');
-            const upcoming=weekly.analysis.upcoming_tier1;
-            if(upcoming.filter(x=>x.event_id==='eci').length!==1)throw Error('Employment Cost Index missing or duplicated');
-            for(const id of ['gdp','pce']){
-              const rows=upcoming.filter(x=>x.event_id===id);
-              if(rows.length!==1||rows[0].evidence.length<2)throw Error('Primary/NYFed corroboration not preserved '+id);
-            }
-            const audit=JSON.parse(fs.readFileSync('evidence/numeric-audit.json','utf8'));
-            if(audit.failed!==0||audit.verified<10||audit.status!=='PASS_CALCULABLE_ONLY')throw Error('Independent live arithmetic did not pass');
-            fs.writeFileSync('evidence/source-calendar-checks.json',JSON.stringify({source:nyfed.id,status:nyfed.status,events:upcoming.map(x=>({id:x.event_id,at_myt:x.at_myt,evidence:x.evidence})),numeric_verified:audit.verified,not_calculable:audit.not_calculable},null,2));
-            fs.writeFileSync('evidence/mobile-pages.json',JSON.stringify({checks:evidence,capture_id:daily.capture_id,quality:daily.quality.acceptance},null,2));
-            console.log(JSON.stringify({checks:evidence,quality:daily.quality.acceptance}));
-            await b.close();
-          })().catch(e=>{console.error(e);process.exit(1)});
-          JS
-      - name: Retain acceptance evidence for one day
-        if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        with:
-          name: market-migration-acceptance
-          path: evidence
-          retention-days: 1
+                          'publication_date':pub.isoformat(),'event_date':None,'legal_status':'UNRESOLVED',
+                          'effective_date':None,'note':'Treasury official dated release index'})
+    if not rows:
+        raise ValueError('No dated Treasury release rows parsed; coverage unconfirmed')
+    return [],{'items':items,'coverage':'current dated press-release index only; older pagination not exhaustive'}
 
-# Final renderer and date-boundary acceptance revision 2.
-# Final provider-timezone acceptance revision 3.
-# v1.1 regulatory coverage and incident-handler acceptance.
 
-# v1.2 independent report freshness and archive-linkage acceptance.
+def parse_ici_workbook(body, now):
+    """Public ICI workbook: exact same universe, units explicitly USD millions."""
+    from comex_gold.parser import read_workbook
+    sheets,_=read_workbook(body)
+    candidates=[rows for _,rows in sheets if any('Weekly Total Net Assets' in str(c) for r in rows for c in r)]
+    if len(candidates)!=1:raise ValueError('ICI workbook identity missing/ambiguous')
+    rows=candidates[0]
+    if not any('(millions of dollars)' in str(c).lower() for r in rows[:6] for c in r):
+        raise ValueError('ICI workbook units missing')
+    heads=[r for r in rows[:10] if r and str(r[0]).strip()=='DATE']
+    if len(heads)!=1:raise ValueError('ICI workbook DATE heading missing')
+    groups=heads[0]
+    total_start=next((i for i,c in enumerate(groups) if str(c).strip()=='TOTAL - ALL MONEY MARKET FUNDS'),None)
+    if total_start is None:raise ValueError('ICI all-fund universe not found')
+    end=next((i for i in range(total_start+1,len(groups)) if str(groups[i]).strip()),len(groups))
+    tna_heads=[r for r in rows[:10] if any(str(c).strip()=='TNA' for c in r)]
+    if len(tna_heads)!=1:raise ValueError('ICI TNA labels missing')
+    tnas=[i for i in range(total_start,end) if str(tna_heads[0][i]).strip()=='TNA']
+    if len(tnas)<4:raise ValueError('ICI all-fund TNA columns incomplete')
+    labels=next((r for r in rows[:10] if any(str(c).strip()=='TAX-EXEMPT' for c in r)),None)
+    if labels is None:raise ValueError('ICI category labels missing')
+    def col(label):
+        i=next((i for i in range(total_start,end) if str(labels[i]).strip()==label),None)
+        if i is None or i+1 not in tnas:raise ValueError('ICI category/TNA heading changed')
+        return i+1
+    total_col=col('TOTAL');components=[col(k) for k in ['TAX-EXEMPT','GOVERNMENT','PRIME']]
+    points={}
+    for row in rows:
+        raw=str(row[0]).strip() if row else ''
+        if not re.fullmatch(r'\d{2}/\d{2}/\d{4}',raw):continue
+        # The dated caption is not a data row.
+        if len(row)<=total_col or row[total_col]=='':continue
+        day=datetime.strptime(raw,'%m/%d/%Y').date().isoformat()
+        value=number(row[total_col])
+        if value<=0 or abs(value-sum(number(row[c]) for c in components))>2:
+            raise ValueError('ICI workbook component reconciliation failed')
+        if day in points:raise ValueError('Duplicate ICI workbook week')
+        points[day]=value*1e6
+    if len(points)<2:raise ValueError('ICI workbook too few dated rows')
+    ordered=sorted(points);obs=[];changes=[]
+    for i,day in enumerate(ordered):
+        obs.append(observation('mmf_assets_usd',points[day],day,'USD',basis='ICI public workbook, TNA, USD millions'))
+        if i and (datetime.fromisoformat(day)-datetime.fromisoformat(ordered[i-1])).days==7:
+            delta=points[day]-points[ordered[i-1]]
+            obs.append(observation('mmf_weekly_asset_change_usd',delta,day,'USD',basis='Difference of adjacent 7-day TNA rows; not net flow'))
+            changes.append({'date':day,'asset_change_usd':delta})
+    trend=None
+    if len(ordered)>=14:
+        last14=ordered[-14:]
+        if all((datetime.fromisoformat(b)-datetime.fromisoformat(a)).days==7 for a,b in zip(last14,last14[1:])):
+            start,finish=last14[0],last14[-1]
+            v=points[finish]-points[start]
+            trend={'weeks':13,'baseline_date':start,'end_date':finish,'asset_change_usd':v,
+                   'asset_change_pct':100*v/points[start],'net_flow_usd':None}
+    return obs, {'source_format':'ICI public XLS/XLSX','net_flow_usd':None,'verified_weeks':len(ordered),
+                 'asset_trend_13w':trend,'weekly_asset_changes':changes,
+                 'note':'总资产及资产差额；不是精确资金净流入。工作簿未单列发布时间，保持null。'}
 
-# v1.2 final early-manual-preview boundary acceptance.
 
-# v1.3 official supplementary calendar, independent arithmetic and bounded Pages acceptance.
+def parse_bill(body, now, identity):
+    root=XML.fromstring(body.decode('utf-8-sig'));bill=root.find('bill')
+    if bill is None:raise ValueError('GovInfo BILLSTATUS bill missing')
+    actual={k:(bill.findtext(k) or '').strip() for k in ['congress','type','number']}
+    if actual!={k:str(v) for k,v in identity.items()}:raise ValueError('GovInfo bill identity mismatch')
+    updated=bill.findtext('updateDate')
+    if updated and datetime.fromisoformat(updated.replace('Z','+00:00'))>now:raise ValueError('Future BILLSTATUS update')
+    title=bill.findtext('title') or ''
+    actions=[]
+    for a in bill.findall('./actions/item'):
+        day=a.findtext('actionDate');description=a.findtext('text') or ''
+        if not day:continue
+        if datetime.strptime(day,'%Y-%m-%d').date()>now.astimezone(ET).date():raise ValueError('Future Congressional action')
+        actions.append({'date':day,'text':description,'type':a.findtext('type')})
+    if not actions:raise ValueError('GovInfo action history missing')
+    latest_node=bill.find('latestAction')
+    latest={'date':latest_node.findtext('actionDate'),'text':latest_node.findtext('text')} if latest_node is not None else max(actions,key=lambda a:a['date'])
+    if latest['date']!=max(a['date'] for a in actions):raise ValueError('BILLSTATUS latest action/history mismatch')
+    laws=[{'type':x.findtext('type'),'number':x.findtext('number')} for x in bill.findall('./laws/item')]
+    enacted=any(x.get('type')=='Public Law' and x.get('number') for x in laws)
+    start=(now.astimezone(MYT).date()-timedelta(days=7)).isoformat();end=now.astimezone(MYT).date().isoformat()
+    items=[{'title':title+' — '+a['text'],'url':'https://www.govinfo.gov/app/details/BILLS-'+actual['congress']+actual['type'].lower()+actual['number'],
+            'publication_date':None,'event_date':a['date'],'event_date_basis':'Congress actionDate',
+            'legal_status':'CongressAction','effective_date':None,'action_type':a['type'],
+            'note':'正式国会行动记录；不把程序行动当作成法或实施规则'}
+           for a in actions if start<=a['date']<end]
+    # Use the exact XML URL for traceability; app/details is version-specific and not guessed.
+    xml_url='https://www.govinfo.gov/bulkdata/BILLSTATUS/'+actual['congress']+'/'+actual['type'].lower()+'/BILLSTATUS-'+actual['congress']+actual['type'].lower()+actual['number']+'.xml'
+    for item in items:item['url']=xml_url
+    return [], {'items':items,'bill_title':title,'bill_identity':actual,'bulk_updated_at':updated,
+                'latest_action':latest,'laws':laws,'enactment_record':'ENACTED' if enacted else 'NO_ENACTMENT_RECORD',
+                'actions_in_window':len(items),'coverage':'Only this identified bill; current official action history, not new-bill discovery'}
