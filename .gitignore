@@ -5,3 +5,4 @@ data/.update.lock
 *.tmp
 public-data/
 cloud-deploy/
+public-preview/

@@ -1,0 +1,106 @@
+name: Market reports (daily and weekly)
+
+on:
+  workflow_dispatch:
+    inputs:
+      report:
+        description: Report to generate (manual runs refresh with a preserved revision)
+        required: true
+        default: both
+        type: choice
+        options: [both, daily, weekly, due]
+  schedule:
+    # Malaysia UTC+8 has no DST. Primary + two recovery attempts, never early.
+    - cron: '0,17,47 0 * * *'
+    - cron: '0,27 2 * * 6'
+    - cron: '17 3 * * 6'
+  push:
+    branches: [main]
+    paths:
+      - 'market_reports/**'
+      - 'market_tests/**'
+      - '.github/workflows/market-reports.yml'
+
+permissions:
+  contents: read
+
+# Shared with the existing Gold collector: never race archive writes or Pages deployments.
+concurrency:
+  group: comex-cloud
+  cancel-in-progress: false
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      actions: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}market/
+    env:
+      PYTHONUNBUFFERED: '1'
+      REPORT_KIND: ${{ github.event_name == 'schedule' && 'due' || inputs.report || 'both' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install existing Gold parser dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Test original Gold collector and market reports
+        run: python -m unittest discover -q
+      - name: Verify archive before network or publication
+        run: python -m market_reports verify
+      - name: Collect and generate reports (partial data remains explicit)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python -m market_reports run --report "$REPORT_KIND"
+      - name: Persist complete archive before publication
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add market_data
+          if ! git diff --cached --quiet; then
+            git commit -m 'Archive market reports and source receipts [skip ci]'
+            git push origin HEAD:main
+          fi
+      - name: Preserve original Gold endpoints and add report dashboard
+        run: |
+          python -m comex_gold.cloud --output-dir public-data
+          python -m market_reports publish --site public-data
+      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: public-data
+          retention-days: 1
+      - name: Deploy combined Pages package
+        id: deploy
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+      - name: Surface source warnings and critical failures after publishing
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=Path('market_data/quality.json')
+          if not p.exists():
+              raise SystemExit('No report quality record')
+          q=json.loads(p.read_text())
+          missing=q['missing_or_unverified']
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+              f.write('## Market report quality\n\n'+q['acceptance']+'\n\n')
+              f.write('Sources needing review: '+(', '.join(missing) or 'none')+'\n')
+              f.write('\nReports and immutable revisions were persisted before Pages publication.\n')
+          for key in missing:
+              print('::warning title=Source quality::'+key+' unavailable/stale/unverified. See market/quality.json')
+          critical=set(missing)&{'comex','srf','crypto','vix','vix3m'}
+          if critical:
+              raise SystemExit('Critical sources incomplete: '+', '.join(sorted(critical)))
+          PY

@@ -59,6 +59,8 @@ jobs:
           fi
       - name: Build public data package
         run: python -m comex_gold.cloud --output-dir public-data
+      - name: Preserve market dashboard on Gold-only deployments
+        run: python -m market_reports publish --site public-data
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

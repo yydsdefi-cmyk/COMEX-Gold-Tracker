@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "repository": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker",
+  "dashboard_target": "https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/",
+  "original_missions_preserved": true,
+  "original_prompts_recovered": true,
+  "local_offline_tests": "PASS: 67 methods",
+  "local_live_daily": "PASS with explicitly degraded sources",
+  "local_live_weekly": "PASS with explicitly degraded sources and semantic limitations",
+  "remote_code": "PENDING",
+  "remote_end_to_end": "PENDING",
+  "manual_dispatch": "PENDING",
+  "mobile_pages": "PENDING",
+  "future_schedule_execution": "UNKNOWN until an actual scheduled run occurs",
+  "full_original_semantic_equivalence": "NOT ACHIEVED: see METHOD_CHANGES.md",
+  "new_recurring_subscription_cost_usd": 0
+}

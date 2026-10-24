@@ -1,0 +1,1 @@
+Live public-source parser fixtures retrieved 2026-10-24 UTC. HTML trimmed to factual data/table structures; Cboe CSV limited to 12 final rows. Test-only synthetic mutations are never imported into market_data or COMEX history. Fixtures test parsing and accounting; they do not prove future availability.

@@ -1,0 +1,36 @@
+# Source registry
+
+运行时完整URL、来源类型、工程时效、解析器和限制：`market_data/source_registry.json`，发布到 `/market/source_registry.json`。逐次receipt含响应SHA256、字节数、抓取UTC、HTTP状态和实际解析结果。hash绑定响应字节，不构成来源真实性的独立签名；不是全部原网页的再发布档案。
+
+|指标/主题|来源|说明|
+|---|---|---|
+|AAII|https://www.aaii.com/sentimentsurvey|公共最新及近期周度；周截至≠网页修改日期|
+|CNN F&G|https://production.dataviz.cnn.io/index/fearandgreed/graphdata|官方origin非稳定公开API，拒绝访问时缺失|
+|VIX/VIX3M|https://cdn.cboe.com/api/global/us_indices/daily_prices/VIX_History.csv 与VIX3M_History.csv|Cboe官方收盘CSV，同日才算期限比|
+|Crypto F&G|https://api.alternative.me/fng/?limit=31&format=json|UTC供应商日戳和原分类|
+|SRF|https://markets.newyorkfed.org/api/rp/repo/all/results/lastTwoWeeks.json|USD accepted，逐场、排除明确小额演习|
+|Treasury拍卖|https://www.treasurydirect.gov/TA_WS/securities/announced?format=json&days=30|公告日、拍卖日、USD规模、需求指标；不是未来未公告的供给|
+|COMEX|https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker|同提交快照+collector workflow runs；官方源https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls|
+|ICI|https://www.ici.org/research/stats/mmf|表格USD billions；资产变化不是净流|
+|Overnight|https://query1.finance.yahoo.com/v8/finance/chart/|次级行情，^GSPC/^IXIC/^TNX/DX-Y.NYB/CL=F/GC=F/BTC-USD|
+|日历BLS|https://www.bls.gov/schedule/news_release/bls.ics|官方时间，转换MYT|
+|日历BEA|https://www.bea.gov/news/schedule|GDP/PCE等|
+|FOMC|https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm|会议结束日；发布时间惯例假设另列|
+|SEC|https://www.sec.gov/news/pressreleases.rss|公告窗口；未从每份正文穷尽法律含义|
+|CFTC|https://www.cftc.gov/RSS/RSSGP/rssgp.xml|同上|
+|Fed|https://www.federalreserve.gov/feeds/press_all.xml|同上|
+|Treasury新闻|https://home.treasury.gov/news/press-releases|官方有日期索引|
+|Congress/GPO|https://www.govinfo.gov/rss/bills.xml|立法文本发布，不覆盖全部表决/行动|
+|White House|https://www.whitehouse.gov/presidential-actions/feed/|总统行动RSS|
+|Federal Register|https://www.federalregister.gov/api/v1/documents.json|公共政府机器元数据；HTML/XML不是正式法律版本，正式PDF链接到GovInfo；生效日来自单文档JSON|
+
+官方技术与费用参考：
+
+- https://docs.github.com/en/actions/concepts/billing-and-usage
+- https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule
+- https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site
+- https://markets.newyorkfed.org/static/docs/markets-api.html
+- https://www.treasurydirect.gov/legal-information/developers/web-api-security/
+- https://www.federalregister.gov/developers/documentation/api/v1
+
+来源变动或被拒时，不切换到无标注的第三方估计。周报使用有限官方渠道，不声称对整个美国监管信息完备。

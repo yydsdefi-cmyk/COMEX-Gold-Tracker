@@ -1,0 +1,30 @@
+# Test results — 2026-10-24
+
+实际命令：`python -m unittest discover -q`，最后一次预部署运行67项、0失败。原Gold40项+新market_tests27个测试方法；不把用例内多个assert重复计数。网络端到端与远端部署不算离线测试通过。
+
+|要求|结果|实际证据/边界|
+|---|---|---|
+|1 数据采集正确性|PASS（fixture与本地live覆盖）|AAII百分比与spread、Cboe收盘、Alternative日期、SRF操作、ICI资产、Treasury类型金额；未来源可用性不保证|
+|2 来源可追溯|PASS|每观察源URL/响应hash/抓取时刻；没有用抓取日期代替发布日期|
+|3 日期与时区|PASS|MYT08/10到时、早运行不发布、美东DST 12/13小时转换、naive时间拒绝|
+|4 缺失与过期|PASS|超时/拒绝变MISSING；future拒绝；来源时效；COMEX同日05之后与26h校验|
+|5 计算|PASS|SRF10/19–23常规$12M，测试$67M排除；ICI7944.57B/21.49B；coupon213B含FRN30B、非FRN183B|
+|6 阈值分类|PASS|SRF10/50/100B边界；Total单日严格<-1/-3/-5%；50B归类为显式工程解释|
+|7 重复执行|PASS|相同capture/revision幂等、CSV去重；健康due不再采集；降级有意允许恢复尝试|
+|8 部分API失败|PASS|缺失COMEX的daily/weekly仍显式降级生成，其余源保留；拒绝访问不重试绕过，超时最多2次|
+|9 报告渲染|PASS（HTML结构/escaping）|真实daily/weekly可生成、viewport与链接、脚本注入转义；手机视觉验收另列|
+|10 历史完整性|PASS|完整revision文件集合/hash；修改capture报错；保留旧revision；来源绑定|
+|11 workflow权限|PASS（静态）|新workflow默认read、job按需write、固定ActionsSHA、无pull_request_target/force；远端实际权限另列|
+|12 中断恢复|PASS|模拟未完成revision，无manifest不得发布；重跑补齐同revision；已完成内容冲突拒绝|
+|本地真实daily端到端|PASS / DEGRADED|2026-10-24真实网络采集、Markdown/JSON/CSV、COMEX当前H/当天attempt；CNN418，AAII第二轮验证页|
+|本地真实weekly端到端|PASS / DEGRADED|官方feed与Fed/BEA/BLS下周日历、FR文种/单文档生效日期；冷启动未积满7份日报；完整法律语义未等价|
+|历史样本对比|PASS（核对并保留差异）|COMEX三库存、Ratio、四窗口与当天样本一致；今日Crypto取得51而早晨样本待确认；现货/期货、Treasury额外FRN、官方FR发布日期与公告日差异照实披露|
+|GitHub实际执行/手动dispatch/Pages|PENDING|以DEPLOYMENT_STATUS.json最终证据为准，不能从本地执行推定|
+|未来定时实际运行|UNKNOWN|配置可静态检查，必须未来真正schedule运行才可确认|
+|完整原报告语义等价|BLOCKED/NOT ACHIEVED|无付费LLM的确定性系统不能凭标题断言完整法律影响；未知项保留，不能捏造|
+
+首轮67测试曾1项失败：Treasury查询漏未来coupon。改用官方公告接口后检出额外30B FRN，调整为全部coupon213B、固定利率2/5/7Y183B、FRN30B并独立检查类型与AM/PM时间。最终通过不抹去先前失败。
+
+复用范围：旧Gold采集、原报告历史、导出器及40测试；找到了未合并的一致性安全补丁，但本次不混入另一线程对Gold核心模块的额外变更；保持其候选证据供后续独立审阅。新报告档案自己的hash验证独立实现。
+
+双线程收敛：用户2026-10-24明确以本线程继续并停止另一个。检查到另一工作区存在未提交market_intel/intelligence实现，但远端main仍1ed12c3d；未发布第二套系统、未覆盖该工作区、未混算其测试结果。此处仅发布market_reports/market_data这一套，远端提交前后使用预期HEAD检查。
