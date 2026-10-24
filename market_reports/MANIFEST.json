@@ -3,7 +3,7 @@
   "version": "1.3.0",
   "sha256": {
     ".github/workflows/collect-and-publish.yml": "b5d6df52234e3a198fe6c54ec59f7e4021358e4f3bf2d0bb65e2c07e7c1fbced",
-    ".github/workflows/market-reports.yml": "b4c70e972978455f9bdca637968cb2f8557e97d5daf9a72aaf56919657c9b4d7",
+    ".github/workflows/market-reports.yml": "ec37b67596d429aae815bd8cdbb44a3b0db42c1602be5b353de7086891b497ce",
     ".gitignore": "9fadfc7dcc194bf3c9d8642565146474bf8dbffe0170be20616716670d75792c",
     "README.md": "6688b3d470160b67a45bcaea0502fb8d0398b2bd3a57eb28b946ff12d293a302",
     "market_reports/CHANGELOG.md": "140bf840209c6ae7d11fe818782bb9ef52315b18a2e063a653eabb22ad7dc448",
@@ -35,7 +35,7 @@
     "market_reports/evidence-mobile-pages.json": "65ea0ac4831b0f8b2d6037d5f5d6d5599de81e7f3b0097caf6e6146d6ac139e4",
     "market_reports/parsers.py": "514d7cf2f4236a63ed4484fd2998c4ffd695256fdea15aad0416325ea6f5a1c1",
     "market_reports/regulation.py": "090ac548f4a468d01b3811c245cc6703167b07dcfce8faa288866669d226cdb1",
-    "market_reports/render.py": "ed3b19d7b077e305cb80263a26a844bc2c97ef6cf997548b1d99fb9aef5694b5",
+    "market_reports/render.py": "e3f247b51e3c573390365e0d5c3a524f115366ba1ce75133e43dc2fa73d2c5bf",
     "market_reports/report.py": "c8964adcec6e2a169c3cfdf6fdecc62f65f5ddd06d280b952acd4bc947dfa026",
     "market_reports/schedule.py": "9bde28b98c0a64ad3b90567cf9b0dd49e0e952e83b291ddd1af60598b91b2ca9",
     "market_reports/sources.py": "f611f3090d0fbbab66f2c43843c4505d2040a498e8496a3c9f639597cee3844b",

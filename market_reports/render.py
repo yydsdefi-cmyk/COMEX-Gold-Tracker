@@ -14,6 +14,7 @@ CSS='''
 main{max-width:860px;margin:auto;padding:22px 18px 60px}header{border-bottom:3px solid var(--accent);padding:14px 0 22px}h1{font-size:26px;line-height:1.3;letter-spacing:-.5px}h2{font-size:18px;margin:30px 0 10px;padding-top:15px;border-top:1px solid var(--line)}a{color:#086a73;overflow-wrap:anywhere}p,li{overflow-wrap:anywhere}ul{padding-left:22px}nav{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0}nav a,.card{background:white;padding:12px 16px;border:1px solid var(--line);border-radius:12px;text-decoration:none}.card{margin:14px 0}.muted{color:var(--muted)}.warn{background:#fff0d6;border-left:4px solid #b7791f;padding:12px 14px;border-radius:5px}.table-scroll{max-width:100%;overflow-x:auto;margin:14px 0;background:white;border-radius:8px;border:1px solid var(--line)}table{border-collapse:collapse;font-size:13px;width:100%;min-width:380px}th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:normal}th{background:#e9f2f3}pre{white-space:pre-wrap;overflow-wrap:anywhere}small{color:var(--muted)}details{background:#fff;padding:12px;border-radius:8px;margin:12px 0}summary{cursor:pointer;font-weight:600}.overview p{margin:5px 0}@media(max-width:400px){main{padding:14px 12px 40px}h1{font-size:23px}body{font-size:14px}th,td{padding:7px 8px}}
 '''
 CSS+='\n.report-clock{font-size:13px}.report-clock[data-state="CURRENT"]{background:#e8f4f1;border-left-color:#087c75}\n'
+CSS+='\n.compact-three{min-width:0;table-layout:fixed}.compact-three th,.compact-three td{overflow-wrap:anywhere}.compact-three th:nth-child(1),.compact-three td:nth-child(1){width:28%}.compact-three th:nth-child(2),.compact-three td:nth-child(2){width:45%}.compact-three th:nth-child(3),.compact-three td:nth-child(3){width:27%}\n'
 PAGES_ARCHIVE_DAYS=180
 REPOSITORY='https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker'
 
@@ -41,7 +42,8 @@ def markdown(s, compact=False):
             while i<len(lines) and (lines[i].strip().startswith('|') or not lines[i].strip()):
                 if lines[i].strip():rows.append(lines[i].strip())
                 i+=1
-            out.append('<small>表格可左右滑动查看全部列</small><div class="table-scroll"><table>')
+            compact_table=len(rows[0].strip('|').split('|'))==3
+            out.append(('<small>日期与变化单位分别列示</small>' if compact_table else '<small>表格可左右滑动查看全部列</small>')+'<div class="table-scroll"><table'+(' class="compact-three"' if compact_table else '')+'>')
             for n,row in enumerate(rows):
                 if re.fullmatch(r'[|:\-\s]+',row):continue
                 tag='th' if n==0 else 'td'

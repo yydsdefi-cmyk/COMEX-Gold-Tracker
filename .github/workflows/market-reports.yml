@@ -14,8 +14,6 @@ on:
     - cron: '0,17,47 0 * * *'
     - cron: '0,27 2 * * 6'
     - cron: '17 3 * * 6'
-    # Temporary real scheduler acceptance; removed after successful diagnostic run.
-    - cron: '45 11 24 10 *'
   push:
     branches: [main]
     paths:
@@ -45,7 +43,7 @@ jobs:
       url: ${{ steps.deploy.outputs.page_url }}market/
     env:
       PYTHONUNBUFFERED: '1'
-      REPORT_KIND: ${{ github.event_name == 'schedule' && github.event.schedule == '45 11 24 10 *' && 'both' || github.event_name == 'schedule' && 'due' || inputs.report || 'both' }}
+      REPORT_KIND: ${{ github.event_name == 'schedule' && 'due' || inputs.report || 'both' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
