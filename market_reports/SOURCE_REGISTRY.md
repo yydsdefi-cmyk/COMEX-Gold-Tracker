@@ -34,3 +34,15 @@
 - https://www.federalregister.gov/developers/documentation/api/v1
 
 来源变动或被拒时，不切换到无标注的第三方估计。周报使用有限官方渠道，不声称对整个美国监管信息完备。
+
+v1.1新增来源：
+
+|来源|用途与限制|
+|---|---|
+|https://www.occ.gov/rss/occ_news.xml |正式机构公告标题/摘要；最终规则公告不自动等于生效|
+|https://www.govinfo.gov/bulkdata/BILLSTATUS/119/hr/BILLSTATUS-119hr3633.xml |119届CLARITY法案的官方行动和成法记录；不覆盖其它届次新法案发现|
+|https://www.govinfo.gov/bulkdata/BILLSTATUS/119/s/BILLSTATUS-119s1582.xml |119届GENIUS法案的官方行动及Public Law记录；实施义务/日期另核|
+|Federal Register完整日期窗口分页 |删除依赖不明确OR搜索语义的文本query；保留页响应hash、总count、覆盖状态和逐份相关文档元数据|
+|https://www.ici.org/mm_summary_data_2025.xls |ICI当前官方页面链接的20周TNA工作簿；云端403未解决，只在HTML成功且明确链接时尝试。未知发布时间不推算|
+
+公开来源云端验证证据：[source-verification-2026-10-24.json](evidence/source-verification-2026-10-24.json)。诊断探针为临时工作流，验收后移除；不持续换路由访问被拒来源。

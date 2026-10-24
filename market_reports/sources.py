@@ -7,7 +7,12 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode, quote
 from urllib.request import Request, urlopen
 from . import parsers
+from . import regulation
 from .core import UTC, stamp, digest, assess_date, observation, ET
+
+
+SOURCE_IDS_V1=frozenset('aaii cnn vix vix3m crypto srf treasury ici bls bea fomc sec cftc fed congress whitehouse treasury_news federal_register sp500 nasdaq us10y dxy wti gold btc comex'.split())
+SOURCE_IDS_V2=SOURCE_IDS_V1|{'occ','clarity_bill','genius_bill'}
 
 
 def registry(now):
@@ -27,11 +32,14 @@ def registry(now):
       s('fomc','https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm','fomc'),
       s('sec','https://www.sec.gov/news/pressreleases.rss','rss'),
       s('cftc','https://www.cftc.gov/RSS/RSSGP/rssgp.xml','rss'),
+      s('occ','https://www.occ.gov/rss/occ_news.xml','rss'),
+      {**s('clarity_bill','https://www.govinfo.gov/bulkdata/BILLSTATUS/119/hr/BILLSTATUS-119hr3633.xml','bill'), 'bill_identity':{'congress':'119','type':'HR','number':'3633'}},
+      {**s('genius_bill','https://www.govinfo.gov/bulkdata/BILLSTATUS/119/s/BILLSTATUS-119s1582.xml','bill'), 'bill_identity':{'congress':'119','type':'S','number':'1582'}},
       s('fed','https://www.federalreserve.gov/feeds/press_all.xml','rss'),
       s('congress','https://www.govinfo.gov/rss/bills.xml','rss',note='Official GPO bill publications, not comprehensive vote/amendment monitoring.'),
       s('whitehouse','https://www.whitehouse.gov/presidential-actions/feed/','rss'),
       s('treasury_news','https://home.treasury.gov/news/press-releases','treasury_news',note='Official press-release index; linked release pages are the primary references.'),
-      s('federal_register','https://www.federalregister.gov/api/v1/documents.json?'+urlencode({'conditions[term]':'cryptocurrency OR stablecoin OR "digital asset" OR tokenization','conditions[publication_date][gte]':(now.date()-timedelta(days=7)).isoformat(),'per_page':'100','order':'newest'}),'federal_register',note='Rule/Proposed Rule/Notice types authoritative; effective_on may be absent.'),
+      s('federal_register',regulation.fr_page_url(now,1),'federal_register',note='Full bounded seven-day document window, local topic filtering, official PDF and effective-date metadata.'),
     ]
     for key,symbol in [('sp500','^GSPC'),('nasdaq','^IXIC'),('us10y','^TNX'),('dxy','DX-Y.NYB'),('wti','CL=F'),('gold','GC=F'),('btc','BTC-USD')]:
         src.append(s(key,'https://query1.finance.yahoo.com/v8/finance/chart/'+quote(symbol,safe='')+'?range=1mo&interval=1d','yahoo',2 if key=='btc' else 4,'secondary',
@@ -63,26 +71,27 @@ def download(url, timeout=20, attempts=2, opener=urlopen):
 
 
 def collect_one(spec, now, downloader=download):
+    if spec['id']=='federal_register':return regulation.collect_register(now,downloader)
     receipt = {**spec,'fetched_at_utc':stamp(now),'status':'MISSING','observations':[],'details':{}}
     try:
         body,meta=downloader(spec['url'])
         receipt.update(meta)
         fn=getattr(parsers,'parse_'+spec['parser'])
-        args={'metric':spec['id']} if spec['parser'] in ('cboe','yahoo') else {}
+        args={'metric':spec['id']} if spec['parser'] in ('cboe','yahoo') else {'identity':spec['bill_identity']} if spec['parser']=='bill' else {}
         obs,details=fn(body,now,**args)
-        if spec['id']=='federal_register':
-            for item in details.get('items',[])[:20]:
-                detail_url='https://www.federalregister.gov/api/v1/documents/'+item['document_number']+'.json'
+        if spec['id']=='ici':
+            # Only a successful official HTML release permits the optional public XLS extension.
+            # HTTP403 does not trigger alternate-route retries or a disguised client.
+            workbook_url='https://www.ici.org/mm_summary_data_2025.xls'
+            if workbook_url in body.decode('utf-8-sig',errors='replace'):
                 try:
-                    detail_body,detail_meta=downloader(detail_url)
-                    document=json.loads(detail_body)
-                    if document['document_number']!=item['document_number'] or document['type']!=item['legal_status']:
-                        raise ValueError('Federal Register detail/search mismatch')
-                    item.update(effective_date=document.get('effective_on'),comments_close_on=document.get('comments_close_on'),
-                                official_pdf=document.get('pdf_url'),action=document.get('action'),
-                                detail_response_sha256=detail_meta['response_sha256'],detail_fetched_at_utc=detail_meta['fetched_at_utc'])
-                except Exception as exc:
-                    item['detail_error']=type(exc).__name__+': '+str(exc)[:200]
+                    wb,wm=downloader(workbook_url)
+                    long_obs,long_details=parsers.parse_ici_workbook(wb,now)
+                    details['workbook_extension']={**long_details,'url':workbook_url,**wm}
+                    # Keep release-rounded headline metrics and workbook-derived history separate.
+                    details['workbook_observations']=[{**o,'source_url':workbook_url,'response_sha256':wm['response_sha256'],
+                        'fetched_at_utc':wm['fetched_at_utc']} for o in long_obs]
+                except Exception as exc:details['workbook_extension_error']=type(exc).__name__+': '+str(exc)[:200]
         for o in obs:
             o.update(source=spec['id'],source_url=spec['url'],response_sha256=meta['response_sha256'],fetched_at_utc=meta['fetched_at_utc'])
             o['quality']='SCHEDULED' if o.get('scheduled') else assess_date(o['observation_date'],now,spec['max_age_days'])
@@ -95,7 +104,7 @@ def collect_one(spec, now, downloader=download):
                 receipt['status']='STALE'
         if spec['id']=='srf' and obs and not max(obs,key=lambda o:o['observation_date'])['complete']:
             receipt['status']='PROVISIONAL'
-        if spec['id']=='federal_register' and not details['coverage_complete']:
+        if spec['id']=='bls' and details.get('calendar_covers_through','')<(now.date()+timedelta(days=7)).isoformat():
             receipt['status']='INCOMPLETE'
     except Exception as e:
         receipt.update(status='MISSING',error=type(e).__name__+': '+str(e)[:350],observations=[],details={})

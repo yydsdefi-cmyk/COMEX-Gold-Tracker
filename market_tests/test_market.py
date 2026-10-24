@@ -31,9 +31,9 @@ def fake_sources(now):
     out=[]
     for s in registry(now):
         k=s['id'];obs=[];details={}
-        fixture={'aaii':'aaii.html','srf':'srf.json','crypto':'crypto.json','vix':'vix.txt','vix3m':'vix3m.txt','ici':'ici.html','treasury':'auctions.json','bea':'bea.txt','fomc':'fed_calendar.txt','bls':'bls.txt'}.get(k)
+        fixture={'aaii':'aaii.html','srf':'srf.json','crypto':'crypto.json','vix':'vix.txt','vix3m':'vix3m.txt','ici':'ici.html','treasury':'auctions.json','bea':'bea.txt','fomc':'fed_calendar.txt','bls':'bls.txt','occ':'occ_rss.xml','clarity_bill':'govinfo_clarity_excerpt.xml','genius_bill':'govinfo_genius_excerpt.xml'}.get(k)
         if fixture:
-            args={'metric':k} if k in ('vix','vix3m') else {}
+            args={'metric':k} if k in ('vix','vix3m') else {'identity':s['bill_identity']} if s['parser']=='bill' else {}
             obs,details=getattr(parsers,'parse_'+s['parser'])((FIX/fixture).read_bytes(),now,**args)
         out.append(receipt(k,obs,details))
     return out

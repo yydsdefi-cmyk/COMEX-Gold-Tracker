@@ -104,3 +104,23 @@ jobs:
           if critical:
               raise SystemExit('Critical sources incomplete: '+', '.join(sorted(critical)))
           PY
+
+  health-notice:
+    name: Report a real pipeline incident or resolve recovery
+    needs: report
+    if: always() && !cancelled()
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Maintain one bot-owned health issue
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PIPELINE_RESULT: ${{ needs.report.result }}
+        run: python3 -m market_reports.alerts

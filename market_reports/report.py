@@ -2,6 +2,7 @@ import json
 import re
 from datetime import datetime, timedelta
 from .core import MYT, parse_time, number
+from .regulation import timeline_day,asset_relevance,KEY
 
 
 def compose(lines):
@@ -200,23 +201,32 @@ def daily(capture):
     return compose(lines)
 
 
-CRYPTO=re.compile(r'crypt|bitcoin|ether|stablecoin|tokeniz|tokenis|digital asset|GENIUS|CLARITY|24.?7|blockchain',re.I)
-STATUS={'Rule':'正式规则（生效日期单独核验）','Proposed Rule':'拟议规则（未生效）','Notice':'通知（法律效力逐项核验）','Presidential Document':'总统文件（法律效力逐项核验）'}
+CRYPTO=KEY
+STATUS={'CongressAction':'正式国会行动记录（不等于已成法）','FinalRuleAnnouncement':'最终规则公告（不自动等于已生效）','ProposalAnnouncement':'提案/征求意见公告（尚非最终规则）','SupervisoryPriorities':'监管检查重点（不是新规则）','GuidanceOrSpeech':'指引/声明/讲话（非正式规则证明）','Rule':'正式规则（生效日期单独核验）','Proposed Rule':'拟议规则（未生效）','Notice':'通知（法律效力逐项核验）','Presidential Document':'总统文件（法律效力逐项核验）'}
 
 
 def timeline(capture):
-    now=parse_time(capture['generated_at_utc'])
-    items={}
+    now=parse_time(capture['generated_at_utc']);items={}
+    start=(now.astimezone(MYT).date()-timedelta(days=7)).isoformat();end=now.astimezone(MYT).date().isoformat()
     for r in capture['sources']:
         for item in r.get('details',{}).get('items',[]):
-            if not CRYPTO.search(item['title']) and not item.get('topic_signal'):
-                continue
-            day=item['publication_date'][:10]
-            # Weekly publication timeline explicitly uses seven MYT calendar dates, including run day.
-            if not (now.astimezone(MYT).date()-timedelta(days=7)).isoformat()<=day<(now.astimezone(MYT).date()).isoformat():
-                continue
-            items.setdefault(item['url'],{**item,'source':r['id']})
-    return sorted(items.values(),key=lambda x:(x['publication_date'][:10],x['url']))
+            if not CRYPTO.search(item['title']) and not item.get('topic_signal'):continue
+            day=timeline_day(item)
+            if not day or not start<=day<end:continue
+            key=(item['url'],day,item['title'])
+            items.setdefault(key,{**item,'source':r['id'],'timeline_date':day})
+    return sorted(items.values(),key=lambda x:(x['timeline_date'],x['url'],x['title']))
+
+
+def regulatory_upcoming(capture):
+    now=parse_time(capture['generated_at_utc']).astimezone(MYT).date();out=[]
+    for r in capture['sources']:
+        for item in r.get('details',{}).get('items',[]):
+            for key,label in [('effective_date','所载生效日'),('comments_close_on','意见截止日')]:
+                day=item.get(key)
+                if day and now.isoformat()<=day<=(now+timedelta(days=7)).isoformat():
+                    out.append('- '+day+'｜'+label+'｜['+item['title'].replace('[','(').replace(']',')')+']('+item['url']+')（原文件日期；截止时刻/时区未提供时不猜）')
+    return list(dict.fromkeys(out))
 
 
 def weekly(capture, daily_captures):
@@ -273,7 +283,7 @@ def weekly(capture, daily_captures):
     a=latest(capture,'mmf_assets_usd');delta=value(capture,'mmf_weekly_asset_change_usd')
     lines.append('ICI总资产 $'+fmt(a['value']/1e12 if a else None,5)+'T；周资产变化 $'+fmt(delta/1e9 if delta is not None else None,2,True)+'B。'+dates(a)+'。资产变化不等于净流入；3个月流趋势待积累。')
     lines += ['## Treasury / Fed']+treasury_lines(capture)
-    lines += ['## Crypto Regulatory Timeline（按发布日期，事件日期未知则不猜）']
+    lines += ['## Crypto Regulatory Timeline（国会行动日／机构发布日期）']
     items=timeline(capture)
     if not items:
         lines.append('本次已读取且可筛选的官方源中，没有确认到符合条件的条目；覆盖不完整，不能解释为本周无监管变化。')
@@ -282,16 +292,37 @@ def weekly(capture, daily_captures):
         effective=item.get('effective_date')
         if item['legal_status']=='Rule' and effective:
             status='正式规则，'+('尚未生效' if effective>now.date().isoformat() else '已到所载生效日期，修订状态另核验')
-        lines.append('- '+item['publication_date'][:10]+'｜['+item['title'].replace('[','(').replace(']',')')+']('+item['url']+')｜'+item['source']+'｜'+status+'｜生效 '+str(effective or '待核验')+'；事件日期 '+str(item.get('event_date') or '待核验')+(('｜[正式PDF]('+item['official_pdf']+')') if item.get('official_pdf') else ''))
-    coverage={r['id']:r['status'] for r in capture['sources'] if r['id'] in ['sec','cftc','fed','treasury_news','congress','whitehouse','federal_register']}
-    lines.append('来源覆盖：'+json.dumps(coverage,ensure_ascii=False)+'。RSS仅覆盖发布窗口；Congress发布feed不覆盖全部表决/修订。关键词筛选可能遗漏；未查到不等于未发生。')
+        lines.append('- '+item['timeline_date']+'｜['+item['title'].replace('[','(').replace(']',')')+']('+item['url']+')｜'+item['source']+'｜'+status+'｜生效 '+str(effective or '待核验')+'；行动/事件日期 '+str(item.get('event_date') or '未另提供')+(('｜[正式PDF]('+item['official_pdf']+')') if item.get('official_pdf') else ''))
+        if item.get('topics'):
+            lines.append('主题：'+' / '.join(item['topics'])+'（确定性主题归类，不是价格影响结论）。')
+    lines += ['## Congress：指定法案的官方状态']
+    for key,label in [('clarity_bill','CLARITY'),('genius_bill','GENIUS')]:
+        receipt=next((r for r in capture['sources'] if r['id']==key),{})
+        d=receipt.get('details',{})
+        if receipt.get('status')!='OK' or not d.get('latest_action'):
+            lines.append(label+'：待确认（官方行动源未取得）。');continue
+        a=d['latest_action'];laws=d.get('laws',[])
+        state='存在成法记录：'+', '.join(str(x['type'])+' '+str(x['number']) for x in laws) if d['enactment_record']=='ENACTED' else '当前官方文件未见成法记录'
+        identity=d['bill_identity']
+        lines.append(label+'｜第'+identity['congress']+'届 '+identity['type']+identity['number']+'｜'+state+'｜[官方BILLSTATUS]('+receipt['url']+')')
+        lines.append('最新已登记行动 '+a['date']+'：'+a['text']+'；本周行动 '+str(d['actions_in_window'])+'条。文件更新 '+str(d.get('bulk_updated_at') or '未提供')+'，本次读取 '+receipt['fetched_at_utc']+'。成法与实施规则、生效日期分开。')
+    review=[]
+    for receipt in capture['sources']:
+        for i in receipt.get('details',{}).get('items',[]):
+            day=timeline_day(i)
+            if i.get('review_candidate') and not i.get('topic_signal') and day and (now.date()-timedelta(days=7)).isoformat()<=day<now.date().isoformat():
+                review.append('- '+day+'｜['+i['title']+']('+i['url']+')｜官方公告候选：仅有Feed元数据，Crypto相关正文尚未核验，不当作已生效规则。')
+    if review:lines += ['## 待正文核验的监管线索']+review[:5]
+    coverage={r['id']:r['status'] for r in capture['sources'] if r['id'] in ['sec','cftc','fed','occ','treasury_news','congress','clarity_bill','genius_bill','whitehouse','federal_register']}
+    lines.append('来源覆盖：'+json.dumps(coverage,ensure_ascii=False)+'。Federal Register按完整日期窗口有界分页后本地筛选；Congress指定法案行动记录与一般发布Feed分开。机构时间戳转美东日期，FR用原刊登日期；未知事件日不猜。关键词筛选及新法案发现仍可能遗漏。')
     lines += ['## 下周已知事件与风险']+event_lines(capture,True)
+    deadlines=regulatory_upcoming(capture)
+    lines += deadlines if deadlines else ['下周监管生效/意见截止节点：本次结构化官方记录未确认到；不等于没有节点。']
     lines += ['## 结构性影响与未决问题',
               '事实：上列公告的发布日期和Federal Register文种可追溯。解读：标题与文种不足以证明已通过、已生效或市场因果关系。',
               '|资产|直接/间接影响|','|---|---|']
     for asset in ['BTC','ETH','Stablecoin','Tokenized Securities']:
-        related=any(re.search({'BTC':r'bitcoin|crypto|digital asset','ETH':r'ether|crypto|digital asset','Stablecoin':r'stablecoin|GENIUS','Tokenized Securities':r'tokeniz|tokenis'}[asset],i['title'],re.I) for i in items)
-        lines.append('|'+asset+'|'+('主题直接相关（基于标题的推断）；具体权利义务待正文核验' if related else '本次筛选未确认直接影响；不能据此断言无实质影响')+'|')
+        lines.append('|'+asset+'|'+asset_relevance(items,asset)+'|')
     lines.append('结构性监管变化以已列文种和生效日期为事实基础；标题主题关联不是完整法律影响评估，下周监管截止日缺少可核验信息时保留待确认。')
     lines.append('方法变更：免费确定性系统提供可审计数据与公告线索；不冒充原LLM的完整法律语义研究。详见METHOD_CHANGES.md。')
     lines += ['## 来源与质量','[完整来源登记](https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/source_registry.json)｜[数据质量](https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/quality.json)；各条目附原始官方链接。']

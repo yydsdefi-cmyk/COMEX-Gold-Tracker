@@ -82,3 +82,11 @@ COMEX仍使用原采集器的真实报告窗口，不按自然日重算。每次
 |文件完整性/变更|[MANIFEST.json](MANIFEST.json)，[CHANGELOG.md](CHANGELOG.md)|
 
 目标为MYT每日08:00和周六10:00；首次新schedule尚未到时，实际延迟以GitHub为准。原两项ChatGPT任务仍保留。
+
+## v1.1：监管覆盖与故障记录
+
+新增OCC公告和CLARITY/GENIUS官方BILLSTATUS行动记录。周报现在把国会行动、机构公告、FR刊登和所载生效日期分开；FR有界扫描完整7日文档窗口后本地筛选，明确PARTIAL/未知。旧报告与v1数据不重写，v2捕获包含新增来源。
+
+真实失败会在本仓库维护一个带标记的bot故障issue，恢复后关闭；不更改人工issue，不发测试假故障。仅health-notice job有issues:write，报表job权限不扩大；是否手机收到通知仍未核验。若仓库禁用Issues/拒绝token写入，health-notice会失败并保留Actions日志，报表和Pages的已发布结果不会回滚。
+
+云端ICI/BLS/CNN限制仍存在。ICI工作簿适配器本地成功不是云端成功，不能把fixture或本地旧数据当作云端新值。

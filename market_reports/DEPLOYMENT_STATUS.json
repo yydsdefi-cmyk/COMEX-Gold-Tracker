@@ -32,5 +32,12 @@
     "dashboard": "https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/",
     "quality": "https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/quality.json"
   },
-  "schedule_state_api": "PASS: GitHub workflow id 394836688 state=active read from public GitHub API"
+  "schedule_state_api": "PASS: GitHub workflow id 394836688 state=active read from public GitHub API",
+  "continuation_v1_1": {
+    "status": "PENDING CLOUD ACCEPTANCE",
+    "local_tests": "93 PASS",
+    "live_local": "v2 both reports generated; 29 sources; legacy archive preserved",
+    "cloud_source_probe": "OCC and two GovInfo bill files HTTP200; ICI/BLS403; CNN public shell has no index value",
+    "health_alerts": "unit-tested bot-only dedup/recovery; actual posting not induced"
+  }
 }

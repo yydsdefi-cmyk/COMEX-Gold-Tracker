@@ -1,0 +1,62 @@
+[
+  {
+    "id": "ici_workbook",
+    "url": "https://www.ici.org/mm_summary_data_2025.xls",
+    "fetched_at_utc": "2026-10-24T05:34:59.641718+00:00",
+    "http_status": 403,
+    "error": "HTTP Error 403: Forbidden",
+    "site_error_excerpt": "<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>\n<H1>Access Denied</H1>\n \nYou don't have permission to access \"http&#58;&#47;&#47;www&#46;ici&#46;org&#47;mm&#95;summary&#95;data&#95;2025&#46;xls\" on this server.<P>\nReference&#32;&#35;18&#46;a02b3417&#46;1792820100&#46;20814fd0\n<P>https&#58;&#47;&#47;errors&#46;edgesuite&#46;net&#47;18&#46;a02b3417&#46;1792820100&#46;20814fd0</P>\n</BODY>\n</H"
+  },
+  {
+    "id": "bls_public_calendar",
+    "url": "https://www.bls.gov/schedule/news_release/current_year.asp",
+    "fetched_at_utc": "2026-10-24T05:34:59.642189+00:00",
+    "http_status": 403,
+    "error": "HTTP Error 403: Forbidden",
+    "site_error_excerpt": "<!DOCTYPE HTML>\n<html lang=\"en-us\">      \n               <head> \n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n<title>Access Denied</title>\n</head>\n  <style type=\"text/css\">\n    .centerDiv\n    {\n      width: 60%;\n      height:200px;\n      margin: 0 auto;\n      background-color:#FFFFFF ;\n    }\n  </style>\n<body>\n<div class=\"centerDiv\">\n               <h1><a href=https://www.b"
+  },
+  {
+    "id": "cnn_public_page",
+    "url": "https://www.cnn.com/markets/fear-and-greed",
+    "fetched_at_utc": "2026-10-24T05:34:59.642492+00:00",
+    "error": "ValueError: Response too large"
+  },
+  {
+    "id": "occ_rss",
+    "url": "https://www.occ.gov/rss/occ_news.xml",
+    "fetched_at_utc": "2026-10-24T05:34:59.642813+00:00",
+    "http_status": 200,
+    "bytes": 8645,
+    "sha256": "2d9b3af71f60bd350a82a5ee7eb9bb0ee4900c09822917f81b5b8d44317c3258",
+    "content_type": "text/xml",
+    "final_url": "https://www.occ.gov/rss/occ_news.xml"
+  },
+  {
+    "id": "clarity_bill",
+    "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/119/hr/BILLSTATUS-119hr3633.xml",
+    "fetched_at_utc": "2026-10-24T05:34:59.863712+00:00",
+    "http_status": 200,
+    "bytes": 58608,
+    "sha256": "3a4361797b517b651ad365932965636ab353ed5f3795cf28b02f67031f2fdda6",
+    "content_type": "text/xml",
+    "final_url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/119/hr/BILLSTATUS-119hr3633.xml"
+  },
+  {
+    "id": "genius_bill",
+    "url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/119/s/BILLSTATUS-119s1582.xml",
+    "fetched_at_utc": "2026-10-24T05:34:59.920619+00:00",
+    "http_status": 200,
+    "bytes": 359992,
+    "sha256": "43ac5572487c0604f84292116caad45ade9e9f97153de0b77e94987eb4566559",
+    "content_type": "text/xml",
+    "final_url": "https://www.govinfo.gov/bulkdata/BILLSTATUS/119/s/BILLSTATUS-119s1582.xml"
+  },
+  {
+    "id": "sec_priorities",
+    "url": "https://www.sec.gov/newsroom/press-releases/2026-109-sec-announces-fiscal-year-2027-examination-priorities",
+    "fetched_at_utc": "2026-10-24T05:34:59.974506+00:00",
+    "http_status": 403,
+    "error": "HTTP Error 403: Forbidden",
+    "site_error_excerpt": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n<title>SEC.gov | Request Rate Threshold Exceeded</title>\n<style>\nhtml {height: 100%}\nbody {height: 100%; margin:0; padding:0;}\n#header {background-color:#003"
+  }
+]

@@ -218,7 +218,8 @@ def parse_yahoo(body, now, metric='sp500'):
 
 
 def parse_rss(body, now):
-    root = XML.fromstring(body.decode('utf-8-sig'))
+    root = XML.fromstring(body)
+    from .regulation import KEY
     items = []
     for e in root.findall('.//item'):
         title = text(e.findtext('title') or '')
@@ -235,8 +236,15 @@ def parse_rss(body, now):
         if now-timedelta(days=8) <= pub <= now:
             items.append({'title':title,'url':link,'publication_date':pub.isoformat(),
                           'event_date':None,'legal_status':'UNRESOLVED','effective_date':None,
-                          'topic_signal':bool(re.search(r'crypt|bitcoin|ether|stablecoin|tokeniz|tokenis|digital asset|GENIUS|CLARITY|blockchain',title+' '+text(e.findtext('description') or ''),re.I)),
+                          'topic_signal':bool(KEY.search(title+' '+text(e.findtext('description') or ''))),
+                          'summary':text(e.findtext('description') or '')[:1200],
+                          'review_candidate':bool(re.search(r'examination priorities',title,re.I)),
                           'note':'官方公告；标题或RSS摘要主题筛选不等于法律效力核验'})
+    from .regulation import status_from_title,topics
+    for item in items:
+        item['legal_status']=status_from_title(item['title'])
+        item['topics']=topics(item['title']+' '+item.get('summary',''))
+        item['verified_scope']='official feed title/summary; linked legal body not examined'
     return [], {'items':items,'coverage':'feed window only; no items does not establish no developments'}
 
 
@@ -256,7 +264,9 @@ def parse_federal_register(body, now):
 
 def parse_bls(body, now):
     s=body.decode('utf-8-sig').replace('\r\n ', '').replace('\n ', '')
-    items=[]
+    if 'BEGIN:VCALENDAR' not in s or 'END:VCALENDAR' not in s or 'BEGIN:VEVENT' not in s:
+        raise ValueError('BLS response is not a populated iCalendar')
+    items=[];all_dates=[]
     for chunk in s.split('BEGIN:VEVENT')[1:]:
         m=re.search(r'DTSTART(?:;TZID=([^:\r\n]+))?:(\d{8}T\d{6}Z?)',chunk)
         title=re.search(r'SUMMARY:(.+)',chunk)
@@ -267,10 +277,12 @@ def parse_bls(body, now):
             raise ValueError('BLS timezone unrecognized')
         dt=datetime.strptime(raw.rstrip('Z'),'%Y%m%dT%H%M%S')
         dt=dt.replace(tzinfo=UTC if raw.endswith('Z') else ET)
+        all_dates.append(dt.astimezone(MYT).date().isoformat())
         if now-timedelta(days=7)<=dt<=now+timedelta(days=8):
             items.append({'name':title[1].strip(),'at_myt':dt.astimezone(MYT).isoformat(),'source':'BLS',
                           'tier1':bool(re.search('Consumer Price|Producer Price|Employment Situation|Employment Cost',title[1],re.I))})
-    return [], {'events':items,'coverage':'BLS only; FOMC and BEA processed separately'}
+    if not all_dates:raise ValueError('BLS calendar has no dated events')
+    return [], {'events':items,'calendar_covers_through':max(all_dates),'coverage':'BLS only; FOMC and BEA processed separately'}
 
 
 def parse_bea(body, now):
@@ -340,3 +352,96 @@ def parse_treasury_news(body, now):
     if not rows:
         raise ValueError('No dated Treasury release rows parsed; coverage unconfirmed')
     return [],{'items':items,'coverage':'current dated press-release index only; older pagination not exhaustive'}
+
+
+def parse_ici_workbook(body, now):
+    """Public ICI workbook: exact same universe, units explicitly USD millions."""
+    from comex_gold.parser import read_workbook
+    sheets,_=read_workbook(body)
+    candidates=[rows for _,rows in sheets if any('Weekly Total Net Assets' in str(c) for r in rows for c in r)]
+    if len(candidates)!=1:raise ValueError('ICI workbook identity missing/ambiguous')
+    rows=candidates[0]
+    if not any('(millions of dollars)' in str(c).lower() for r in rows[:6] for c in r):
+        raise ValueError('ICI workbook units missing')
+    heads=[r for r in rows[:10] if r and str(r[0]).strip()=='DATE']
+    if len(heads)!=1:raise ValueError('ICI workbook DATE heading missing')
+    groups=heads[0]
+    total_start=next((i for i,c in enumerate(groups) if str(c).strip()=='TOTAL - ALL MONEY MARKET FUNDS'),None)
+    if total_start is None:raise ValueError('ICI all-fund universe not found')
+    end=next((i for i in range(total_start+1,len(groups)) if str(groups[i]).strip()),len(groups))
+    tna_heads=[r for r in rows[:10] if any(str(c).strip()=='TNA' for c in r)]
+    if len(tna_heads)!=1:raise ValueError('ICI TNA labels missing')
+    tnas=[i for i in range(total_start,end) if str(tna_heads[0][i]).strip()=='TNA']
+    if len(tnas)<4:raise ValueError('ICI all-fund TNA columns incomplete')
+    labels=next((r for r in rows[:10] if any(str(c).strip()=='TAX-EXEMPT' for c in r)),None)
+    if labels is None:raise ValueError('ICI category labels missing')
+    def col(label):
+        i=next((i for i in range(total_start,end) if str(labels[i]).strip()==label),None)
+        if i is None or i+1 not in tnas:raise ValueError('ICI category/TNA heading changed')
+        return i+1
+    total_col=col('TOTAL');components=[col(k) for k in ['TAX-EXEMPT','GOVERNMENT','PRIME']]
+    points={}
+    for row in rows:
+        raw=str(row[0]).strip() if row else ''
+        if not re.fullmatch(r'\d{2}/\d{2}/\d{4}',raw):continue
+        # The dated caption is not a data row.
+        if len(row)<=total_col or row[total_col]=='':continue
+        day=datetime.strptime(raw,'%m/%d/%Y').date().isoformat()
+        value=number(row[total_col])
+        if value<=0 or abs(value-sum(number(row[c]) for c in components))>2:
+            raise ValueError('ICI workbook component reconciliation failed')
+        if day in points:raise ValueError('Duplicate ICI workbook week')
+        points[day]=value*1e6
+    if len(points)<2:raise ValueError('ICI workbook too few dated rows')
+    ordered=sorted(points);obs=[];changes=[]
+    for i,day in enumerate(ordered):
+        obs.append(observation('mmf_assets_usd',points[day],day,'USD',basis='ICI public workbook, TNA, USD millions'))
+        if i and (datetime.fromisoformat(day)-datetime.fromisoformat(ordered[i-1])).days==7:
+            delta=points[day]-points[ordered[i-1]]
+            obs.append(observation('mmf_weekly_asset_change_usd',delta,day,'USD',basis='Difference of adjacent 7-day TNA rows; not net flow'))
+            changes.append({'date':day,'asset_change_usd':delta})
+    trend=None
+    if len(ordered)>=14:
+        last14=ordered[-14:]
+        if all((datetime.fromisoformat(b)-datetime.fromisoformat(a)).days==7 for a,b in zip(last14,last14[1:])):
+            start,finish=last14[0],last14[-1]
+            v=points[finish]-points[start]
+            trend={'weeks':13,'baseline_date':start,'end_date':finish,'asset_change_usd':v,
+                   'asset_change_pct':100*v/points[start],'net_flow_usd':None}
+    return obs, {'source_format':'ICI public XLS/XLSX','net_flow_usd':None,'verified_weeks':len(ordered),
+                 'asset_trend_13w':trend,'weekly_asset_changes':changes,
+                 'note':'总资产及资产差额；不是精确资金净流入。工作簿未单列发布时间，保持null。'}
+
+
+def parse_bill(body, now, identity):
+    root=XML.fromstring(body.decode('utf-8-sig'));bill=root.find('bill')
+    if bill is None:raise ValueError('GovInfo BILLSTATUS bill missing')
+    actual={k:(bill.findtext(k) or '').strip() for k in ['congress','type','number']}
+    if actual!={k:str(v) for k,v in identity.items()}:raise ValueError('GovInfo bill identity mismatch')
+    updated=bill.findtext('updateDate')
+    if updated and datetime.fromisoformat(updated.replace('Z','+00:00'))>now:raise ValueError('Future BILLSTATUS update')
+    title=bill.findtext('title') or ''
+    actions=[]
+    for a in bill.findall('./actions/item'):
+        day=a.findtext('actionDate');description=a.findtext('text') or ''
+        if not day:continue
+        if datetime.strptime(day,'%Y-%m-%d').date()>now.astimezone(ET).date():raise ValueError('Future Congressional action')
+        actions.append({'date':day,'text':description,'type':a.findtext('type')})
+    if not actions:raise ValueError('GovInfo action history missing')
+    latest_node=bill.find('latestAction')
+    latest={'date':latest_node.findtext('actionDate'),'text':latest_node.findtext('text')} if latest_node is not None else max(actions,key=lambda a:a['date'])
+    if latest['date']!=max(a['date'] for a in actions):raise ValueError('BILLSTATUS latest action/history mismatch')
+    laws=[{'type':x.findtext('type'),'number':x.findtext('number')} for x in bill.findall('./laws/item')]
+    enacted=any(x.get('type')=='Public Law' and x.get('number') for x in laws)
+    start=(now.astimezone(MYT).date()-timedelta(days=7)).isoformat();end=now.astimezone(MYT).date().isoformat()
+    items=[{'title':title+' — '+a['text'],'url':'https://www.govinfo.gov/app/details/BILLS-'+actual['congress']+actual['type'].lower()+actual['number'],
+            'publication_date':None,'event_date':a['date'],'event_date_basis':'Congress actionDate',
+            'legal_status':'CongressAction','effective_date':None,'action_type':a['type'],
+            'note':'正式国会行动记录；不把程序行动当作成法或实施规则'}
+           for a in actions if start<=a['date']<end]
+    # Use the exact XML URL for traceability; app/details is version-specific and not guessed.
+    xml_url='https://www.govinfo.gov/bulkdata/BILLSTATUS/'+actual['congress']+'/'+actual['type'].lower()+'/BILLSTATUS-'+actual['congress']+actual['type'].lower()+actual['number']+'.xml'
+    for item in items:item['url']=xml_url
+    return [], {'items':items,'bill_title':title,'bill_identity':actual,'bulk_updated_at':updated,
+                'latest_action':latest,'laws':laws,'enactment_record':'ENACTED' if enacted else 'NO_ENACTMENT_RECORD',
+                'actions_in_window':len(items),'coverage':'Only this identified bill; current official action history, not new-bill discovery'}

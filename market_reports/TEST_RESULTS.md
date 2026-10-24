@@ -33,3 +33,9 @@
 最终补充证据：一次性验收run40065481203成功；360px与390px各检查首页、daily、weekly，body宽度等于viewport，无页面横向溢出，COMEX展开成功；Gold原latest.json/history.csv及market JSON/CSV/registry/quality共7路径HTTP200。下载的JSON证据存evidence-mobile-pages.json/evidence-manual-dispatch.json；截图来自同次真实托管Chromium测试并已人工视觉检查。独立干净远端worktree再跑70项测试通过、17个归档对象核验通过。Total/Registered/Eligible的5D/10D/20D独立Decimal复算9/9见evidence-independent-calculations.json。额外修复了BTC必须使用provider UTC日界（不能用美股ET日界），以及CNN epoch timestamp不代表独立发布时间。
 
 排程未来真实执行仍UNKNOWN；完整原报告语义等价仍NOT ACHIEVED，不因上述工程测试通过而改写。验证时云端CNN/ICI/BLS缺失；网站本身和数据入口正常，缺失不是正常值0。
+
+## v1.1 本地续做结果（部署前）
+
+共93个回归方法通过，较v1.0.1新增23个方法；旧70个不算新增。新增覆盖：OCC实际公告状态、GovInfo两个法案身份/法律记录、cloture非成法、国会行动日与未知发布日期、美东周边界、FR5类分页/重复/失败/元数据错配、明确未来监管截止日、普通clarity/whether非Crypto信号、BTC/ETH直接与间接主题区分、ICI20周单位/类别/13周资产差、BLS错误HTML拒绝、旧capture字节不改、bot故障去重/恢复/人工issue保护。
+
+实际本地端到端生成v2 daily/weekly（29来源）并保持旧档案通过。FR扫469份/5页，4份相关；此为本地证据，新增源码的云端端到端和手机验收尚待完成，不与v1.0.1云端成功混算。

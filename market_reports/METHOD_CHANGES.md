@@ -35,3 +35,14 @@
 |确定性Python规则|当前已部署实测：数字对比、监控等级、中文模板、来源/状态/日历/Timeline候选可生成。|采用；完整法律语义判断仍是明确缺口，不把缺口藏在模型输出中。|
 
 这个比较不创建任何新计费项目或令牌，也不把用户的Google赠款/AI订阅额度算成永久免费资源。
+
+## v1.1 续做（2026-10-24）
+
+- 复用另一线程的已核实GovInfo BILLSTATUS/OCC接入思路，只扩展本仓库market_reports，不部署market_intel/intelligence第二套。通过实际官方XML核对119届HR3633和S1582的身份、title、latestAction和laws；CLARITY的cloture/reconsider行动不等于成法，GENIUS的Public Law记录不等于所有实施规则已生效。
+- 增加OCC官方RSS；区分最终规则公告、正式Federal Register刊登与所载生效日期。机构RSS时间转美东日期，国会行动用actionDate；发布时间未知仍null。保留旧v1 capture字节，新capture v2显式记录29个来源ID，避免增加来源导致旧档案失效。
+- Federal Register改为此前7个完整日期的全部文档有界分页（最多10页/1000条），本地筛选后再读取相关文档的正式文种、生效/意见截止字段。页数/count不一致、重复、缺页均明确PARTIAL并保留已核事实，不声称穷尽全网。仅“clarity”或“whether”不再误判为CLARITY法案/ETH；资产直接相关主题也不等同币价影响或新增专属义务。
+- 2026-10-24本地真实检查扫469文档/5页，筛出4份相关文件：Cboe EDGX crypto资产信托/ETF期权报送公告、OCC稳定币发行许可信息收集通知、OCC稳定币发行人报告信息收集通知、GENIUS实施最终规则。最终云端范围以最新报告JSON为准。
+- 一次性云端公开来源验证run40066811938：OCC/GovInfo两个法案均HTTP200；ICI官方XLS和BLS公开HTML均403。CNN官方页面可下载但只含动态组件空壳，没有可验证的指数值；不从广告/脚本数字猜指数，不更换身份、IP或代理绕过。SEC正文返回官方Request Rate Threshold Exceeded，保留Feed线索，不当作已读法律正文。
+- ICI官方20周XLS解析器仅在HTML release正常取得、且该页面明确链接到公开工作簿时尝试扩展；403不会触发其它路径重试。工作簿是USD millions，独立核对类别合计与13周资产差。资产变化不是净流量；本地适配器通过不代表云端限制解除，不拿测试fixture填生产数据。
+- BLS的HTTP200错误页也必须拒绝，不能当作空日历；日历必须有VCALENDAR/VEVENT和有效时区，并检查所覆盖末日。
+- 新增GitHub内部单一故障issue机制：仅真实report job失败、关键源失败或预期日报/周报缺失时建/更新，恢复后仅关闭带本项目标记且由github-actions[bot]创建的issue。独立health-notice job仅contents:read+issues:write，正常报表job不增加issues写权限；不创建外部消息服务或测试假故障通知。手机通知仍取决于GitHub账号设置。

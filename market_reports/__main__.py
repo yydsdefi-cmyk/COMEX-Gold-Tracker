@@ -4,7 +4,7 @@ import sys
 from datetime import datetime, timedelta
 from pathlib import Path
 from .core import DATA, MYT, ROOT, UTC, atomic, commit_bundle, digest, due_reports, encoded, immutable, rebuild_history, stamp, verify_bundle
-from .sources import collect, registry
+from .sources import collect, registry, SOURCE_IDS_V1, SOURCE_IDS_V2
 from .comex import collect_comex
 from .report import daily,weekly
 from .render import publish
@@ -22,10 +22,13 @@ def validate_archive(data):
         raw=p.read_bytes()
         if p.stem!=digest(raw):raise ValueError('Capture hash mismatch '+p.name)
         c=json.loads(raw)
-        if c['schema_version']!=1:raise ValueError('Unknown capture schema')
+        if c['schema_version'] not in (1,2):raise ValueError('Unknown capture schema')
         sources={r['id']:r for r in c['sources']}
-        if set(sources)!={s['id'] for s in registry(datetime.now(UTC))}|{'comex'}:
-            raise ValueError('Capture source set mismatch')
+        expected=SOURCE_IDS_V1 if c['schema_version']==1 else SOURCE_IDS_V2
+        if len(sources)!=len(c['sources']) or set(sources)!=expected:
+            raise ValueError('Capture source set mismatch/duplicate')
+        if c['schema_version']==2 and c.get('source_ids')!=sorted(expected):
+            raise ValueError('Capture registry snapshot mismatch')
         for o in c['observations']:
             r=sources[o['source']]
             if not o.get('source_url') or o.get('response_sha256')!=r.get('response_sha256'):
@@ -45,7 +48,7 @@ def run(kinds,data=DATA,now=None,collector=collect,comex_collector=collect_comex
     started_at=stamp(now)
     receipts=collector(now)+[comex_collector(now)]
     if not fixed_now:now=datetime.now(UTC)
-    capture={'schema_version':1,'collection_started_at_utc':started_at,'generated_at_utc':stamp(now),'timezone':'Asia/Kuala_Lumpur',
+    capture={'schema_version':2,'source_ids':sorted(SOURCE_IDS_V2),'collection_started_at_utc':started_at,'generated_at_utc':stamp(now),'timezone':'Asia/Kuala_Lumpur',
              'sources':receipts,'observations':[o for r in receipts for o in r['observations']]}
     raw=encoded(capture);capture_id=digest(raw)
     immutable(data/'captures'/(capture_id+'.json'),raw)
@@ -66,7 +69,7 @@ def run(kinds,data=DATA,now=None,collector=collect,comex_collector=collect_comex
     for kind in kinds:
         md=daily(capture) if kind=='daily' else weekly(capture,older)
         payload={'kind':kind,'intended_local_date':today.isoformat(),'target_time_myt':'08:00' if kind=='daily' else '10:00',
-                 'capture_id':capture_id,'capture':capture,'quality':quality,'method_version':'1.0.0'}
+                 'capture_id':capture_id,'capture':capture,'quality':quality,'method_version':'1.1.0'}
         folder=data/'reports'/kind/today.isoformat()
         files={'report.md':md,'report.json':encoded(payload),'quality.json':encoded(quality)}
         revision=commit_bundle(folder,files)
