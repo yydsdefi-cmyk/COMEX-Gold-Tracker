@@ -67,3 +67,7 @@ Version 1.3.0, 2026-10-24.
 ## 立即补跑与重跑发布修复
 
 用户要求立即试跑。40093211984 attempt2采集/150测试/归档成功，但同run默认github-pages产物重名，Pages拒绝发布。已在两个生产workflow将上传name和部署artifact_name配对为run_id/run_attempt组合。修复源码72232f5bea5c2e2f44bd8617dec024637673ed9c；Gold40096226966成功，market40096226964首次及真实attempt2均成功。保留两份artifact且只部署第二份；云端150测试、13项数值复算通过，两个公开报告JSON核对为新capture。原失败记录保留。证据evidence/v1.3-pages-rerun.json；首个正式due排程和来源/语义限制不因手动试跑通过而改写。
+
+## 旧数据导入（2026-10-24）
+
+已恢复10/12–10/16旧指标CSV共5个每日快照，独立存为market_data/imports/legacy-7ba0d79023bd8e6b.json。来源为旧导出，不是逐项已重新回源的数据，保留原值、2个空白、M oz单位及快照日期口径；不并入官方history.csv或伪造旧晨报。首页历史区提供5个日期入口、CSV/JSON下载，机器目录market/imports/index.json。源码2907891a，真实云端40098573657成功，159测试通过；公开首页、5节历史页、索引、JSON及CSV哈希均核验。其他完整旧报告本轮未恢复。证据evidence/v1.3-historical-import.json。公开站点仍为静态只读，仓库访问权限未扩大，未加入账户/上传/转账入口；常见密钥格式扫描无匹配不等于完整安全审计。

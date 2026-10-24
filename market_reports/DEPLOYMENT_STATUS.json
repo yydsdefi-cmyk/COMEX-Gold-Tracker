@@ -4,7 +4,7 @@
   "dashboard_target": "https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/",
   "original_missions_preserved": true,
   "original_prompts_recovered": true,
-  "local_offline_tests": "Historical v1.3 local 150 PASS; takeover reused completed cloud tests without repeating them",
+  "local_offline_tests": "PASS: 159 tests for historical-import source; 9 new import tests",
   "local_live_daily": "Historical v1.0.1 live local PASS/DEGRADED; v1.2 live collection validated in GitHub Actions",
   "local_live_weekly": "Historical v1.0.1 live local PASS/DEGRADED; v1.2 live collection validated in GitHub Actions",
   "remote_code": "PASS: final render source 312c6e28a16d82c824d6a61ac475e456588e22d8",
@@ -15,7 +15,7 @@
   "full_original_semantic_equivalence": "NOT ACHIEVED: see METHOD_CHANGES.md",
   "new_recurring_subscription_cost_usd": 0,
   "verified_at_utc": "2026-10-24T13:04:44.085619+00:00",
-  "remote_offline_tests": "PASS: 150 tests, no skips, actual repaired rerun 40096226964 attempt2",
+  "remote_offline_tests": "PASS: 159 tests, no skips, run 40098573657",
   "historical_archive_integrity": "PASS: takeover clean clone verify=50 objects; no immutable market_data files changed; this is a point-in-time count",
   "original_gold_preserved": "PASS: original Gold push run 40064686634 success after overlay; root latest.json and history.csv HTTP200",
   "schedule_configuration": "PASS: configured on main; daily UTC00:00/00:17/00:47 and Saturday UTC02:00/02:27/03:17",
@@ -39,7 +39,7 @@
     "v1_3_acceptance": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40090620469",
     "v1_3_actual_diagnostic_schedule": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40092628091",
     "v1_3_expanded_mobile": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40093283415",
-    "v1_3_final_report_publish": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40096226964",
+    "v1_3_final_report_publish": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40098573657",
     "pages_rerun_repair": "market_reports/evidence/v1.3-pages-rerun.json"
   },
   "schedule_state_api": "PASS: GitHub workflow id 394836688 state=active read from public GitHub API",
@@ -73,7 +73,7 @@
     "source_coverage": "27/30 OK; CNN/ICI/BLS missing",
     "first_regular_due_run": "UNKNOWN; next daily 2026-10-25 08:00 MYT, weekly 2026-10-31 10:00 MYT"
   },
-  "verified_source_head": "72232f5bea5c2e2f44bd8617dec024637673ed9c",
+  "verified_source_head": "2907891a95942c26c8cab0d902fa2d91464f61f0",
   "diagnostic_scheduler": {
     "run_id": 40092628091,
     "event": "schedule",
@@ -86,5 +86,23 @@
     "temporary_cron": "Removed in eea7abcc59b3c0010024ff2fb3066ee413c1e50a"
   },
   "manual_immediate_trial": "PASS after repair: actual fresh generation plus same-run attempt2, 40096226964 success; both live Pages JSON capture IDs verified",
-  "pages_rerun_repair": "PASS: unique run_id/run_attempt artifact names on both production workflows; two artifacts retained, attempt2 selected and deployed; see evidence/v1.3-pages-rerun.json"
+  "pages_rerun_repair": "PASS: unique run_id/run_attempt artifact names on both production workflows; two artifacts retained, attempt2 selected and deployed; see evidence/v1.3-pages-rerun.json",
+  "historical_import": {
+    "status": "DEPLOYED",
+    "imported_snapshot_dates": [
+      "2026-10-12",
+      "2026-10-13",
+      "2026-10-14",
+      "2026-10-15",
+      "2026-10-16"
+    ],
+    "verification_status": "LEGACY_NOT_REVERIFIED",
+    "row_count": 5,
+    "missing_cells": 2,
+    "date_semantics": "Original daily snapshots, not each series observation/publication dates",
+    "independent_of_authoritative_history": true,
+    "public_machine_index": "https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/imports/index.json",
+    "other_old_complete_reports": "Not restored in this pass",
+    "evidence": "market_reports/evidence/v1.3-historical-import.json"
+  }
 }

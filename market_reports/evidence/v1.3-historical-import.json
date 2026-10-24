@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "source_commit": "2907891a95942c26c8cab0d902fa2d91464f61f0",
+  "run_id": 40098573657,
+  "run_url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40098573657",
+  "conclusion": "success",
+  "cloud_tests": 159,
+  "local_tests": 159,
+  "independent_weekly_audit": {
+    "verified": 13,
+    "failed": 0,
+    "not_calculable": 3
+  },
+  "import_id": "legacy-7ba0d79023bd8e6b",
+  "source_name": "mobile_market_trend_data_2026-10-12_to_2026-10-16.csv",
+  "snapshot_dates": [
+    "2026-10-12",
+    "2026-10-13",
+    "2026-10-14",
+    "2026-10-15",
+    "2026-10-16"
+  ],
+  "date_semantics": "Original daily snapshot dates, not verified observation/publication dates of each series",
+  "verification_status": "LEGACY_NOT_REVERIFIED",
+  "normalized_csv_sha256": "7ba0d79023bd8e6b4c21f136c23c2cc88097c823df9734372130dff1fd698ce4",
+  "hosted_checks": {
+    "home_link": true,
+    "json_index": true,
+    "raw_csv_hash_matches": true,
+    "dated_sections": 5,
+    "missing_cells": 2,
+    "site": "https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/imports/legacy-7ba0d79023bd8e6b/index.html"
+  },
+  "source_history": "No existing official market_data/captures or report revisions overwritten; old snapshot rows not added to authoritative history.csv",
+  "other_history": "No other complete historical reports restored in this pass",
+  "security_review": {
+    "scope": "Current local working-tree common private-key/GitHub-token/API-key/AWS-key pattern scan and page/workflow surface inspection only",
+    "secret_pattern_matches": 0,
+    "not_claimed": "Full penetration test, full Git history scan, account security verification or attack-free guarantee",
+    "page_access": "Public static reading/download; no public upload, authenticated account, transaction or repository write endpoint added"
+  },
+  "log_evidence": [
+    "2026-10-24T13:32:38.5168901Z Ran 159 tests in 2.028s",
+    "2026-10-24T13:32:39.8317805Z Verified/recovered archive objects: 59",
+    "2026-10-24T13:32:54.5319269Z   \"verified\": 13,",
+    "2026-10-24T13:32:54.5319913Z   \"failed\": 0,",
+    "2026-10-24T13:32:54.5320268Z   \"not_calculable\": 3,",
+    "2026-10-24T13:33:04.7951737Z Reported success!"
+  ]
+}
