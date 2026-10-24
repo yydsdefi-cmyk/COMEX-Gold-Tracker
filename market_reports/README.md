@@ -20,6 +20,7 @@ python -m pip install -r requirements.txt
 python -m unittest discover -q
 python -m market_reports verify
 python -m market_reports recover  # only rebuild derived CSV after immutable archive checks
+python -m market_reports.audit  # inspect PASS_CALCULABLE_ONLY / FAIL / BLOCKED
 python -m market_reports run --report both
 python -m comex_gold.cloud --output-dir public-data
 python -m market_reports publish --site public-data
@@ -97,3 +98,7 @@ COMEX仍使用原采集器的真实报告窗口，不按自然日重算。每次
 `verify`只读核对capture、完整报告revision、最新指针及CSV派生视图。`recover`先核验不可变档案，只重建缺失/不一致CSV，不修改旧capture或报告；不可变档案损坏时停止。工作流联网前执行recover，成功后按原有顺序归档及发布。不要手动改pointer或quality来把降级报告涂成正常。
 
 目标前的健康手动预览不会抑制到时重新生成；111项本地与云端测试及手机实际日期状态已验收。浏览器时效提示以设备时钟为准，不是主动推送。原任务、数据缺项及首次真正schedule未到时的限制保持。
+
+## v1.3 升级候选
+
+新增NYFed公开日历旁证、SRF完整度保护、有单位的周变化和只读Decimal审计；实际状态见DEPLOYMENT_STATUS.json。BLS/ICI/CNN的云端限制不因本地可读而消失。Pages保留近180天及每类最新报告，更旧记录从按月导航打开仓库Markdown，完整CSV/JSON及修订保留。

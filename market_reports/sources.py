@@ -13,6 +13,7 @@ from .core import UTC, stamp, digest, assess_date, observation, ET
 
 SOURCE_IDS_V1=frozenset('aaii cnn vix vix3m crypto srf treasury ici bls bea fomc sec cftc fed congress whitehouse treasury_news federal_register sp500 nasdaq us10y dxy wti gold btc comex'.split())
 SOURCE_IDS_V2=SOURCE_IDS_V1|{'occ','clarity_bill','genius_bill'}
+SOURCE_IDS_V3=SOURCE_IDS_V2|{'nyfed_calendar'}
 
 
 def registry(now):
@@ -30,6 +31,8 @@ def registry(now):
       s('bls','https://www.bls.gov/schedule/news_release/bls.ics','bls'),
       s('bea','https://www.bea.gov/news/schedule','bea'),
       s('fomc','https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm','fomc'),
+      s('nyfed_calendar','https://www.newyorkfed.org/research/calendars/nationalecon_cal','nyfed_calendar',kind='official_editorial_calendar',
+        note='Supplementary public NYFed calendar; linked next month only when needed. BLS direct availability stays separate.'),
       s('sec','https://www.sec.gov/news/pressreleases.rss','rss'),
       s('cftc','https://www.cftc.gov/RSS/RSSGP/rssgp.xml','rss'),
       s('occ','https://www.occ.gov/rss/occ_news.xml','rss'),
@@ -72,6 +75,9 @@ def download(url, timeout=20, attempts=2, opener=urlopen):
 
 def collect_one(spec, now, downloader=download):
     if spec['id']=='federal_register':return regulation.collect_register(now,downloader)
+    if spec['id']=='nyfed_calendar':
+        from .calendar import collect_calendar
+        return collect_calendar(now,downloader)
     receipt = {**spec,'fetched_at_utc':stamp(now),'status':'MISSING','observations':[],'details':{}}
     try:
         body,meta=downloader(spec['url'])
@@ -92,7 +98,11 @@ def collect_one(spec, now, downloader=download):
                     details['workbook_observations']=[{**o,'source_url':workbook_url,'response_sha256':wm['response_sha256'],
                         'fetched_at_utc':wm['fetched_at_utc']} for o in long_obs]
                 except Exception as exc:details['workbook_extension_error']=type(exc).__name__+': '+str(exc)[:200]
+        seen=set()
         for o in obs:
+            identity=(o['metric'],o['observation_date'])
+            if identity in seen:raise ValueError('Duplicate indicator observation date')
+            seen.add(identity)
             o.update(source=spec['id'],source_url=spec['url'],response_sha256=meta['response_sha256'],fetched_at_utc=meta['fetched_at_utc'])
             o['quality']='SCHEDULED' if o.get('scheduled') else assess_date(o['observation_date'],now,spec['max_age_days'])
             if o['quality']=='FUTURE':
@@ -103,6 +113,8 @@ def collect_one(spec, now, downloader=download):
             if latest and assess_date(latest,now,spec['max_age_days'])!='OK':
                 receipt['status']='STALE'
         if spec['id']=='srf' and obs and not max(obs,key=lambda o:o['observation_date'])['complete']:
+            receipt['status']='PROVISIONAL'
+        if spec['id']=='srf' and obs and any(x['date']>=max(o['observation_date'] for o in obs) for x in details.get('unclassified_operations',[])):
             receipt['status']='PROVISIONAL'
         if spec['id']=='bls' and details.get('calendar_covers_through','')<(now.date()+timedelta(days=7)).isoformat():
             receipt['status']='INCOMPLETE'

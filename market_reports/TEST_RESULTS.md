@@ -69,3 +69,9 @@
 独立实际数据副本恢复实验：只读verify发现CSV截断且不修改证据；recover无源网络调用，重建后SHA256与冻结基线一致；90个不可变文件hash均未变。见evidence/v1.2-isolated-recovery.json。Gold导出器与市场叠加前后本地10文件hash不变，云端原入口HTTP200。health-notice实跑HEALTHY_NO_INCIDENT，不造生产假故障。
 
 29来源26 OK；CNN418、ICI/BLS403仍DEGRADED。原ChatGPT任务未修改；新真实schedule尚未到时UNKNOWN、完整法律语义NOT ACHIEVED、手机通知送达UNKNOWN。不得把工程PASS写成无缺项迁移。
+
+## v1.3 候选验证
+
+150个方法通过、0跳过（既有111+新增39）。新增覆盖SRF缩写/误排/时区/完整场次/未知操作/部分不冒充Normal、未知首次发布时间、实际10/11月日历/DST/跨月/失败/错误页/陈旧/越界链接、事件去重与冲突、%/bp/pp/B USD、VIX同日输入、周内片段、来源失联/修订/0基准/未来与未核验点、provider数组和重复日期、独立Decimal故障注入以及Pages保留/源历史不删。
+
+本地真实两报30来源，仅CNN缺失；13项可算周变化独立复算通过、3不可算。ICI/BLS本地可读不代表云端可读，本地market_data不上传。云端公开日历探测两页200；新版集成端到端、手机和临时真实排程待验收。环境中断前已有150测试证据，恢复后重新检查，不能把之前版本云端成功冒充本版。

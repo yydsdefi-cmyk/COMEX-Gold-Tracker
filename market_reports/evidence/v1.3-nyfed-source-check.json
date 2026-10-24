@@ -1,0 +1,23 @@
+{
+  "run": 40071922697,
+  "sources": [
+    {
+      "url": "https://www.newyorkfed.org/research/calendars/nationalecon_cal",
+      "status": 200,
+      "bytes": 118065,
+      "sha256": "e9f878f4247e12316eb32f58de72f1deb1d141389f5d4c9ae0d212f9dc6850b3",
+      "eastern_time_label": true,
+      "eci": true,
+      "fetched_at_utc": "2026-10-24T06:52:37.835855+00:00"
+    },
+    {
+      "url": "https://www.newyorkfed.org/research/calendars/i-nov26.html",
+      "status": 200,
+      "bytes": 111401,
+      "sha256": "a11293381f5ed080d1241ced1df9e6463fac863164dda32ed71993a877195fa5",
+      "eastern_time_label": true,
+      "eci": false,
+      "fetched_at_utc": "2026-10-24T06:52:38.082625+00:00"
+    }
+  ]
+}

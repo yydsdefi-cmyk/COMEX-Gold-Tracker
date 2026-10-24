@@ -54,3 +54,19 @@
 页面时效按MYT每天08:00、周六10:00逐份计算；未到当期目标前仍以上一期为目标，到时至4小时内显示排队/补跑，之后显示逾期。该4小时来自既有恢复窗口，不是数据风险阈值。当前日报和周报有各自状态，历史页不冒充当前页；设备时间异常单独提醒。浏览器不需外部API，不发送提醒；未打开页面时不会主动检查。来源是否新鲜与报告是否发布仍分开。
 
 补充：目标时刻前的健康手动预览不满足当期定时运行；到时仍重新采集。页面同日预览也不会被当作已完成目标。
+
+## v1.3 续做
+
+NYFed经济日历是独立官方编辑日历，全部时间Eastern；BLS直连缺失仍保留。未来7个MYT日期跨月时只跟随实际NEXT MONTH同域链接，最多两月；检查月份、全部工作日格、连续月、时区和覆盖，失败保留已核父页并标PARTIAL/INCOMPLETE。BEA/BLS与NYFed同类同刻合并为旁证，时刻冲突保留。沿用CPI/PPI/就业/ECI/GDP/PCE/FOMC筛选，不扩充普通事件清单。
+
+SRF整词SVE/test/exercise或small value才排除；latest不能误排。已给时区保留，naive lastUpdated才按ET解释。完整度为08:15–08:30及13:30–13:45 ET各一场、没有未分类同日操作；特殊时间或制度改变标PROVISIONAL，不猜缺场为0。部分数量不渲染全天Normal。依据NYFed 2025-12-10制度公告及官方FAQ，不使用旧FAQ过时利率或总额限制，用户监控等级不变。
+
+Crypto daily timestamp和NYFed lastUpdated不代表独立首次发布时间。新记录保存provider_timestamp/provider_updated_at，publication_date未知null；旧schema1/2及旧CSV记录不改，旧方法字段不能当作新核验的首次发布时间。新schema3为旧29来源加nyfed_calendar，共30。
+
+周初基准取7日前当日或此前最近可得观察，检索范围14天；缺基准明确PARTIAL_WEEK。价格用%、US10Y用bp、情绪与比例用点/pp、资金用B USD。VIX/VIX3M必须同观察日，不称完整期货曲线。历史点可保留旧STALE标记作为历史依据，当前来源失联另标；未来/未核验点和部分SRF日不用于完整日比较。JSON analysis保留输入日期、source_url、hash、vintage和单位。
+
+只读audit使用Decimal和独立测量规则核对派生数字、原始观察绑定、显示单位和周初标签。只有可算项目是PASS_CALCULABLE_ONLY，没有数据为BLOCKED/NOT_CALCULABLE；不是退出0即全指标通过。生产在采集后执行，真实不一致阻止发布。
+
+GitHub官方公开站点上限1GB：Pages发布近180天及每类最新报告，按最新存档日锚定窗口；更早条目按月链接仓库Markdown。所有JSON/revision/全量CSV留在Git，生成目录market/archive可重建，market_data不删除。
+
+本版将临时增加一次真实GitHub schedule诊断，以新鲜采集生成both；这是额外验收时刻，不冒充每日08:00/周六10:00目标分钟的实际执行。验收后移除临时cron与模式分支。

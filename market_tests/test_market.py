@@ -31,6 +31,10 @@ def fake_sources(now):
     out=[]
     for s in registry(now):
         k=s['id'];obs=[];details={}
+        if k=='nyfed_calendar':
+            from market_reports.calendar import parse_calendar
+            details=parse_calendar((FIX/'nyfed_calendar_oct.html').read_bytes())
+            out.append(receipt(k,details=details));continue
         fixture={'aaii':'aaii.html','srf':'srf.json','crypto':'crypto.json','vix':'vix.txt','vix3m':'vix3m.txt','ici':'ici.html','treasury':'auctions.json','bea':'bea.txt','fomc':'fed_calendar.txt','bls':'bls.txt','occ':'occ_rss.xml','clarity_bill':'govinfo_clarity_excerpt.xml','genius_bill':'govinfo_genius_excerpt.xml'}.get(k)
         if fixture:
             args={'metric':k} if k in ('vix','vix3m') else {'identity':s['bill_identity']} if s['parser']=='bill' else {}

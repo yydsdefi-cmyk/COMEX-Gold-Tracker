@@ -46,3 +46,8 @@ v1.1新增来源：
 |https://www.ici.org/mm_summary_data_2025.xls |ICI当前官方页面链接的20周TNA工作簿；云端403未解决，只在HTML成功且明确链接时尝试。未知发布时间不推算|
 
 公开来源云端验证证据：[source-verification-2026-10-24.json](evidence/source-verification-2026-10-24.json)。诊断探针为临时工作流，验收后移除；不持续换路由访问被拒来源。
+
+
+v1.3：NYFed官方编辑日历 https://www.newyorkfed.org/research/calendars/nationalecon_cal ，实际NEXT MONTH示例 https://www.newyorkfed.org/research/calendars/i-nov26.html 。月份动态读取，不硬编码未来年月；这不是BLS站点访问恢复。云端两页HTTP200证据见evidence/v1.3-nyfed-source-check.json，run40071922697。
+
+SRF制度参考 https://www.newyorkfed.org/markets/opolicy/operating_policy_251210 及其官方FAQ。Pages容量依据 https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits （2026-10-24核验，公开站点1GB上限）。

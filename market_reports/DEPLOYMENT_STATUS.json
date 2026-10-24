@@ -55,5 +55,15 @@
     "archive_recovery": "PASS: immutable lineage validated before derived CSV rebuild",
     "limits": "CNN/ICI/BLS unavailable; full legal semantics not equivalent; first actual scheduled execution pending"
   },
-  "independent_recovery": "PASS: real archive isolated copy, CSV corruption detected read-only then recovered byte-identically; 90 immutable files unchanged; no source network calls"
+  "independent_recovery": "PASS: real archive isolated copy, CSV corruption detected read-only then recovered byte-identically; 90 immutable files unchanged; no source network calls",
+  "continuation_v1_3": {
+    "status": "PENDING CLOUD ACCEPTANCE",
+    "local_tests": "150 PASS, no skips",
+    "local_live": "30 sources; only CNN missing locally; not cloud ICI/BLS proof",
+    "independent_local_numeric_audit": "13 verified, 0 failed, 3 not calculable",
+    "cloud_calendar_probe": "Two public calendar pages HTTP200 run40071922697",
+    "capture_schema": 3,
+    "temporary_diagnostic_schedule": "45 11 24 10 *",
+    "target_utc": "2026-10-24T11:45:00+00:00"
+  }
 }

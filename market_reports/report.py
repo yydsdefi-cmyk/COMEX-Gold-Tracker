@@ -3,6 +3,8 @@ import re
 from datetime import datetime, timedelta
 from .core import MYT, parse_time, number
 from .regulation import timeline_day,asset_relevance,KEY
+from .calendar import event_kind,NAMES
+from .trends import weekly_changes
 
 
 def compose(lines):
@@ -53,8 +55,18 @@ def event_list(capture, future=False):
             at=parse_time(e['at_myt'])
             in_window=local.date()<=at.date()<=local.date()+timedelta(days=7) if future else at.date()==local.date()
             if e.get('tier1') and in_window:
-                events.append(e)
-    return sorted(events,key=lambda x:x['at_myt'])
+                events.append({**e,'event_id':e.get('event_id') or event_kind(e['name']),
+                               'evidence':[{'source':e['source'],'calendar_url':e.get('calendar_url') or r['url'],
+                                            'release_url':e.get('release_url')}]})
+    # Same event/time is corroboration, not a second event. Conflicting times stay visible.
+    grouped={}
+    for e in sorted(events,key=lambda x:x['source']=='NYFed calendar'):
+        key=(e['event_id'] or e['name'],e['at_myt'])
+        if key in grouped:grouped[key]['evidence']+=e['evidence']
+        else:grouped[key]=e
+    for e in grouped.values():
+        e['time_conflict']=any(other['event_id']==e['event_id'] and other['at_myt'][:10]==e['at_myt'][:10] and other['at_myt']!=e['at_myt'] for other in grouped.values()) if e['event_id'] else False
+    return sorted(grouped.values(),key=lambda x:x['at_myt'])
 
 
 def event_lines(capture,future=False):
@@ -62,13 +74,19 @@ def event_lines(capture,future=False):
     events=event_list(capture,future)
     lines=[]
     for e in events[:8 if future else 3]:
-        lines.append('- '+e['at_myt'].replace('T',' ')[:16]+' MYT｜'+e['name']+'（'+e['source']+'）')
+        name=NAMES.get(e['event_id'],e['name'])
+        proof=' / '.join(dict.fromkeys('['+x['source']+']('+x['calendar_url']+')' for x in e['evidence']))
+        lines.append('- '+e['at_myt'].replace('T',' ')[:16]+' MYT｜'+name+'（'+proof+'）'+(' ⚠来源时刻冲突，待核验' if e['time_conflict'] else ''))
     if not events:
         lines.append('已读取日历内未发现符合筛选的Tier-1事件；不等于完整全球经济日历无事件。')
     failed=[k for k in ['bls','bea','fomc'] if src.get(k,{}).get('status')!='OK']
     if failed:
         lines.append('⚠ 日历覆盖待确认：'+', '.join(failed))
-    lines.append('范围：美国BLS/BEA/FOMC；不含付费共识预期与自动因果归因。FOMC时刻按14:00 ET惯例估计，临时变更待核验。')
+    if src.get('nyfed_calendar',{}).get('status')=='OK':
+        lines.append('补充：纽约联储公开日历可旁证部分事件，不代表BLS直连已恢复；日历日期/时刻可能调整。')
+    elif 'nyfed_calendar' in src:
+        lines.append('⚠ 纽约联储补充日历覆盖：'+src['nyfed_calendar']['status'])
+    lines.append('范围：美国BLS/BEA/FOMC及NYFed日历；不含付费共识预期与自动因果归因。FOMC时刻按14:00 ET惯例估计，临时变更待核验。')
     return lines
 
 
@@ -142,7 +160,7 @@ def daily(capture):
            '- 美股情绪：'+('部分数据待确认，极端共振不能确认。' if sources.get('cnn',{}).get('status')!='OK' else '见来源分类；AAII/VIX未预设新极端阈值。'),
            '- Crypto：'+('最新 '+fmt(value(capture,'crypto_fg'),0)+'，与昨日/7日前分开核对。' if latest(capture,'crypto_fg') else '待确认。'),
            '- Event Risk：'+str(len(event_list(capture)))+'项已读取日历候选；覆盖限制见下。',
-           '- SRF：'+(str(latest(capture,'srf_usd').get('level')) if latest(capture,'srf_usd') else '待确认')+'，不等同QE判断。',
+           '- SRF：'+(str(latest(capture,'srf_usd').get('level')) if latest(capture,'srf_usd') and sources.get('srf',{}).get('status')=='OK' and latest(capture,'srf_usd').get('complete') else '完整使用量/等级待确认')+'，不等同QE判断。',
            '- Treasury：未来7日已公告供给分Bills/Coupon。',
            '- COMEX：'+('当天核验通过；库存风险另列。' if sources.get('comex',{}).get('status')=='OK' else '⚠本次未通过采集核验。'),
            '- Cash Liquidity：'+('周资产变化可得；不是精确净流入。' if value(capture,'mmf_assets_usd') is not None else '待确认。'),
@@ -180,7 +198,10 @@ def daily(capture):
     lines += ['## SRF（常规隔夜操作）']
     o=latest(capture,'srf_usd')
     if o:
-        lines.append('$'+fmt(o['value']/1e9,6)+'B → '+o['level']+'｜'+dates(o)+'｜'+str(o['operation_count'])+'场；'+('完整度规则通过' if o.get('complete') else '⚠仅部分操作，不能视为全天总量'))
+        complete=o.get('complete') and sources.get('srf',{}).get('status')=='OK'
+        lines.append('$'+fmt(o['value']/1e9,6)+'B'+(' → '+o['level'] if complete else '（仅已得部分；全天等级待确认）')+'｜'+dates(o)+'｜'+str(o['operation_count'])+'场；'+('完整度规则通过' if complete else '⚠操作/源完整度未核验'))
+        if o.get('provider_updated_at'):
+            lines[-1]+='｜最后修订 '+o['provider_updated_at']+'（首次发布时间未单列）'
         if o['level']!='Normal':
             lines.append('观察：流动性使用量触发用户监控等级；超过$100B也不代表必然QE。')
         excluded=sources['srf']['details'].get('excluded_exercises',[])
@@ -231,28 +252,10 @@ def regulatory_upcoming(capture):
 
 def weekly(capture, daily_captures):
     now=parse_time(capture['generated_at_utc']).astimezone(MYT)
+    comparisons=weekly_changes(capture,daily_captures)
     lines=[f'# 每周市场与Crypto监管周报｜{now:%Y-%m-%d}',f'生成 {now:%H:%M} MYT｜目标周六10:00 MYT｜市场数据截至本次抓取；监管覆盖此前7个完整日期（来源发布日期口径），延迟抓取不冒充准点发布。',
-           '## 一周市场变化',f'已累积 {len(daily_captures)} 个不同MYT日期的日报档案；少于7天时不冒充完整晨报周总结。',
-           '|指标|可核验期初→期末|变化|','|---|---|---|']
-    for metric,label in [('sp500','S&P 500'),('nasdaq','Nasdaq'),('aaii_spread','AAII Spread pp'),('cnn_fg','CNN F&G'),('vix','VIX'),('vix3m','VIX3M'),('crypto_fg','Crypto F&G'),('srf_usd','SRF USD'),('mmf_assets_usd','MMF资产 USD')]:
-        rows={}
-        for c in daily_captures+[capture]:
-            for o in c['observations']:
-                if o['metric']==metric and (now.date()-timedelta(days=14)).isoformat()<=o['observation_date']<=now.date().isoformat():
-                    rows[o['observation_date']]=o
-        ordered=[rows[k] for k in sorted(rows)]
-        baseline=[o for o in ordered if o['observation_date']<=(now.date()-timedelta(days=7)).isoformat()]
-        current=[o for o in ordered if o['observation_date']>(now.date()-timedelta(days=7)).isoformat()]
-        ordered=([baseline[-1]] if baseline else [])+current
-        if len(ordered)<2:
-            lines.append('|'+label+'|已核验独立日期不足|待确认|');continue
-        a,b=ordered[0],ordered[-1]
-        lines.append('|'+label+'|'+a['observation_date']+' '+fmt(a['value'])+' → '+b['observation_date']+' '+fmt(b['value'])+'|'+fmt(b['value']-a['value'],2,True)+'（原单位）|')
-    srf=series(capture,'srf_usd');srf=[o for o in srf if (now.date()-timedelta(days=6)).isoformat()<=o['observation_date']<=now.date().isoformat()]
-    if srf:
-        lines.append('SRF已取得日期的使用量合计 $'+fmt(sum(o['value'] for o in srf)/1e9,6)+'B；最大单日 $'+fmt(max(o['value'] for o in srf)/1e9,6)+'B。按操作日期去重，测试操作排除；缺日不补0，合计不是未偿存量。')
-    summary=[]
-    spread=series(capture,'aaii_spread')
+           '## 一周市场变化',f'本次引用此前 {len(daily_captures)} 个不同MYT日期的日报档案，并使用本次采集；不足完整一周时不冒充7份晨报总结。',
+ …720 tokens truncated…ries(capture,'aaii_spread')
     if len(spread)>=2:
         a,b=spread[-2],spread[-1];change=b['value']-a['value']
         summary.append('AAII Bull-Bear Spread '+fmt(a['value'],1)+'→'+fmt(b['value'],1)+'pp，'+('悲观程度上升' if change<0 else '悲观程度下降' if change>0 else '没有变化')+'（调查情绪，非收益预测）。')

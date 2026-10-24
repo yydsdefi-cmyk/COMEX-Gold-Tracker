@@ -3,7 +3,7 @@ import html
 import json
 import re
 import shutil
-from datetime import datetime
+from datetime import datetime,timedelta,date
 from pathlib import Path
 from .core import atomic, encoded, digest, verify_bundle
 from .schedule import CLOCK_JS
@@ -14,6 +14,8 @@ CSS='''
 main{max-width:860px;margin:auto;padding:22px 18px 60px}header{border-bottom:3px solid var(--accent);padding:14px 0 22px}h1{font-size:26px;line-height:1.3;letter-spacing:-.5px}h2{font-size:18px;margin:30px 0 10px;padding-top:15px;border-top:1px solid var(--line)}a{color:#086a73;overflow-wrap:anywhere}p,li{overflow-wrap:anywhere}ul{padding-left:22px}nav{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0}nav a,.card{background:white;padding:12px 16px;border:1px solid var(--line);border-radius:12px;text-decoration:none}.card{margin:14px 0}.muted{color:var(--muted)}.warn{background:#fff0d6;border-left:4px solid #b7791f;padding:12px 14px;border-radius:5px}.table-scroll{max-width:100%;overflow-x:auto;margin:14px 0;background:white;border-radius:8px;border:1px solid var(--line)}table{border-collapse:collapse;font-size:13px;width:100%;min-width:380px}th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:normal}th{background:#e9f2f3}pre{white-space:pre-wrap;overflow-wrap:anywhere}small{color:var(--muted)}details{background:#fff;padding:12px;border-radius:8px;margin:12px 0}summary{cursor:pointer;font-weight:600}.overview p{margin:5px 0}@media(max-width:400px){main{padding:14px 12px 40px}h1{font-size:23px}body{font-size:14px}th,td{padding:7px 8px}}
 '''
 CSS+='\n.report-clock{font-size:13px}.report-clock[data-state="CURRENT"]{background:#e8f4f1;border-left-color:#087c75}\n'
+PAGES_ARCHIVE_DAYS=180
+REPOSITORY='https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker'
 
 
 def freshness_banner(kind,day,generated):
@@ -80,17 +82,24 @@ def publish(data,site):
     for p in sorted((data/'reports').glob('*/*/latest.json')):
         ptr=json.loads(p.read_text());bundle=p.parent/ptr['revision'];verify_bundle(bundle)
         kind=p.parent.parent.name;day=p.parent.name
+        pointers.append((kind,day,ptr,bundle))
+    latest={kind:max(x[1] for x in pointers if x[0]==kind) for kind in ['daily','weekly'] if any(x[0]==kind for x in pointers)}
+    floor=(date.fromisoformat(max(x[1] for x in pointers))-timedelta(days=PAGES_ARCHIVE_DAYS-1)).isoformat() if pointers else ''
+    visible=[x for x in pointers if x[1]>=floor or latest.get(x[0])==x[1]]
+    # Only rendered output is replaced. Immutable reports and full CSV stay in Git.
+    if (target/'archive').exists():shutil.rmtree(target/'archive')
+    for kind,day,ptr,bundle in visible:
         destination=target/'archive'/kind/day
         destination.mkdir(parents=True,exist_ok=True)
         for name in ['report.md','report.json','quality.json','MANIFEST.json']:
             shutil.copyfile(bundle/name,destination/name)
         md=(bundle/'report.md').read_text()
         atomic(destination/'index.html',page(kind+' '+day,'<p class="muted">历史档案：'+day+'，不是当前报告。</p>'+markdown(md,compact=True),base='../../../',generated=ptr['generated_at_utc']))
-        pointers.append((kind,day,ptr,bundle))
     links=[]
     for kind in ['daily','weekly']:
         matches=[x for x in pointers if x[0]==kind]
         if not matches:
+            for ext in ['html','md','json']:(target/(kind+'.'+ext)).unlink(missing_ok=True)
             links.append('<div class="card"><h2>'+('每日08:00 晨报' if kind=='daily' else '周六10:00 周报')+'</h2>'+freshness_banner(kind,'','')+'</div>');continue
         _,day,ptr,bundle=matches[-1]
         md=(bundle/'report.md').read_text()
@@ -104,8 +113,17 @@ def publish(data,site):
     gen=json.loads((data/'health.json').read_text())['last_generated_at_utc'] if (data/'health.json').exists() else ''
     body='<h1>市场反向指标与监管观察</h1><p class="muted">Malaysia time · 每日08:00 / 周六10:00<br>公开数据、确定性中文分析，持续独立于ChatGPT运行。</p><div class="warn" id="health">生成状态是静态快照；请核对报告日期。调度可能延迟，缺失/未核验不表示风险为零。</div>'+''.join(links)
     body+='<details><summary>历史档案与数据</summary><p><a href="history.csv">CSV历史序列</a> · <a href="source_registry.json">来源登记</a> · <a href="quality.json">质量报告</a> · <a href="../latest.json">原Gold Tracker JSON</a></p>'
-    for kind,day,ptr,bundle in reversed(pointers):
-        body+=f'<p><a href="archive/{kind}/{day}/index.html">{day} {kind}</a></p>'
+    body+='<p class="muted">页面保留近180天及每类最新报告；更早报告链接到仓库，所有修订和完整CSV保留。</p>'
+    months=sorted({x[1][:7] for x in pointers},reverse=True)
+    for month in months:
+        body+='<details><summary>'+month+'</summary>'
+        for kind,day,ptr,bundle in reversed(pointers):
+            if day[:7]!=month:continue
+            local=(kind,day,ptr,bundle) in visible
+            href=f'archive/{kind}/{day}/index.html' if local else REPOSITORY+f'/blob/main/market_data/reports/{kind}/{day}/{ptr["revision"]}/report.md'
+            body+='<p><a href="'+href+'">'+day+' '+kind+('' if local else '（仓库）')+'</a></p>'
+        body+='</details>'
+    body+='<p><a href="'+REPOSITORY+'/tree/main/market_data/reports">所有原始档案及修订</a></p>'
     body+='</details><p class="muted">监管：官方公告与Federal Register文种可核验；完整法律语义与资产影响仍须正文核验。CNN被拒时保持缺失。此系统不自动生成交易建议。</p>'
     atomic(target/'index.html',page('市场观察',body,base='./',generated=gen))
-    return len(pointers)
+    return len(visible)
