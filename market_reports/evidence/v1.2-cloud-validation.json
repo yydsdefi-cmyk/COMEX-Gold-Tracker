@@ -1,0 +1,50 @@
+{
+  "version": "1.2.0",
+  "source_commit": "fb0f1b335e2d36411bcf032c031551573935e5aa",
+  "data_commit": "e850e4e381f2e55d63dcb28f9b5ff974c489fe8c",
+  "manual_both_run": 40070992174,
+  "manual_report_job": 120804316831,
+  "mobile_acceptance_run": 40070987079,
+  "manual_conclusion": "success",
+  "mobile_conclusion": "success",
+  "local_clean_remote_tests": {
+    "methods": 111,
+    "failures": 0,
+    "skipped": 0
+  },
+  "cloud_tests": {
+    "methods": 111,
+    "failures": 0,
+    "skipped": 0
+  },
+  "enhanced_archive_objects_verified": 38,
+  "csv_rows": 463,
+  "capture_schemas": {
+    "1": 6,
+    "2": 6
+  },
+  "previous_immutable_files_compared": 72,
+  "previous_immutable_files_changed": 0,
+  "source_receipts": 29,
+  "source_ok": 26,
+  "missing_sources": {
+    "cnn": "HTTP418",
+    "ici": "HTTP403",
+    "bls": "HTTP403"
+  },
+  "actual_browser_clock_boundary_checks": 7,
+  "browser_simulated_clock": "2026-10-25T04:00:00Z",
+  "browser_dom_states": {
+    "daily": "OVERDUE",
+    "weekly": "CURRENT"
+  },
+  "health_job": 120804446739,
+  "health_result": "HEALTHY_NO_INCIDENT",
+  "original_gold_output_files_locally_compared": 10,
+  "gold_files_changed_by_overlay": 0,
+  "schedule_workflow_state": "active",
+  "first_actual_schedule": "UNKNOWN; target not yet reached",
+  "full_semantic_equivalence": "NOT ACHIEVED",
+  "new_recurring_subscription_cost_usd_estimate": 0,
+  "verified_at_utc": "2026-10-24T06:39:53.792828+00:00"
+}

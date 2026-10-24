@@ -1,0 +1,14 @@
+{
+  "test": "Real archived data copied to isolated directory; CSV interrupted then recovered",
+  "data_commit": "20a63d67bc043dfcb72c2aa29d7a16c53df73f39",
+  "code_commit": "fb0f1b335e2d36411bcf032c031551573935e5aa",
+  "read_only_verify_rejected_corruption": true,
+  "read_only_verify_left_bad_csv_untouched": true,
+  "recovered_csv_sha256": "ba0074ea57e2b5b9d5af626449fc27c7f1d9581fd30285ea898fed86cea289e6",
+  "recovered_csv_matches_frozen_baseline": true,
+  "immutable_files": 90,
+  "immutable_files_changed": [],
+  "verified_archive_objects": 32,
+  "source_network_calls": 0,
+  "result": "PASS"
+}

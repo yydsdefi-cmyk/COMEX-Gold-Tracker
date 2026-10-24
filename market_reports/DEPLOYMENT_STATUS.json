@@ -1,22 +1,22 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "repository": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker",
   "dashboard_target": "https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/",
   "original_missions_preserved": true,
   "original_prompts_recovered": true,
-  "local_offline_tests": "PASS: 93 tests from independent clean remote worktree",
-  "local_live_daily": "PASS with explicitly degraded sources",
-  "local_live_weekly": "PASS with explicitly degraded sources and semantic limitations",
-  "remote_code": "PASS: source commit 9136230f5628d3e1a2aabd8a3f6100d3673b75e7",
+  "local_offline_tests": "PASS: 111 tests, no skips, from independent clean remote worktree",
+  "local_live_daily": "Historical v1.0.1 live local PASS/DEGRADED; v1.2 live collection validated in GitHub Actions",
+  "local_live_weekly": "Historical v1.0.1 live local PASS/DEGRADED; v1.2 live collection validated in GitHub Actions",
+  "remote_code": "PASS: source commit fb0f1b335e2d36411bcf032c031551573935e5aa",
   "remote_end_to_end": "PASS: daily and weekly persisted and published; data coverage DEGRADED",
-  "manual_dispatch": "PASS: real workflow_dispatch input=both, run 40068302153, success",
-  "mobile_pages": "PASS: 360px and 390px, dashboard/daily/weekly HTTP200, no body overflow, COMEX expansion works",
+  "manual_dispatch": "PASS: real workflow_dispatch input=both, run 40070992174, success",
+  "mobile_pages": "PASS: 360/390px three pages, seven endpoints, COMEX expansion; actual browser independent date states and seven clock boundaries",
   "future_schedule_execution": "UNKNOWN: first newly installed actual schedule has not yet occurred; do not equate manual with schedule",
   "full_original_semantic_equivalence": "NOT ACHIEVED: see METHOD_CHANGES.md",
   "new_recurring_subscription_cost_usd": 0,
-  "verified_at_utc": "2026-10-24T05:59:52Z",
-  "remote_offline_tests": "PASS: 93 tests in GitHub Actions run 40068302153",
-  "historical_archive_integrity": "PASS: 26 archive objects; 459 CSV rows; six schema1 and two schema2 captures preserved",
+  "verified_at_utc": "2026-10-24T06:39:53.792828+00:00",
+  "remote_offline_tests": "PASS: 111 tests, no skips, GitHub Actions run 40070992174",
+  "historical_archive_integrity": "PASS: 38 objects; 463 CSV rows; six v1/six v2 captures; 72 previous immutable files compared byte-for-byte, no change",
   "original_gold_preserved": "PASS: original Gold push run 40064686634 success after overlay; root latest.json and history.csv HTTP200",
   "schedule_configuration": "PASS: configured on main; daily UTC00:00/00:17/00:47 and Saturday UTC02:00/02:27/03:17",
   "next_daily_target_myt": "2026-10-25T08:00:00+08:00",
@@ -27,12 +27,14 @@
   "acceptance_overall": "CONDITIONAL: autonomous infrastructure deployed, original report semantics not fully equivalent",
   "evidence": {
     "initial_cloud_run": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40064686612",
-    "final_manual_both": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40068302153",
-    "final_mobile_acceptance": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40068297391",
+    "final_manual_both": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40070992174",
+    "final_mobile_acceptance": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40070987079",
     "dashboard": "https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/",
     "quality": "https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/quality.json",
     "v1_0_1_manual_both": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40065487640",
-    "v1_0_1_mobile_acceptance": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40065481203"
+    "v1_0_1_mobile_acceptance": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40065481203",
+    "v1_1_manual_both": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40068302153",
+    "v1_1_mobile_acceptance": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40068297391"
   },
   "schedule_state_api": "PASS: GitHub workflow id 394836688 state=active read from public GitHub API",
   "continuation_v1_1": {
@@ -43,12 +45,15 @@
     "regulatory_sources": "OCC and identified CLARITY/GENIUS official status; full FR bounded seven-day scan",
     "limits": "ICI/BLS/CNN missing; full legal-effect reasoning not equivalent; first actual schedule pending"
   },
-  "failure_issue_mechanism": "PASS healthy cloud branch: HEALTHY_NO_INCIDENT, no issue created. Create/dedup/recovery covered by mocks; no real failure induced.",
+  "failure_issue_mechanism": "PASS healthy cloud branch HEALTHY_NO_INCIDENT; incident create/dedup/recovery tested with mocks; delivery UNKNOWN",
   "continuation_v1_2": {
-    "status": "PENDING CLOUD ACCEPTANCE",
+    "status": "DEPLOYED / CONDITIONAL ACCEPTANCE",
     "local_tests": "111 PASS, no skips",
-    "legacy_archive": "26 objects PASS; schema1/2 bytes unchanged",
-    "changes": "Report/capture/pointer/quality/CSV linkage; independent MYT report freshness; recover derived CSV only",
-    "early_manual_preview": "Fixed: healthy preview cannot suppress scheduled generation"
-  }
+    "cloud_tests": "111 PASS, no skips",
+    "mobile_acceptance": "PASS: independent report clock DOM and seven browser boundaries",
+    "early_manual_preview": "PASS: healthy preview cannot suppress due report, browser shows pending",
+    "archive_recovery": "PASS: immutable lineage validated before derived CSV rebuild",
+    "limits": "CNN/ICI/BLS unavailable; full legal semantics not equivalent; first actual scheduled execution pending"
+  },
+  "independent_recovery": "PASS: real archive isolated copy, CSV corruption detected read-only then recovered byte-identically; 90 immutable files unchanged; no source network calls"
 }

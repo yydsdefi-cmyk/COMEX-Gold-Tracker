@@ -7,7 +7,7 @@
 - 周报: https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/weekly.html
 - 工作流: https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/workflows/market-reports.yml
 
-当前v1.1.0，2026-10-24已实际发布并验收（93项本地/云端测试、真实manual both及360/390px手机检查通过）；基础设施PASS，数据覆盖DEGRADED，完整原报告语义不等价。详见 [部署状态](DEPLOYMENT_STATUS.json) 和 [HANDOFF](HANDOFF.md)。
+当前v1.2.0，2026-10-24已实际发布并验收（111项本地/云端测试、真实manual both及360/390px手机检查通过）；基础设施PASS，数据覆盖DEGRADED，完整原报告语义不等价。详见 [部署状态](DEPLOYMENT_STATUS.json) 和 [HANDOFF](HANDOFF.md)。
 
 完整原提示词在 `specs/original_missions.json`；2026-10-24两份原任务输出在相邻文件。原任务保持启用，没有调用自动化修改接口。
 
@@ -79,7 +79,7 @@ COMEX仍使用原采集器的真实报告窗口，不按自然日重算。每次
 |方法与免费LLM比较|[METHOD_CHANGES.md](METHOD_CHANGES.md)|
 |来源说明|[SOURCE_REGISTRY.md](SOURCE_REGISTRY.md)|
 |测试及验收|[TEST_RESULTS.md](TEST_RESULTS.md)，[DEPLOYMENT_STATUS.json](DEPLOYMENT_STATUS.json)|
-|机器证据|[v1.1手动触发](evidence/v1.1-manual-dispatch.json)，[v1.1手机页面](evidence/v1.1-mobile-pages.json)，[云端验证](evidence/v1.1-cloud-validation.json)，[独立复算](evidence-independent-calculations.json)|
+|机器证据|[v1.2手动触发](evidence/v1.2-manual-dispatch.json)，[手机页面](evidence/v1.2-mobile-pages.json)，[逐份时效](evidence/v1.2-clock-pages.json)，[云端验证](evidence/v1.2-cloud-validation.json)，[隔离恢复](evidence/v1.2-isolated-recovery.json)，[独立复算](evidence-independent-calculations.json)|
 |文件完整性/变更|[MANIFEST.json](MANIFEST.json)，[CHANGELOG.md](CHANGELOG.md)|
 
 目标为MYT每日08:00和周六10:00；首次新schedule尚未到时，实际延迟以GitHub为准。原两项ChatGPT任务仍保留。
@@ -95,3 +95,5 @@ COMEX仍使用原采集器的真实报告窗口，不按自然日重算。每次
 ## v1.2 档案验证与恢复
 
 `verify`只读核对capture、完整报告revision、最新指针及CSV派生视图。`recover`先核验不可变档案，只重建缺失/不一致CSV，不修改旧capture或报告；不可变档案损坏时停止。工作流联网前执行recover，成功后按原有顺序归档及发布。不要手动改pointer或quality来把降级报告涂成正常。
+
+目标前的健康手动预览不会抑制到时重新生成；111项本地与云端测试及手机实际日期状态已验收。浏览器时效提示以设备时钟为准，不是主动推送。原任务、数据缺项及首次真正schedule未到时的限制保持。

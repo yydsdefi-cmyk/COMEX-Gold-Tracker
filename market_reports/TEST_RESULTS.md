@@ -1,5 +1,7 @@
 # Test results — 2026-10-24
 
+当前v1.2：111项本地/云端测试通过，0跳过；最新验收在本文末尾，早期结果保留为历史。
+
 实际命令：`python -m unittest discover -q`，v1.0.1本地最终运行70项、0失败。原Gold40项+新market_tests30个测试方法；不把用例内多个assert重复计数。网络端到端与远端部署不算离线测试通过。
 
 |要求|结果|实际证据/边界|
@@ -57,3 +59,13 @@
 首次新回归2项旧fixture失败：健康due测试仅改pointer.degraded，旧capture测试缺派生CSV。分别改为真正全OK的合成receipt及从原始capture建立CSV，保留原测试目的，不取消新校验。真实v1/v2旧档案26对象通过增强核验。云端新版及浏览器日期状态尚待验收，旧版成功不代替新版结果。
 
 后续发现并修复提前健康手动预览会抑制到时due的边界；111项全部通过，并对浏览器相同日期但生成早于目标时刻的状态做真实脚本执行。前一候选109项/手机验收已通过，但不代替此修正的云端结果。
+
+## v1.2 最终云端验收
+
+最终源码fb0f1b335e2d36411bcf032c031551573935e5aa。真实manual both 40070992174、手机验收40070987079均success；云端111个测试方法通过、0跳过，全新远端worktree也111通过。38个归档对象增强核验，CSV463行；六个schema1/六个schema2 capture。v1.1已有72不可变文件逐字节比对没有变化。源清单52文件的已部署候选hash全部吻合；本次最终文档清单另重新生成，不能把清单自己的hash加入自身。
+
+托管Chromium：360/390px首页/日报/周报无body横向溢出，COMEX展开，七个Gold/市场数据路径HTTP200。实际浏览器7项MYT日期/4小时补跑/提前预览边界通过，DOM模拟2026-10-25 12:00 MYT为daily OVERDUE、weekly CURRENT，已查看实际截图。这是时钟逻辑验收，不冒充未来真实调度。
+
+独立实际数据副本恢复实验：只读verify发现CSV截断且不修改证据；recover无源网络调用，重建后SHA256与冻结基线一致；90个不可变文件hash均未变。见evidence/v1.2-isolated-recovery.json。Gold导出器与市场叠加前后本地10文件hash不变，云端原入口HTTP200。health-notice实跑HEALTHY_NO_INCIDENT，不造生产假故障。
+
+29来源26 OK；CNN418、ICI/BLS403仍DEGRADED。原ChatGPT任务未修改；新真实schedule尚未到时UNKNOWN、完整法律语义NOT ACHIEVED、手机通知送达UNKNOWN。不得把工程PASS写成无缺项迁移。

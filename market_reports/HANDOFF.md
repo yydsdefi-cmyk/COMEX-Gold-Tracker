@@ -1,6 +1,6 @@
 # HANDOFF — Market Reports Migration
 
-Version 1.1.0, 2026-10-24.
+Version 1.2.0, 2026-10-24.
 
 原始任务、完整原文、实际历史样本已恢复并保存在specs。原ChatGPT任务保持启用。唯一已授权目标仓库为 https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker ，GitHub连接确认账号有admin/push，实际写入及部署结果另以证据确认，不能从权限字段推定成功。
 
@@ -27,7 +27,7 @@ Version 1.1.0, 2026-10-24.
 
 运行时网站、源码、原prompts、样本、source registry、quality、历史、MANIFEST、CHANGELOG均可从README入口访问；精确状态以DEPLOYMENT_STATUS.json为准。重复线程收敛为这一套，不发布market_intel/intelligence第二套。
 
-## v1.1 当前交付状态
+## v1.1 验收历史
 
 已真实部署，条件验收。源码9136230f5628d3e1a2aabd8a3f6100d3673b75e7；manual both 40068302153及手机40068297391成功。云端和独立远端checkout均93测试通过；26归档对象/459 CSV行验证，旧schema1保留。OCC及两个指定国会法案官方状态已接入，FR完整窗口分页及法律阶段/美东日期核对已部署。
 
@@ -36,3 +36,15 @@ Version 1.1.0, 2026-10-24.
 故障issue机制的正常云端分支已运行，输出HEALTHY_NO_INCIDENT、未创建issue；创建/去重/恢复逻辑经模拟测试，未故意制造真实生产故障。通知送达取决于GitHub设置，未验证。临时探测及验收workflow已移除，仅保留两个生产workflow。后续优先检查首次实际定时运行与来源质量；不需ChatGPT或本机常开。当前新增订阅费预计USD0/月，原两任务和Gold功能保留。
 
 当前机器证据在evidence/v1.1-*.json；旧证据保留为历史。MANIFEST按实际Git字节重新计算，覆盖新增源码、fixture、交接文档和两个生产workflow。
+
+## v1.2 当前交付状态
+
+已部署，条件验收。源码fb0f1b335e2d36411bcf032c031551573935e5aa。真实manual both [40070992174](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40070992174)和手机验收[40070987079](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40070987079)成功。云端与全新远端worktree各111测试通过、0跳过；38归档对象、CSV463行，六个schema1和六个schema2 capture并存。与v1.1逐字节比较72个旧不可变文件，无修改。
+
+增强核验覆盖revision内容寻址、报告目录/日期/capture、quality与来源、pointer字段及CSV派生视图。verify只读拒绝漂移；recover在全部不可变对象验证后重建CSV；坏capture绝不自动改hash。另对真实数据的隔离副本模拟CSV中断：只读拒绝、恢复后与冻结CSV一致，90个不可变文件不变，没有源网络请求。原Gold导出器叠加前后10文件hash不变；云端原Gold两数据入口HTTP200。
+
+当前首页、日报、周报按MYT目标独立检查发布时效，允许4小时补跑窗口，之后提示逾期。实际浏览器模拟周日12:00 MYT时显示daily OVERDUE、weekly CURRENT；7个边界检查通过。历史页单独标记；目标前的健康手动预览不会使定时运行跳过。
+
+29来源中26 OK，CNN418/ICI403/BLS403仍明确缺失；没有用本地可读值冒充云端。法律语义等价仍NOT ACHIEVED。首个新schedule尚未到时，真实执行仍UNKNOWN：下一目标2026-10-25 08:00 MYT、周报2026-10-31 10:00 MYT。配置及workflow active已核对，不能以模拟日期或manual代替真实schedule。health-notice正常分支成功，未制造生产故障；手机通知送达未验证。
+
+临时验收/探测workflow已移除，只保留原Gold与market-reports两个生产workflow；无永久actions:write权限扩张。预计新增订阅费USD0/月，仍无需ChatGPT或常开电脑。最新机器证据在evidence/v1.2-*.json；旧证据原样保留。原两个ChatGPT任务未修改。
