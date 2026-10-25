@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "source": "CME",
-  "as_of_local_date": "2026-10-25",
+  "as_of_local_date": "2026-10-26",
   "as_of_timezone": "Asia/Kuala_Lumpur",
-  "generated_at_utc": "2026-10-24T23:55:58.923392+00:00",
+  "generated_at_utc": "2026-10-25T21:40:22.333379+00:00",
   "update_status": "UNCHANGED",
   "last_update": {
-    "attempted_at_utc": "2026-10-24T23:55:58.119048+00:00",
+    "attempted_at_utc": "2026-10-25T21:40:21.835760+00:00",
     "source_url": "https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls",
     "status": "UNCHANGED",
     "imported_reports": 1,
@@ -46,9 +46,9 @@
       "Content-Length": "16896",
       "Last-Modified": "Fri, 23 Oct 2026 19:04:55 GMT",
       "ETag": "\"6275eb63af9cddc2c5d27a63b4c7f421\"",
-      "Date": "Sat, 24 Oct 2026 23:55:58 GMT"
+      "Date": "Sun, 25 Oct 2026 21:40:22 GMT"
     },
-    "last_verified_at_utc": "2026-10-24T23:55:58.643326+00:00"
+    "last_verified_at_utc": "2026-10-25T21:40:22.103758+00:00"
   },
   "observation_count": 39,
   "reconciliation_checks_passed": 164,
@@ -70,7 +70,7 @@
       "interpretation": "Do not treat the difference between reports as physical withdrawal; cause is not confirmed."
     }
   ],
-  "report_age_weekdays": 0,
+  "report_age_weekdays": 1,
   "freshness": "WITHIN_AGE_LIMIT",
   "freshness_rule": "Report Date age <= 1 weekday; conservative, not a confirmed CME publication calendar",
   "is_latest_confirmed": false,
