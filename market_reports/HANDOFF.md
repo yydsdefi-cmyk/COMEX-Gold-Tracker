@@ -1,73 +1,129 @@
-# HANDOFF — Market Reports Migration
+# 市场报表自动化交接 — 2026-10-26
 
-Version 1.3.0, 2026-10-24.
+这是当前接手入口，仅涵盖市场晨报、Crypto监管周报及复用的COMEX Gold Tracker。方法版本仍为1.3.0；本轮核验真实运行并更新交接，没有改计算、调度或权限，没有触发新采集。旧交接全文保存在handoff_history/HANDOFF_2026-10-24.md。
 
-当前状态以本文末尾“v1.3 最终验收与线程接续”及DEPLOYMENT_STATUS.json为准；先前版本段落为历史记录。
+## 当前结果
 
-原始任务、完整原文、实际历史样本已恢复并保存在specs。原ChatGPT任务保持启用。唯一已授权目标仓库为 https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker ，GitHub连接确认账号有admin/push，实际写入及部署结果另以证据确认，不能从权限字段推定成功。
+|项目|当前事实|
+|---|---|
+|生产仓库|https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker ，main；本轮核验基线aff037c54d44db5b714f1fdda7d1cfe809bbb5e8|
+|正式晨报schedule|PASS：10/25与10/26真实schedule事件，REPORT_KIND=due，采集、归档和Pages成功|
+|准点08:00|不保证；首次生成10/25 08:25:17 MYT、10/26 08:36:06 MYT|
+|正式周报schedule|UNKNOWN：首次目标2026-10-31 10:00 MYT；当前10/24周报来自push/manual路径|
+|最新晨报|10/26；最新revision于09:30:07 MYT生成，capture fa5fd67ce7e93a5da48321c7803dd1a83d3eac58ea4e2926669b99f28a14857c|
+|最新周报|10/24；capture 7860be4b5f122e9ca494250530837257b50d1137f13459aa9c5e461247e5d8bf|
+|来源|DEGRADED：30项receipt、27项OK；CNN418、ICI403、BLS403。NYFed补充日历不代表BLS直连恢复|
+|当前验证|最近真实云端159测试通过；干净远端快照verify核对72对象，修改前MANIFEST的79项哈希全部一致|
+|数值审计|10/24周报13项可算值PASS、0 FAIL、3不可算；不代表10/26所有值或完整法律语义均通过|
+|原Gold|10/25–26六次schedule成功；Activity 10/22、Report 10/23；10/26 07:56:55 MYT尝试UNCHANGED；is_latest_confirmed=false|
+|完整语义等价|NOT ACHIEVED：全文法律影响、部分资金流/拍卖指标仍不足，见METHOD_CHANGES.md|
+|手机通知|UNKNOWN；网页不主动推送，原生GitHub失败通知送达取决于账户设置|
+|原ChatGPT任务|本轮未修改；10/24恢复的原prompt在specs。10/26只读查询未取得匹配记录，当前启停UNKNOWN，不据此推断删除或仍启用|
 
-入口：README.md、METHOD_CHANGES.md、SOURCE_REGISTRY.md、TEST_RESULTS.md、DEPLOYMENT_STATUS.json。根目录原Gold README及comex_gold模块保持；仅在原Gold workflow添加叠加报告的步骤。新workflow和Gold共享并发组，防止Pages覆盖与Git写竞争。
+本交接后main可能新增文档提交；接手时重新读取远端HEAD。本轮没有为文档更新重复运行159项回归，使用刚完成的云端证据；已重新只读核验当前档案和最新周报数字。
 
-状态：原40项回归+30项新增方法，共70项离线测试通过；真实daily和weekly本地生成完成。首次测试抓到Treasury漏未来券及第二次30B FRN漏计，已修正接口及分类；不得把初次失败记录改成通过。完整live源可用性以最新quality记录为准。
+## 公开入口
 
-最终部署证据见DEPLOYMENT_STATUS.json及本文最终验收。未来schedule到时才有实际调度证据；仅配置正确和manual通过不能宣称未来schedule已成功。
+- 首页：https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/
+- 晨报：https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/daily.html
+- 周报：https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/weekly.html
+- 报表工作流：https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/workflows/market-reports.yml
+- 原Gold工作流：https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/workflows/collect-and-publish.yml
 
-已知未等价迁移：CNN拒绝/AAII偶发验证页；完整监管语义、所有Congress动态、事件日期时间线、WI拍卖tail和因果反应、精确MMF净流与3个月流趋势。免费规则报表可自主运行，但这些缺口意味着不可宣称原报告100%无损替代。维护者无需ChatGPT；任何Python/GitHub维护者可按README运行。
+手机/平板/电脑的现代浏览器可直接阅读，无需登录。新LLM可读取公开文件分析；写回仓库或手动Actions需要用户在新平台安全连接GitHub，新LLM不继承旧ChatGPT授权。
 
-不要删除或自动停掉原ChatGPT任务。既有Gold根数据入口必须保留。不得引入付费模型、试用、客户数据、常开主机或硬编码凭证。历史revision与source capture不可重写。
+## 调度与发布
 
+全部目标时间Asia/Kuala_Lumpur，UTC+8无夏令时；美国事件用America/New_York处理DST。
 
-## v1.0.1 验收历史（2026-10-24）
+|工作流|UTC cron|MYT配置目标|
+|---|---|---|
+|daily|0,17,47 0 * * *|每日08:00、08:17、08:47|
+|weekly|0,27 2 * * 6；17 3 * * 6|周六10:00、10:27、11:17|
+|原Gold|17 21 * * *；17 23 * * *；41 23 * * *|每日05:17、07:17、07:41|
 
-**基础设施已真实部署；总体CONDITIONAL，未达原报告完整语义等价。** 最终源码commit为c342517df4f4e43d2952169d9d6cc1cd981fa60e。真实manual workflow_dispatch `both` 运行40065487640成功，云端70测试通过，daily/weekly同一capture归档后Pages成功。一次性验收40065481203成功：360/390px各3页、详情交互、7条公开数据路径均通过；JSON证据永久保存在相邻evidence文件。一次性验收workflow在最终交付提交移除，常规报表job没有actions:write。
+GitHub可能延迟或未触发某个cron；本轮观察到每日报表2次真实运行，不能说3个配置点全部执行。不要循环查询UTC等待未来排程，也不要增加临时cron作无目的重复验收。
 
-从最新远端建立独立干净worktree，70测试通过，17个archive对象通过hash/来源绑定核验；当时CSV456条。独立Decimal复算Total/Registered/Eligible的5D/10D/20D共9项通过，不调用原collector计算函数。原Gold在新增叠加步骤后实际运行40064686634成功，原入口未覆盖。CSV条数/档案对象数是验收时点值，后续正常增加。
+两个workflow共享comex-cloud并发组，cancel-in-progress=false。Gold-only发布也叠加现有市场页。生产顺序：checkout main、依赖、回归、recover、due采集、独立周变化audit、Git归档、合并Gold/市场导出、Pages、来源警告与关键源检查。先归档后发布；推送冲突停止，不force。
 
-云端26个source receipts中23项OK；CNN418、ICI403、BLS403。首次本地ICI/BLS可读不能作为云端成功证据，没有用本地旧值填云端空缺。AAII偶发验证页也会保留缺失。监管仍是官方文种/生效日期+主题线索，非穷尽法律研究。原ChatGPT两任务保持启用；不要因工作流绿色就删原任务。
+健康due有当期报告就不再采集；降级报告目标后4小时内允许恢复尝试，提前手动预览不抑制正式到时生成。页面daily/weekly分别检查CURRENT/PENDING/OVERDUE，避免一个新报告掩盖另一个漏更。
 
-排程配置已在main核验。新排程首次到时尚未来临：首个目标2026-10-25 08:00 MYT，下次周报2026-10-31 10:00 MYT；不能把push/manual说成schedule。GitHub原生失败通知送达未验证。当前预计新增订阅费USD0/月，无LLM、常开电脑或ChatGPT依赖。
+comex/srf/crypto/vix/vix3m关键源失败时，先发布明确降级报告再使job失败。独立health-notice维护一个bot拥有的故障issue，恢复后关闭；平台完全没创建运行时，任务无法自我通知。没有外部消息服务。
 
-运行时网站、源码、原prompts、样本、source registry、quality、历史、MANIFEST、CHANGELOG均可从README入口访问；精确状态以DEPLOYMENT_STATUS.json为准。重复线程收敛为这一套，不发布market_intel/intelligence第二套。
+重跑修复必须保留：上传name与deploy artifact_name都用github-pages-${{ github.run_id }}-${{ github.run_attempt }}，防止同run多attempt默认名冲突。40096226964真实attempt2已成功。当前市场workflow固定Actions SHA；原Gold仍有@v标签，不能称全仓库均固定SHA。
 
-## v1.1 验收历史
+## 给其他LLM的数据接口
 
-已真实部署，条件验收。源码9136230f5628d3e1a2aabd8a3f6100d3673b75e7；manual both 40068302153及手机40068297391成功。云端和独立远端checkout均93测试通过；26归档对象/459 CSV行验证，旧schema1保留。OCC及两个指定国会法案官方状态已接入，FR完整窗口分页及法律阶段/美东日期核对已部署。
+以下路径根地址为https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/ ：
 
-29来源中26 OK；CNN418、ICI/BLS403仍缺失。ICI工作簿适配器可离线验证，不代表云端可取。SEC priorities仅线索，不宣称已读被拒绝正文。完整法律语义研究仍未等价；首次实际schedule未到时仍UNKNOWN。
+|用途|路径|
+|---|---|
+|最新结构化报告|market/daily.json、market/weekly.json|
+|对应中文文本|market/daily.md、market/weekly.md|
+|市场历史|market/history.csv|
+|质量及来源登记|market/quality.json、market/source_registry.json|
+|旧导入目录|market/imports/index.json；条目csv/json相对该目录解析|
+|Gold完整历史与快照|根目录history.csv、latest.json|
 
-故障issue机制的正常云端分支已运行，输出HEALTHY_NO_INCIDENT、未创建issue；创建/去重/恢复逻辑经模拟测试，未故意制造真实生产故障。通知送达取决于GitHub设置，未验证。临时探测及验收workflow已移除，仅保留两个生产workflow。后续优先检查首次实际定时运行与来源质量；不需ChatGPT或本机常开。当前新增订阅费预计USD0/月，原两任务和Gold功能保留。
+报告JSON包含kind、intended_local_date、target_time_myt、capture_id、capture、quality、method_version；weekly另含analysis.weekly_comparisons/upcoming_tier1。receipt保存来源URL、抓取时刻、响应hash、状态、观测和错误，并不保存所有原始HTTP正文。
 
-当前机器证据在evidence/v1.1-*.json；旧证据保留为历史。MANIFEST按实际Git字节重新计算，覆盖新增源码、fixture、交接文档和两个生产workflow。
+市场CSV字段：source,metric,observation_date,publication_date,value,unit,fetched_at_utc,response_sha256,quality。当前525行是观测/修订值记录，不是525个交易日。未知发布日期留空，不能用HTTP修改时间、供应商更新戳或抓取时刻替代。
 
-## v1.2 当前交付状态
+CSV按源/指标/观测日/值/发布日期合并相同读取；它不是完整vintage流水。需历史时点重建“当时可知信息”时读market_data/captures，并承认未知首次发布日期；不能仅凭CSV抓取时刻声称完成严格point-in-time回测。历史STALE可能只表示抓取时较旧，不自动表示历史值错误；当前源是否失联另看quality。
 
-已部署，条件验收。源码fb0f1b335e2d36411bcf032c031551573935e5aa。真实manual both [40070992174](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40070992174)和手机验收[40070987079](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40070987079)成功。云端与全新远端worktree各111测试通过、0跳过；38归档对象、CSV463行，六个schema1和六个schema2 capture并存。与v1.1逐字节比较72个旧不可变文件，无修改。
+分析先核对实际覆盖、单位、缺失和修订，按观测日对齐。未来拍卖日的已公告规模不是已完成拍卖。Gold/WTI行情为期货，不是现货；US10Y变化为bp，情绪差为pp/点，库存oz/M oz，空白不是0。
 
-增强核验覆盖revision内容寻址、报告目录/日期/capture、quality与来源、pointer字段及CSV派生视图。verify只读拒绝漂移；recover在全部不可变对象验证后重建CSV；坏capture绝不自动改hash。另对真实数据的隔离副本模拟CSV中断：只读拒绝、恢复后与冻结CSV一致，90个不可变文件不变，没有源网络请求。原Gold导出器叠加前后10文件hash不变；云端原Gold两数据入口HTTP200。
+## 源文件、档案与旧数据
 
-当前首页、日报、周报按MYT目标独立检查发布时效，允许4小时补跑窗口，之后提示逾期。实际浏览器模拟周日12:00 MYT时显示daily OVERDUE、weekly CURRENT；7个边界检查通过。历史页单独标记；目标前的健康手动预览不会使定时运行跳过。
+- market_data/captures/<sha256>.json：不可变capture，当前24份，schema1/2/3分别6/6/12。
+- market_data/reports/<daily|weekly>/<MYT日期>/<revision>/：不可变report.md/report.json/quality.json/MANIFEST.json，当前44个revision；日期目录latest.json为最后更新的可变指针。
+- 当前daily日期为10/24、25、26，weekly只有10/24。网页呈现近180天及每类最新报告，更早条目链接Git；全量CSV及修订留在仓库。
+- market_data/history.csv是可从已核验capture重建的派生视图。不要覆盖capture/revision或修改hash“修复”损坏。
+- 原Gold历史为data/history.csv，39条，Activity范围08/28至10/22；不假设连续无缺口或20D一定可算。
+- market_data/imports/legacy-7ba0d79023bd8e6b.json保留10/12–16旧导出5个每日快照，2个缺失单元，LEGACY_NOT_REVERIFIED。AAII为周度当时沿用值，COMEX快照日未逐行对应Activity/Report Date。保留原值、M oz单位、日期语义，不并入已回源CSV，不伪造旧完整晨报。其他完整旧报告尚未恢复。
+- specs/original_missions.json为完整原prompt/原调度配置，同目录有原报告样本；METHOD_CHANGES.md逐项说明未等价要求；SOURCE_REGISTRY.md及运行时registry登记源和限制。
 
-29来源中26 OK，CNN418/ICI403/BLS403仍明确缺失；没有用本地可读值冒充云端。法律语义等价仍NOT ACHIEVED。首个新schedule尚未到时，真实执行仍UNKNOWN：下一目标2026-10-25 08:00 MYT、周报2026-10-31 10:00 MYT。配置及workflow active已核对，不能以模拟日期或manual代替真实schedule。health-notice正常分支成功，未制造生产故障；手机通知送达未验证。
+## 核心计算限制
 
-临时验收/探测workflow已移除，只保留原Gold与market-reports两个生产workflow；无永久actions:write权限扩张。预计新增订阅费USD0/月，仍无需ChatGPT或常开电脑。最新机器证据在evidence/v1.2-*.json；旧证据原样保留。原两个ChatGPT任务未修改。
+SRF：<10B Normal；[10,50)B Stress；[50,100]B Red Alert；>100B Severe。原50B有重叠，本实现选择已披露工程解释。排除明确SVE/test/exercise，常规两场完整度为当前制度假设；部分场次不能显示全天Normal，高SRF不等于QE。
 
+COMEX：Total单日严格<-1/-3/-5%对应黄/橙/红；Pledged已在Registered内，不重复加。Eligible下降不等于可交割黄金短缺。1D来自官方PREV TOTAL，多日按原采集器连续报告窗口，null和连续性异常保留，不跨断点自行相减。读取同HEAD快照并核对当天MYT05:00后、无未来、≤26h的采集尝试与运行匹配。官方最新状态未独立确认时照实披露。
 
-## v1.3 最终验收与线程接续（2026-10-24）
+周变化保持实际基准日期和%/bp/pp/B USD单位；VIX比率使用同观察日，只是VIX/VIX3M，不称完整期货曲线。ICI资产差不是精确净流量。全文法律生效、适用范围及资产影响需官方正文核验，提案/讲话/标题相关性不能充当生效义务。
 
-已部署，条件验收。接续基线为main `312c6e28a16d82c824d6a61ac475e456588e22d8`；已完成的工作不重复采集或重跑。核对GitHub完成记录：真实manual both [40090946882](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40090946882)、综合验收最新成功attempt [40090620469](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40090620469)、最终发布[40093211984](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40093211984)通过。云端150项测试通过、无跳过；独立Decimal复核13项通过、0失败、3项数据不足。早先因上传payload截断而失败的生产运行与验收attempt仍保留，修复后结果不抹去失败历史。
+## 运行、测试及恢复
 
-360/390px三页与七条原Gold/市场数据路径、COMEX展开、七个日期边界通过。最终展开周变化表与日历[40093283415](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40093283415)通过：17行、表宽310/340px，分别等于容器宽，无水平滚动，bp等单位可见。机器JSON与选取的原始截图保存在`evidence/v1.3-*`，从原1天artifact下载并按其官方ZIP digest核对；旧证据保留。
+在仓库根目录用Python3.12建立venv，安装requirements.txt。无LLM key或计费API要求；报表主要用标准库，复用Gold的XLS依赖。
 
-**实际临时schedule已成功，但正式due排程仍待首跑。** [40092628091](https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40092628091)事件为schedule；名义2026-10-24 19:45 MYT，实际20:07:20 MYT启动，延迟22分20秒。该诊断明确以`both`生成并归档发布，不能证明正式`due`门控、08:00/周六10:00准点执行。临时cron已在`eea7abcc`移除；正式cron与due表达式保留。下一正式目标为2026-10-25 08:00 MYT及2026-10-31 10:00 MYT。无需让Work反复查询时间等待这些时刻。
+```bash
+python -m pip install -r requirements.txt
+python -m unittest discover -q
+python -m market_reports verify
+python -m market_reports.audit
+python -m market_reports recover
+python -m market_reports run --report due
+python -m market_reports run --report both
+python -m comex_gold.cloud --output-dir public-data
+python -m market_reports publish --site public-data
+python -m market_reports.imports old.csv --data-dir market_data
+```
 
-接续时干净远端clone：65项原MANIFEST哈希全部一致；只读verify通过50个档案对象，独立审计再次13通过/0失败/3不可算，未修改任何market_data历史。此次收尾仅保存既有验收证据、更新文档/清单、移除两项已完成临时验收workflow；保留两个生产workflow，去掉临时actions:write。
+verify/audit只读。recover仅在不可变档案通过后恢复派生CSV。run --report both会真实联网并产生修订，仅在需要时运行；Gold导出目录需为空。导入器只接受当前已验证列结构，其他格式先设计映射并保留原件。
 
-当前30来源中27 OK：CNN418、ICI403、BLS403仍缺失；NYFed日历旁证已通过，但不是BLS直连恢复。完整监管法律影响未等价、手机通知送达未验证；原两项ChatGPT任务保持原状。后续只需在正式排程自然发生后查看运行与报告日期；来源接口或语义缺口有可验证方案时再修。当前不引入收费API、不新增第二套系统、不依赖常开电脑或ChatGPT运行。
+测试stdout会打印合成capture和“No report due”；不能取日志首个capture_id当真实采集。结合实际步骤、归档和指针。audit CLI默认检查最新weekly，因此10/26日志13项审计仍对应10/24周报。早期失败记录保留，后续成功不抹去Treasury漏券、上传截断和重跑冲突的历史。
 
-## 立即补跑与重跑发布修复
+当前真实证据：首次daily 40146588471、10/26首次40250109746、10/26恢复40254481640、最近Gold40246990539。链接格式https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/加run_id。机器证据evidence/2026-10-26-live-validation.json；历史手机360/390px验收是10/24证据，本轮未重新测试所有设备。
 
-用户要求立即试跑。40093211984 attempt2采集/150测试/归档成功，但同run默认github-pages产物重名，Pages拒绝发布。已在两个生产workflow将上传name和部署artifact_name配对为run_id/run_attempt组合。修复源码72232f5bea5c2e2f44bd8617dec024637673ed9c；Gold40096226966成功，market40096226964首次及真实attempt2均成功。保留两份artifact且只部署第二份；云端150测试、13项数值复算通过，两个公开报告JSON核对为新capture。原失败记录保留。证据evidence/v1.3-pages-rerun.json；首个正式due排程和来源/语义限制不因手动试跑通过而改写。
+## 费用、权限与接手边界
 
-## 旧数据导入（2026-10-24）
+架构为公开仓库、标准ubuntu GitHub-hosted runner、Pages、Git归档；新增订阅/模型调用费0。平台政策和限额会变化，不承诺永久免费或无限流量，不擅自改私有仓库、larger runner、计费云服务或付费数据。
 
-已恢复10/12–10/16旧指标CSV共5个每日快照，独立存为market_data/imports/legacy-7ba0d79023bd8e6b.json。来源为旧导出，不是逐项已重新回源的数据，保留原值、2个空白、M oz单位及快照日期口径；不并入官方history.csv或伪造旧晨报。首页历史区提供5个日期入口、CSV/JSON下载，机器目录market/imports/index.json。源码2907891a，真实云端40098573657成功，159测试通过；公开首页、5节历史页、索引、JSON及CSV哈希均核验。其他完整旧报告本轮未恢复。证据evidence/v1.3-historical-import.json。公开站点仍为静态只读，仓库访问权限未扩大，未加入账户/上传/转账入口；常见密钥格式扫描无匹配不等于完整安全审计。
+网站公开静态只读，普通访客可下载内容、源码及公开提交信息，分享URL不授予写权限。没有登录、上传、交易或公开写入口。不要发布私人持仓、账户或密钥。10/24常见密钥格式扫描无匹配不等于完整安全审计；本轮未变更权限或重新做安全审计，不保证无恶意流量/账户风险。
+
+原ChatGPT任务本轮未修改，当前启停UNKNOWN，不擅自删除。GitHub执行不依赖它们。新的LLM有GitHub授权才可写回；不把token贴入对话、代码或交接文件。
+
+## 下一步
+
+先用TAKEOVER_PROMPT_ZH.md接手，核对最新main、报告日期、quality和实际schedule，不重建已有系统。10/31自然到时后验证weekly due；研究合法稳定的CNN/ICI/BLS来源，不绕过403/418；有旧原件再补历史；按用户需求补全文法规研究。可选维护包括核验后固定原Gold的Actions SHA。
+
+用户偏好简洁中文、合理可逆维护直接执行、避免重复工作和多轮审批。既有授权内可自主修复并验证，但不得引入费用、强推、改不可变历史、擅改原任务或代发外部消息。结果区分PASS/FAIL/BLOCKED/UNKNOWN，完工后更新交接。

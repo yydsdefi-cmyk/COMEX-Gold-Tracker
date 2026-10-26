@@ -1,5 +1,7 @@
 # 市场晨报与Crypto监管周报
 
+2026-10-26更新：正式daily due已于10/25及26自动运行通过，首次生成约08:25、08:36 MYT；不保证准点。weekly首次正式排程10/31待验证，来源仍27/30 OK。当前接手见[HANDOFF](HANDOFF.md)及[下一位LLM指令](TAKEOVER_PROMPT_ZH.md)，本页较早的候选/首次未到时记录属于10/24历史。
+
 历史导入：已恢复2026-10-12至10-16的旧指标CSV，共5个每日快照。首页“历史档案与数据”内新增“导入的旧数据（历史快照）”，提供逐日查看、CSV及JSON。机器入口为`market/imports/index.json`，相对路径以该目录为基准。原导出保留，不修改已回源的history.csv；所有旧快照统一标记LEGACY_NOT_REVERIFIED，日期为当时快照日期，不冒充各指标的官方观测/发布日期。AAII周值和COMEX日期口径说明随数据提供。其他旧报告本轮未恢复，不捏造缺失日期。
 
 公开分享：当前为公开静态页面和公开仓库。访问者可读取/下载公开内容；普通页面访问不授予仓库写入或Actions运行权限。页面不含登录、资金操作、上传或公开写入入口。发布的资料应仅含允许公开的市场信息，私人持仓/账户和密钥不放在仓库。网址不构成访问控制，账号权限和密钥仍应保密；恶意流量仍可能导致平台限流。此次只做了当前工作树的常见密钥格式扫描，未发现匹配，并非完整渗透或历史提交审计。
@@ -87,7 +89,7 @@ COMEX仍使用原采集器的真实报告窗口，不按自然日重算。每次
 |机器证据|[v1.2手动触发](evidence/v1.2-manual-dispatch.json)，[手机页面](evidence/v1.2-mobile-pages.json)，[逐份时效](evidence/v1.2-clock-pages.json)，[云端验证](evidence/v1.2-cloud-validation.json)，[隔离恢复](evidence/v1.2-isolated-recovery.json)，[独立复算](evidence-independent-calculations.json)|
 |文件完整性/变更|[MANIFEST.json](MANIFEST.json)，[CHANGELOG.md](CHANGELOG.md)|
 
-目标为MYT每日08:00和周六10:00。临时诊断schedule已成功，延迟22分20秒；其both模式不代表正式due排程已通过。首次正式目标尚未到时，实际延迟以GitHub为准。原两项ChatGPT任务仍保留。
+目标为MYT每日08:00和周六10:00。临时诊断schedule已成功，延迟22分20秒；其both模式不代表正式due排程已通过。正式daily due已在10/25、26实跑通过；weekly10/31待首跑，实际延迟以GitHub为准。原两项ChatGPT任务仍保留。
 
 ## v1.1：监管覆盖与故障记录
 

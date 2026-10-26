@@ -7,24 +7,24 @@
   "local_offline_tests": "PASS: 159 tests for historical-import source; 9 new import tests",
   "local_live_daily": "Historical v1.0.1 live local PASS/DEGRADED; v1.2 live collection validated in GitHub Actions",
   "local_live_weekly": "Historical v1.0.1 live local PASS/DEGRADED; v1.2 live collection validated in GitHub Actions",
-  "remote_code": "PASS: final render source 312c6e28a16d82c824d6a61ac475e456588e22d8",
+  "remote_code": "PASS: frozen main aff037c54d44db5b714f1fdda7d1cfe809bbb5e8; source-manifest validation passed",
   "remote_end_to_end": "PASS: v1.3 daily/weekly archived and Pages deployed; coverage DEGRADED",
   "manual_dispatch": "PASS: actual workflow_dispatch both, run 40090946882 success",
   "mobile_pages": "PASS: v1.3 360/390px three pages, seven endpoints, independent clocks; final expanded 17-row weekly table fits both widths, run 40093283415",
-  "future_schedule_execution": "PARTIAL: real temporary diagnostic schedule succeeded (40092628091, both mode); first regular daily/weekly due execution remains UNKNOWN",
+  "future_schedule_execution": "PARTIAL: regular daily schedule+due verified for 2026-10-25/26; first regular weekly schedule still UNKNOWN until 2026-10-31",
   "full_original_semantic_equivalence": "NOT ACHIEVED: see METHOD_CHANGES.md",
   "new_recurring_subscription_cost_usd": 0,
-  "verified_at_utc": "2026-10-24T13:04:44.085619+00:00",
-  "remote_offline_tests": "PASS: 159 tests, no skips, run 40098573657",
-  "historical_archive_integrity": "PASS: takeover clean clone verify=50 objects; no immutable market_data files changed; this is a point-in-time count",
-  "original_gold_preserved": "PASS: original Gold push run 40064686634 success after overlay; root latest.json and history.csv HTTP200",
+  "verified_at_utc": "2026-10-26T06:17:52.912029+00:00",
+  "remote_offline_tests": "PASS: latest regular schedule run 40254481640, 159 tests; no unnecessary local rerun for documentation-only changes",
+  "historical_archive_integrity": "PASS: frozen remote clone read-only verify=72 objects; 24 captures,44 revisions,525 market CSV rows; snapshot counts only",
+  "original_gold_preserved": "PASS: six 10/25-26 scheduled Gold runs success; public latest.json and history.csv HTTP200; latest Activity10/22,Report10/23,attempt10/26 07:56:55 MYT UNCHANGED; official latest independently confirmed=false",
   "schedule_configuration": "PASS: configured on main; daily UTC00:00/00:17/00:47 and Saturday UTC02:00/02:27/03:17",
-  "next_daily_target_myt": "2026-10-25T08:00:00+08:00",
+  "next_daily_target_myt": "2026-10-27T08:00:00+08:00",
   "next_weekly_target_myt": "2026-10-31T10:00:00+08:00",
-  "source_coverage": "DEGRADED: 30 receipts, 27 OK; CNN418, ICI403, BLS403 on actual runner; NYFed supplementary calendar OK",
+  "source_coverage": "DEGRADED: 30 receipts,27 OK; CNN418,ICI403,BLS403 at latest scheduled capture",
   "temporary_acceptance_workflow": "Removed at v1.3 handoff after retaining JSON evidence and selected screenshots; only Gold and market-reports production YAML remain",
   "failure_notification_delivery": "UNKNOWN: native GitHub settings determine delivery; no phone delivery claim",
-  "acceptance_overall": "CONDITIONAL: autonomous infrastructure deployed; data gaps and full original legal semantics remain",
+  "acceptance_overall": "CONDITIONAL: autonomous infrastructure and real daily due verified; source coverage and full original semantics remain incomplete; weekly due pending",
   "evidence": {
     "initial_cloud_run": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40064686612",
     "final_manual_both": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40070992174",
@@ -40,7 +40,10 @@
     "v1_3_actual_diagnostic_schedule": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40092628091",
     "v1_3_expanded_mobile": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40093283415",
     "v1_3_final_report_publish": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40098573657",
-    "pages_rerun_repair": "market_reports/evidence/v1.3-pages-rerun.json"
+    "pages_rerun_repair": "market_reports/evidence/v1.3-pages-rerun.json",
+    "regular_daily_2026_10_25": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40146588471",
+    "regular_daily_2026_10_26": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40254481640",
+    "latest_live_validation": "market_reports/evidence/2026-10-26-live-validation.json"
   },
   "schedule_state_api": "PASS: GitHub workflow id 394836688 state=active read from public GitHub API",
   "continuation_v1_1": {
@@ -71,9 +74,9 @@
     "independent_numeric": "13 verified, 0 failed, 3 not calculable",
     "capture_schema": 3,
     "source_coverage": "27/30 OK; CNN/ICI/BLS missing",
-    "first_regular_due_run": "UNKNOWN; next daily 2026-10-25 08:00 MYT, weekly 2026-10-31 10:00 MYT"
+    "first_regular_due_run": "PASS DAILY on 2026-10-25; WEEKLY UNKNOWN until 2026-10-31"
   },
-  "verified_source_head": "2907891a95942c26c8cab0d902fa2d91464f61f0",
+  "verified_source_head": "aff037c54d44db5b714f1fdda7d1cfe809bbb5e8",
   "diagnostic_scheduler": {
     "run_id": 40092628091,
     "event": "schedule",
@@ -104,5 +107,10 @@
     "public_machine_index": "https://yydsdefi-cmyk.github.io/COMEX-Gold-Tracker/market/imports/index.json",
     "other_old_complete_reports": "Not restored in this pass",
     "evidence": "market_reports/evidence/v1.3-historical-import.json"
-  }
+  },
+  "handoff_revision": "2026-10-26",
+  "regular_daily_schedule": "PASS: schedule events and REPORT_KIND due; 40146588471,40150198864,40250109746,40254481640 completed success",
+  "regular_weekly_schedule": "UNKNOWN: first due target 2026-10-31 10:00 MYT",
+  "on_time_delivery": "NOT GUARANTEED: first report generation 08:25:17 MYT on 10/25 and 08:36:06 on 10/26; these are report-generation delays from 08:00 target, not proven per-cron queue delays",
+  "original_missions_remote_state": "UNKNOWN: this task did not modify them; private lookup did not yield exact-title matches, not proof of deletion"
 }

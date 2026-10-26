@@ -1,0 +1,340 @@
+{
+  "schema_version": 1,
+  "baseline_head": "aff037c54d44db5b714f1fdda7d1cfe809bbb5e8",
+  "verified_date_myt": "2026-10-26",
+  "scope": "Read real scheduled production runs and public endpoints; no new run dispatched and no implementation changes",
+  "scheduled_runs": [
+    {
+      "run_id": 40254481640,
+      "name": "Market reports (daily and weekly)",
+      "event": "schedule",
+      "created_at_utc": "2026-10-26T01:29:40Z",
+      "conclusion": "success",
+      "run_attempt": 1,
+      "head_sha": "c5d38186125ad0aca5f49a0a9002e4055f6dd2c4",
+      "url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40254481640"
+    },
+    {
+      "run_id": 40250109746,
+      "name": "Market reports (daily and weekly)",
+      "event": "schedule",
+      "created_at_utc": "2026-10-26T00:35:38Z",
+      "conclusion": "success",
+      "run_attempt": 1,
+      "head_sha": "6d8cb70ca5a9dd4c512efa8ca3d144d9b644bbb1",
+      "url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40250109746"
+    },
+    {
+      "run_id": 40246990539,
+      "name": "Collect and publish COMEX Gold",
+      "event": "schedule",
+      "created_at_utc": "2026-10-25T23:56:42Z",
+      "conclusion": "success",
+      "run_attempt": 1,
+      "head_sha": "8058d3ad744770ea8d76b8ace8855fcec1f3d55f",
+      "url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40246990539"
+    },
+    {
+      "run_id": 40245505761,
+      "name": "Collect and publish COMEX Gold",
+      "event": "schedule",
+      "created_at_utc": "2026-10-25T23:36:08Z",
+      "conclusion": "success",
+      "run_attempt": 1,
+      "head_sha": "1a7834cf754faaed268d58d61f1d82c183bf94dd",
+      "url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40245505761"
+    },
+    {
+      "run_id": 40236558599,
+      "name": "Collect and publish COMEX Gold",
+      "event": "schedule",
+      "created_at_utc": "2026-10-25T21:40:06Z",
+      "conclusion": "success",
+      "run_attempt": 1,
+      "head_sha": "a304fd37940a134e9830db092d66f62639d9a6c2",
+      "url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40236558599"
+    },
+    {
+      "run_id": 40150198864,
+      "name": "Market reports (daily and weekly)",
+      "event": "schedule",
+      "created_at_utc": "2026-10-25T01:19:47Z",
+      "conclusion": "success",
+      "run_attempt": 1,
+      "head_sha": "6777a5e6c30a8f6ec2d9fc2362d3d7513fe2af92",
+      "url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40150198864"
+    },
+    {
+      "run_id": 40146588471,
+      "name": "Market reports (daily and weekly)",
+      "event": "schedule",
+      "created_at_utc": "2026-10-25T00:24:46Z",
+      "conclusion": "success",
+      "run_attempt": 1,
+      "head_sha": "c0ebb73e727ef9f7f997ab3c16463201df9f82f2",
+      "url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40146588471"
+    },
+    {
+      "run_id": 40144684426,
+      "name": "Collect and publish COMEX Gold",
+      "event": "schedule",
+      "created_at_utc": "2026-10-24T23:55:41Z",
+      "conclusion": "success",
+      "run_attempt": 1,
+      "head_sha": "b6b7a1ed22b13b3ddd6c2abea10e148a33d843fb",
+      "url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40144684426"
+    },
+    {
+      "run_id": 40143404810,
+      "name": "Collect and publish COMEX Gold",
+      "event": "schedule",
+      "created_at_utc": "2026-10-24T23:36:08Z",
+      "conclusion": "success",
+      "run_attempt": 1,
+      "head_sha": "84c0f82698d98c340cb6ab8493303473e362d6ba",
+      "url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40143404810"
+    },
+    {
+      "run_id": 40135226900,
+      "name": "Collect and publish COMEX Gold",
+      "event": "schedule",
+      "created_at_utc": "2026-10-24T21:40:05Z",
+      "conclusion": "success",
+      "run_attempt": 1,
+      "head_sha": "a2c37d734ca2a48a9c19f8efe71602b7adbe1eeb",
+      "url": "https://github.com/yydsdefi-cmyk/COMEX-Gold-Tracker/actions/runs/40135226900"
+    }
+  ],
+  "log_excerpts": [
+    {
+      "run_id": 40146588471,
+      "job_id": 121029128428,
+      "lines": [
+        "2026-10-25T00:24:54.0714633Z   REPORT_KIND: due",
+        "2026-10-25T00:24:55.6995279Z   REPORT_KIND: due",
+        "2026-10-25T00:24:57.2203197Z   REPORT_KIND: due",
+        "2026-10-25T00:24:58.5480801Z   REPORT_KIND: due",
+        "2026-10-25T00:25:02.3268169Z Ran 159 tests in 3.302s",
+        "2026-10-25T00:25:02.3652108Z   REPORT_KIND: due",
+        "2026-10-25T00:25:03.7168706Z Verified/recovered archive objects: 62",
+        "2026-10-25T00:25:03.7452579Z   REPORT_KIND: due",
+        "2026-10-25T00:25:18.5757515Z   REPORT_KIND: due",
+        "2026-10-25T00:25:19.4704856Z   \"verified\": 13,",
+        "2026-10-25T00:25:19.4705176Z   \"failed\": 0,",
+        "2026-10-25T00:25:19.4705808Z   \"not_calculable\": 3,",
+        "2026-10-25T00:25:19.5044399Z   REPORT_KIND: due",
+        "2026-10-25T00:25:20.9233222Z   REPORT_KIND: due",
+        "2026-10-25T00:25:22.0614056Z   REPORT_KIND: due",
+        "2026-10-25T00:25:22.5570208Z   REPORT_KIND: due",
+        "2026-10-25T00:25:22.5687111Z   REPORT_KIND: due",
+        "2026-10-25T00:25:22.5863203Z   REPORT_KIND: due",
+        "2026-10-25T00:25:24.0540509Z   REPORT_KIND: due",
+        "2026-10-25T00:25:31.0962118Z Reported success!",
+        "2026-10-25T00:25:31.1287144Z   REPORT_KIND: due",
+        "2026-10-25T00:25:31.1641353Z ##[warning]bls unavailable/stale/unverified. See market/quality.json",
+        "2026-10-25T00:25:31.1652811Z ##[warning]cnn unavailable/stale/unverified. See market/quality.json",
+        "2026-10-25T00:25:31.1655111Z ##[warning]ici unavailable/stale/unverified. See market/quality.json"
+      ]
+    },
+    {
+      "run_id": 40250109746,
+      "job_id": 121339940382,
+      "lines": [
+        "2026-10-26T00:35:45.4111398Z   REPORT_KIND: due",
+        "2026-10-26T00:35:46.5233912Z   REPORT_KIND: due",
+        "2026-10-26T00:35:48.9396473Z   REPORT_KIND: due",
+        "2026-10-26T00:35:50.4991023Z   REPORT_KIND: due",
+        "2026-10-26T00:35:53.4763052Z Ran 159 tests in 2.418s",
+        "2026-10-26T00:35:53.5044312Z   REPORT_KIND: due",
+        "2026-10-26T00:35:54.3362803Z Verified/recovered archive objects: 67",
+        "2026-10-26T00:35:54.3597410Z   REPORT_KIND: due",
+        "2026-10-26T00:36:07.2626871Z   REPORT_KIND: due",
+        "2026-10-26T00:36:07.8390438Z   \"verified\": 13,",
+        "2026-10-26T00:36:07.8390615Z   \"failed\": 0,",
+        "2026-10-26T00:36:07.8390790Z   \"not_calculable\": 3,",
+        "2026-10-26T00:36:07.8701664Z   REPORT_KIND: due",
+        "2026-10-26T00:36:09.3370761Z   REPORT_KIND: due",
+        "2026-10-26T00:36:10.0434753Z   REPORT_KIND: due",
+        "2026-10-26T00:36:10.3171541Z   REPORT_KIND: due",
+        "2026-10-26T00:36:10.3249236Z   REPORT_KIND: due",
+        "2026-10-26T00:36:10.3371793Z   REPORT_KIND: due",
+        "2026-10-26T00:36:11.8976446Z   REPORT_KIND: due",
+        "2026-10-26T00:36:18.9595968Z Reported success!",
+        "2026-10-26T00:36:18.9813234Z   REPORT_KIND: due",
+        "2026-10-26T00:36:19.0028609Z ##[warning]bls unavailable/stale/unverified. See market/quality.json",
+        "2026-10-26T00:36:19.0033161Z ##[warning]cnn unavailable/stale/unverified. See market/quality.json",
+        "2026-10-26T00:36:19.0034002Z ##[warning]ici unavailable/stale/unverified. See market/quality.json"
+      ]
+    },
+    {
+      "run_id": 40254481640,
+      "job_id": 121353285054,
+      "lines": [
+        "2026-10-26T01:29:47.8188320Z   REPORT_KIND: due",
+        "2026-10-26T01:29:49.1777966Z   REPORT_KIND: due",
+        "2026-10-26T01:29:50.2035135Z   REPORT_KIND: due",
+        "2026-10-26T01:29:51.1467684Z   REPORT_KIND: due",
+        "2026-10-26T01:29:52.8317503Z Ran 159 tests in 1.380s",
+        "2026-10-26T01:29:52.8650504Z   REPORT_KIND: due",
+        "2026-10-26T01:29:53.8022853Z Verified/recovered archive objects: 70",
+        "2026-10-26T01:29:53.8249945Z   REPORT_KIND: due",
+        "2026-10-26T01:30:08.0726560Z   REPORT_KIND: due",
+        "2026-10-26T01:30:08.7216764Z   \"verified\": 13,",
+        "2026-10-26T01:30:08.7216939Z   \"failed\": 0,",
+        "2026-10-26T01:30:08.7217113Z   \"not_calculable\": 3,",
+        "2026-10-26T01:30:08.7523501Z   REPORT_KIND: due",
+        "2026-10-26T01:30:10.1052004Z   REPORT_KIND: due",
+        "2026-10-26T01:30:10.8745258Z   REPORT_KIND: due",
+        "2026-10-26T01:30:11.2280133Z   REPORT_KIND: due",
+        "2026-10-26T01:30:11.2360279Z   REPORT_KIND: due",
+        "2026-10-26T01:30:11.2485040Z   REPORT_KIND: due",
+        "2026-10-26T01:30:12.4287501Z   REPORT_KIND: due",
+        "2026-10-26T01:30:18.9718213Z Reported success!",
+        "2026-10-26T01:30:18.9944901Z   REPORT_KIND: due",
+        "2026-10-26T01:30:19.0181183Z ##[warning]bls unavailable/stale/unverified. See market/quality.json",
+        "2026-10-26T01:30:19.0187684Z ##[warning]cnn unavailable/stale/unverified. See market/quality.json",
+        "2026-10-26T01:30:19.0188855Z ##[warning]ici unavailable/stale/unverified. See market/quality.json"
+      ]
+    },
+    {
+      "run_id": 40246990539,
+      "job_id": 121330539449,
+      "lines": [
+        "2026-10-25T23:56:55.3766393Z Ran 159 tests in 1.248s",
+        "2026-10-25T23:57:05.9447644Z Reported success!"
+      ]
+    }
+  ],
+  "regular_daily_due": "PASS: real schedule events and REPORT_KIND due; reports for 2026-10-25 and 2026-10-26 persisted and published",
+  "regular_weekly_due": "UNKNOWN: next 2026-10-31 10:00 MYT; current 2026-10-24 weekly was generated by a push/manual path",
+  "first_daily_generated_myt": {
+    "2026-10-25": "2026-10-25T08:25:17.798034+08:00",
+    "2026-10-26": "2026-10-26T08:36:06.799223+08:00"
+  },
+  "latest_daily": {
+    "date": "2026-10-26",
+    "generated_at_utc": "2026-10-26T01:30:07.221885+00:00",
+    "capture_id": "fa5fd67ce7e93a5da48321c7803dd1a83d3eac58ea4e2926669b99f28a14857c"
+  },
+  "latest_weekly": {
+    "date": "2026-10-24",
+    "generated_at_utc": "2026-10-24T13:32:52.869985+00:00",
+    "capture_id": "7860be4b5f122e9ca494250530837257b50d1137f13459aa9c5e461247e5d8bf"
+  },
+  "source_coverage": {
+    "total": 30,
+    "ok": 27,
+    "missing": {
+      "bls": "HTTP403",
+      "cnn": "HTTP418",
+      "ici": "HTTP403"
+    },
+    "acceptance": "DEGRADED"
+  },
+  "current_archive": {
+    "verified_objects": 72,
+    "captures": 24,
+    "capture_schemas": {
+      "1": 6,
+      "2": 6,
+      "3": 12
+    },
+    "daily_dates": 3,
+    "weekly_dates": 1,
+    "report_revisions": 44,
+    "market_csv_rows": 525,
+    "gold_csv_rows": 39,
+    "legacy_snapshots": 5,
+    "manifest_entries_before_update": 79,
+    "manifest_mismatches": 0
+  },
+  "weekly_decimal_audit": {
+    "report_date": "2026-10-24",
+    "verified": 13,
+    "failed": 0,
+    "not_calculable": 3,
+    "status": "PASS_CALCULABLE_ONLY"
+  },
+  "cloud_tests": {
+    "count": 159,
+    "run_id": 40254481640,
+    "result": "PASS",
+    "not_rerun_locally": "Implementation unchanged; reused fresh cloud regression logs"
+  },
+  "original_missions": {
+    "remote_state": "UNKNOWN",
+    "changed_by_this_task": false,
+    "lookup_limit": "Private lookup did not yield matched records using original exact-title filter; do not infer deletion or enabled status",
+    "preserved_configuration_source": "market_reports/specs/original_missions.json recovered 2026-10-24"
+  },
+  "limits": [
+    "No on-time guarantee",
+    "Full original legal semantics NOT ACHIEVED",
+    "Phone delivery UNKNOWN",
+    "Official latest CME report independently confirmed=false",
+    "CSV is not a complete point-in-time vintage dataset"
+  ],
+  "public_endpoints": [
+    {
+      "path": "latest.json",
+      "http_status": 200,
+      "bytes": 5380
+    },
+    {
+      "path": "market/imports/index.json",
+      "http_status": 200,
+      "bytes": 424
+    },
+    {
+      "path": "market/quality.json",
+      "http_status": 200,
+      "bytes": 9767
+    },
+    {
+      "path": "history.csv",
+      "http_status": 200,
+      "bytes": 19569
+    },
+    {
+      "path": "market/daily.json",
+      "http_status": 200,
+      "bytes": 673610,
+      "report_date": "2026-10-26",
+      "capture_id": "fa5fd67ce7e93a5da48321c7803dd1a83d3eac58ea4e2926669b99f28a14857c",
+      "generated_at_utc": "2026-10-26T01:30:07.221885+00:00"
+    },
+    {
+      "path": "market/index.html",
+      "http_status": 200,
+      "bytes": 7472
+    },
+    {
+      "path": "market/history.csv",
+      "http_status": 200,
+      "bytes": 77239
+    },
+    {
+      "path": "market/weekly.json",
+      "http_status": 200,
+      "bytes": 719505,
+      "report_date": "2026-10-24",
+      "capture_id": "7860be4b5f122e9ca494250530837257b50d1137f13459aa9c5e461247e5d8bf",
+      "generated_at_utc": "2026-10-24T13:32:52.869985+00:00"
+    }
+  ],
+  "verified_at_utc": "2026-10-26T06:17:52.912029+00:00",
+  "published_report_binding": [
+    {
+      "kind": "daily",
+      "date": "2026-10-26",
+      "sha256": "89d93d9702cc62e34ceac5e6c41c55fdd2f99b49e6fb34da73cd7bce5ff100c8",
+      "same_bytes": true
+    },
+    {
+      "kind": "weekly",
+      "date": "2026-10-24",
+      "sha256": "6c507a4b1df18fc3036a8060f29fcc3ecaf85c68620a0b8161dceb74463d2f0c",
+      "same_bytes": true
+    }
+  ]
+}
