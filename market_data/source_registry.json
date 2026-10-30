@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-29T01:40:58.263354+00:00",
+  "generated_at_utc": "2026-10-30T00:40:27.211129+00:00",
   "sources": [
     {
       "id": "aaii",
@@ -185,7 +185,7 @@
       "max_age_days": 4,
       "note": "Full bounded seven-day document window, local topic filtering, official PDF and effective-date metadata.",
       "parser": "federal_register",
-      "url": "https://www.federalregister.gov/api/v1/documents.json?conditions%5Bpublication_date%5D%5Bgte%5D=2026-10-22&conditions%5Bpublication_date%5D%5Blte%5D=2026-10-28&order=oldest&per_page=100&page=1"
+      "url": "https://www.federalregister.gov/api/v1/documents.json?conditions%5Bpublication_date%5D%5Bgte%5D=2026-10-23&conditions%5Bpublication_date%5D%5Blte%5D=2026-10-29&order=oldest&per_page=100&page=1"
     },
     {
       "id": "sp500",
