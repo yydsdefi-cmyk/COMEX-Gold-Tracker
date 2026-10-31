@@ -1,14 +1,22 @@
 {
-  "historical_rows": 643,
-  "last_generated_at_utc": "2026-10-31T01:43:06.621464+00:00",
+  "historical_rows": 644,
+  "last_generated_at_utc": "2026-10-31T02:39:11.428098+00:00",
   "outputs": [
     {
-      "capture_id": "8268a7e342a422414728972dd5d93066066733d041c2700addeb6ec726c732e7",
+      "capture_id": "721038f2113ae4f5085ad167bd12a873319b6c47635f4f72347b9135cfcd8a56",
       "date": "2026-10-31",
       "degraded": true,
-      "generated_at_utc": "2026-10-31T01:43:06.621464+00:00",
+      "generated_at_utc": "2026-10-31T02:39:11.428098+00:00",
       "kind": "daily",
-      "revision": "6511523301f87cd1275b"
+      "revision": "d3d596b3a7f9e086cfbf"
+    },
+    {
+      "capture_id": "721038f2113ae4f5085ad167bd12a873319b6c47635f4f72347b9135cfcd8a56",
+      "date": "2026-10-31",
+      "degraded": true,
+      "generated_at_utc": "2026-10-31T02:39:11.428098+00:00",
+      "kind": "weekly",
+      "revision": "4a315ca24ee44aae7620"
     }
   ],
   "quality": "DEGRADED",
