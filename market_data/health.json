@@ -1,14 +1,14 @@
 {
-  "historical_rows": 786,
-  "last_generated_at_utc": "2026-11-09T05:12:31.657784+00:00",
+  "historical_rows": 805,
+  "last_generated_at_utc": "2026-11-10T06:27:02.797156+00:00",
   "outputs": [
     {
-      "capture_id": "14893550c0635dc778bae896dda5acfda4b99e0a8ba1bc8e67c5a0f8837d3384",
-      "date": "2026-11-09",
+      "capture_id": "90072b3b688262251d3011ca9705fd2758f4ce94c5db18b02f2a6346f09ad6d5",
+      "date": "2026-11-10",
       "degraded": true,
-      "generated_at_utc": "2026-11-09T05:12:31.657784+00:00",
+      "generated_at_utc": "2026-11-10T06:27:02.797156+00:00",
       "kind": "daily",
-      "revision": "5f5c870a3cfef2b02190"
+      "revision": "5375a3ee20c1657f87c3"
     }
   ],
   "quality": "DEGRADED",
