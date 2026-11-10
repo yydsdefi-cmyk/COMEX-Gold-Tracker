@@ -1,12 +1,12 @@
 {
-  "attempted_at_utc": "2026-11-09T02:57:24.789504+00:00",
+  "attempted_at_utc": "2026-11-10T03:34:04.546563+00:00",
   "source_url": "https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls",
-  "status": "UNCHANGED",
+  "status": "OK",
   "imported_reports": 1,
   "observations": [
     {
-      "date": "2026-11-05",
-      "sha256": "87095753a412b93dc2aa4f509653db743a95312b5e920d691e67d484fec2b2d8"
+      "date": "2026-11-06",
+      "sha256": "86237abb485ea0f7cd59e853358a0eac351cdef711e11ee99e9049884c8b4cf9"
     }
   ]
 }
