@@ -1,35 +1,35 @@
 # COMEX Gold — 官方库存数据
 
-数据生成时间：2026-11-16T03:04:11.449964+00:00
-更新状态：UNCHANGED；数据时效：WITHIN_AGE_LIMIT
-库存日期（Activity Date）：**2026-11-12**；报告日期：2026-11-13
+数据生成时间：2026-11-17T03:53:08.073947+00:00
+更新状态：OK；数据时效：WITHIN_AGE_LIMIT
+库存日期（Activity Date）：**2026-11-13**；报告日期：2026-11-16
 
 单位：troy oz（金衡盎司）；保持 CME Gold Stocks 原始 Combined Total 口径（GC/4GC）。
 
 | 项目 | 库存 | 单日变化 | 单日变化 % |
 |---|---:|---:|---:|
-| Combined Total | 22,904,341.590 | -25,849.198 | -0.112730% |
-| Registered | 14,220,956.883 | -20,544.489 | -0.144258% |
-| Eligible | 8,683,384.707 | -5,304.709 | -0.061053% |
+| Combined Total | 23,028,764.307 | +124,422.717 | 0.543228% |
+| Registered | 14,220,956.883 | +0.000 | 0.000000% |
+| Eligible | 8,807,807.424 | +124,422.717 | 1.432883% |
 
-Registered Ratio：62.088477%
+Registered Ratio：61.753018%
 库存变化分级：NORMAL（用户阈值，非 CME 风险评级）。
 
 单日变化直接核对 CME PREV TOTAL 与 TOTAL TODAY；不补造前一个日期的历史记录。
-5D 变化：-0.386404%（AVAILABLE_CONSECUTIVE_WEEKDAYS）。
-10D 变化：-1.290910%（AVAILABLE_CONSECUTIVE_WEEKDAYS）。
-20D 变化：-2.228184%（AVAILABLE_CONSECUTIVE_WEEKDAYS）。
+5D 变化：+0.155425%（AVAILABLE_CONSECUTIVE_WEEKDAYS）。
+10D 变化：-0.754145%（AVAILABLE_CONSECUTIVE_WEEKDAYS）。
+20D 变化：-1.627126%（AVAILABLE_CONSECUTIVE_WEEKDAYS）。
 
 | 库存分类 | 5D 变化 | 10D 变化 | 20D 变化 |
 |---|---:|---:|---:|
-| Registered | -122,541.107 oz / -0.854332% | -588,545.788 oz / -3.974109% | -596,012.123 oz / -4.022497% |
-| Eligible | +33,694.459 oz / +0.389545% | +289,004.615 oz / +3.442835% | +74,030.419 oz / +0.859884% |
+| Registered | -17,696.696 oz / -0.124286% | -465,954.883 oz / -3.172586% | -596,012.123 oz / -4.022497% |
+| Eligible | +53,433.515 oz / +0.610364% | +290,965.027 oz / +3.416349% | +215,107.349 oz / +2.503373% |
 历史余额衔接异常：2026-09-18 → 2026-09-21。相邻报告前后余额不一致，原因未确认，不能解读为同量实物出库。
 
 Pledged 已在 Registered 内，不另加；Eligible 单独下降不等于交割黄金短缺。
 Registered 快速下降标记：False；连续下降标记：False
-原始报告 SHA-256：`98c128268999ec354300871ce9ba35273447620e9a0e68be1dfa5e63e8b385fb`
-原始文件：`raw/2026-11-12/98c128268999ec354300871ce9ba35273447620e9a0e68be1dfa5e63e8b385fb.xls`
+原始报告 SHA-256：`6559d29f9a25a3c75e2612b5ca9947c5bc029637aa250b707bcf165d3c7f457a`
+原始文件：`raw/2026-11-13/6559d29f9a25a3c75e2612b5ca9947c5bc029637aa250b707bcf165d3c7f457a.xls`
 
 20 日核验进度：20/20（COMPLETE_20_OBSERVATIONS）。
 未取得日期只是工作日候选，不代表已确认的 CME 交易日。
