@@ -1,7 +1,7 @@
 # COMEX Gold — 官方库存数据
 
-数据生成时间：2026-11-17T03:53:08.073947+00:00
-更新状态：OK；数据时效：WITHIN_AGE_LIMIT
+数据生成时间：2026-11-17T05:04:58.395444+00:00
+更新状态：UNCHANGED；数据时效：WITHIN_AGE_LIMIT
 库存日期（Activity Date）：**2026-11-13**；报告日期：2026-11-16
 
 单位：troy oz（金衡盎司）；保持 CME Gold Stocks 原始 Combined Total 口径（GC/4GC）。
