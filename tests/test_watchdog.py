@@ -19,12 +19,12 @@ class WatchdogTests(unittest.TestCase):
         self.assertTrue(fresh)
 
     def test_previous_local_day_triggers_retry(self):
-        self.latest["last_update"]["attempted_at_utc"] = "2026-11-16T23:30:00+00:00"
+        self.latest["last_update"]["attempted_at_utc"] = "2026-11-16T15:30:00+00:00"
         fresh, _ = snapshot_is_fresh(self.latest, self.now)
         self.assertFalse(fresh)
 
     def test_attempt_before_five_myt_triggers_retry(self):
-        self.latest["last_update"]["attempted_at_utc"] = "2026-11-16T21:00:00+00:00"
+        self.latest["last_update"]["attempted_at_utc"] = "2026-11-16T20:59:00+00:00"
         fresh, _ = snapshot_is_fresh(self.latest, self.now)
         self.assertFalse(fresh)
 
