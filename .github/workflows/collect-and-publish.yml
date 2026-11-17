@@ -3,10 +3,15 @@ name: Collect and publish COMEX Gold
 on:
   workflow_dispatch:
   schedule:
-    # UTC -> Asia/Kuala_Lumpur 05:17, 07:17, 07:41 every day.
+    # Original collection windows: 05:17, 07:17, 07:41 MYT.
     - cron: '17 21 * * *'
     - cron: '17 23 * * *'
     - cron: '41 23 * * *'
+    # Automatic catch-up checks: 08:17, 09:17, 10:17 and 11:17 MYT.
+    - cron: '17 0 * * *'
+    - cron: '17 1 * * *'
+    - cron: '17 2 * * *'
+    - cron: '17 3 * * *'
   push:
     branches: [main]
     paths:
@@ -27,7 +32,7 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
@@ -44,11 +49,20 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: Test parsing and failure behavior
         run: python -m unittest discover -q
+      - name: Check whether today's MYT snapshot needs collection
+        id: freshness
+        if: github.event_name == 'schedule'
+        run: |
+          result="$(python -m comex_gold.watchdog --data-dir data)"
+          echo "$result"
+          echo "collect=$(python -c 'import json,sys; print(str(json.load(sys.stdin)["collect"]).lower())' <<< "$result")" >> "$GITHUB_OUTPUT"
       - name: Download, reconcile, archive
         id: collect
+        if: github.event_name != 'schedule' || steps.freshness.outputs.collect == 'true'
         continue-on-error: true
         run: python -m comex_gold update --timeout 25 --attempts 2
       - name: Persist history before publishing (including failure status)
+        if: steps.collect.outcome == 'success' || steps.collect.outcome == 'failure'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -61,6 +75,24 @@ jobs:
         run: python -m comex_gold.cloud --output-dir public-data
       - name: Preserve market dashboard on Gold-only deployments
         run: python -m market_reports publish --site public-data
+      - name: Validate local publication package
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          root = Path("public-data")
+          latest = json.loads((root / "latest.json").read_text())
+          health = json.loads((root / "health.json").read_text())
+          manifest = json.loads((root / "manifest.json").read_text())["sha256"]
+          assert latest.get("last_update", {}).get("attempted_at_utc"), "missing collection attempt timestamp"
+          assert health.get("last_update") == latest.get("last_update"), "health/latest timestamp mismatch"
+          for name in ("latest.json", "health.json", "history.csv", "validation.json"):
+              if name in manifest:
+                  digest = hashlib.sha256((root / name).read_bytes()).hexdigest()
+                  assert manifest[name] == digest, f"manifest hash mismatch: {name}"
+          assert (root / "index.html").is_file(), "missing landing page"
+          print("Local publication validation passed")
+          PY
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
@@ -71,6 +103,47 @@ jobs:
         uses: actions/deploy-pages@v4
         with:
           artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Verify deployed JSON, health and manifest
+        env:
+          PAGE_URL: ${{ steps.deploy.outputs.page_url }}
+        run: |
+          python - <<'PY'
+          import hashlib, json, os, time, urllib.request
+          base = os.environ["PAGE_URL"].rstrip("/") + "/"
+          required = ("latest.json", "health.json", "manifest.json")
+          last_error = None
+          for attempt in range(6):
+              try:
+                  docs = {}
+                  for name in required:
+                      with urllib.request.urlopen(base + name, timeout=15) as response:
+                          if response.status != 200:
+                              raise RuntimeError(f"{name}: HTTP {response.status}")
+                          docs[name] = json.loads(response.read().decode("utf-8"))
+                  latest = docs["latest.json"]
+                  health = docs["health.json"]
+                  manifest = docs["manifest.json"]["sha256"]
+                  if health.get("last_update") != latest.get("last_update"):
+                      raise RuntimeError("deployed health/latest timestamp mismatch")
+                  for name in ("latest.json", "health.json"):
+                      if name not in manifest:
+                          raise RuntimeError(f"manifest missing {name}")
+                      actual = hashlib.sha256(json.dumps(docs[name], ensure_ascii=False, indent=2).encode()).hexdigest()
+                      # Compare canonical content only when serialization matches; the manifest is
+                      # independently verified below against the raw response bytes instead.
+                  for name in required:
+                      with urllib.request.urlopen(base + name, timeout=15) as response:
+                          raw = response.read()
+                      if name in manifest and hashlib.sha256(raw).hexdigest() != manifest[name]:
+                          raise RuntimeError(f"deployed manifest hash mismatch: {name}")
+                  print(f"Deployed endpoint verification passed: {base}")
+                  break
+              except Exception as exc:
+                  last_error = exc
+                  if attempt == 5:
+                      raise
+                  time.sleep(10)
+          PY
       - name: Mark failed collection after publishing explicit failure status
         if: steps.collect.outcome == 'failure'
         run: |
