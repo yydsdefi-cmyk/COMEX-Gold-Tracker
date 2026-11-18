@@ -1,0 +1,17 @@
+{
+  "captured_at_utc": "2026-11-18T02:53:52.234107+00:00",
+  "date": "2026-11-16",
+  "report_date": "2026-11-17",
+  "sha256": "a917da9004e70c0931b6350fbbfdfaeb76d1919a67a96cf3556b30a9692cad85",
+  "source_url": "https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls",
+  "method": "official_https_download",
+  "http_status": 200,
+  "final_url": "https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls",
+  "headers": {
+    "Content-Type": "application/vnd.ms-excel",
+    "Content-Length": "16896",
+    "Last-Modified": "Tue, 17 Nov 2026 20:03:54 GMT",
+    "ETag": "\"5c1fdbbf667fe5227380ff0aa4f60edb\"",
+    "Date": "Wed, 18 Nov 2026 02:53:52 GMT"
+  }
+}
