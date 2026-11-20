@@ -1,42 +1,42 @@
 {
   "schema_version": 1,
   "source": "CME",
-  "as_of_local_date": "2026-11-19",
+  "as_of_local_date": "2026-11-20",
   "as_of_timezone": "Asia/Kuala_Lumpur",
-  "generated_at_utc": "2026-11-19T02:34:04.900564+00:00",
+  "generated_at_utc": "2026-11-20T02:19:13.674118+00:00",
   "update_status": "OK",
   "last_update": {
-    "attempted_at_utc": "2026-11-19T02:34:04.149777+00:00",
+    "attempted_at_utc": "2026-11-20T02:19:13.058578+00:00",
     "source_url": "https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls",
     "status": "OK",
     "imported_reports": 1,
     "observations": [
       {
-        "date": "2026-11-17",
-        "sha256": "58d497c555950ae9f5acfb0770650d52ddb44bd0d9f3f90cede9708cf59ab6de"
+        "date": "2026-11-18",
+        "sha256": "24b0482fb35cc0a5c5f4f39a5e48a928b34523305747f0b6c55c268d41afb1ab"
       }
     ]
   },
   "available": true,
   "status": "NORMAL",
-  "date": "2026-11-17",
-  "activity_date": "2026-11-17",
-  "report_date": "2026-11-18",
+  "date": "2026-11-18",
+  "activity_date": "2026-11-18",
+  "report_date": "2026-11-19",
   "unit": "troy_oz",
   "scope": "CME Gold Stocks official combined report (GC and 4GC)",
-  "total_oz": 23062649.237,
-  "registered_oz": 14174196.261,
-  "eligible_oz": 8888452.976,
-  "registered_ratio": 61.459532,
-  "pledged_oz": 1675835.792,
+  "total_oz": 22965617.222,
+  "registered_oz": 14163622.706,
+  "eligible_oz": 8801994.516,
+  "registered_ratio": 61.673164,
+  "pledged_oz": 1710790.808,
   "pledged_accounting": "subset_of_registered_verified_by_reconciliation",
   "provenance": {
     "source": "CME",
     "source_url": "https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls",
     "source_page": "https://www.cmegroup.com/solutions/clearing/operations-and-deliveries/nymex-delivery-notices.html",
-    "captured_at_utc": "2026-11-19T02:34:04.511345+00:00",
-    "raw_path": "raw/2026-11-17/58d497c555950ae9f5acfb0770650d52ddb44bd0d9f3f90cede9708cf59ab6de.xls",
-    "sha256": "58d497c555950ae9f5acfb0770650d52ddb44bd0d9f3f90cede9708cf59ab6de",
+    "captured_at_utc": "2026-11-20T02:19:13.455696+00:00",
+    "raw_path": "raw/2026-11-18/24b0482fb35cc0a5c5f4f39a5e48a928b34523305747f0b6c55c268d41afb1ab.xls",
+    "sha256": "24b0482fb35cc0a5c5f4f39a5e48a928b34523305747f0b6c55c268d41afb1ab",
     "bytes": 16896,
     "method": "official_https_download",
     "http_status": 200,
@@ -44,12 +44,12 @@
     "headers": {
       "Content-Type": "application/vnd.ms-excel",
       "Content-Length": "16896",
-      "Last-Modified": "Wed, 18 Nov 2026 20:04:21 GMT",
-      "ETag": "\"2aaf9e83bf40f1740fbfd181bd905f1f\"",
-      "Date": "Thu, 19 Nov 2026 02:34:04 GMT"
+      "Last-Modified": "Thu, 19 Nov 2026 20:03:48 GMT",
+      "ETag": "\"5c1079cbccabfb58fca4ccd91b8b3c63\"",
+      "Date": "Fri, 20 Nov 2026 02:19:13 GMT"
     }
   },
-  "observation_count": 57,
+  "observation_count": 58,
   "reconciliation_checks_passed": 164,
   "history_continuity_issues": [
     {
@@ -73,30 +73,30 @@
   "freshness": "WITHIN_AGE_LIMIT",
   "freshness_rule": "Report Date age <= 1 weekday; conservative, not a confirmed CME publication calendar",
   "is_latest_confirmed": false,
-  "change_1d_oz": 66582.497,
-  "change_1d_pct": 0.289539,
-  "registered_change_1d_oz": -13392.887,
-  "registered_change_1d_pct": -0.094399,
-  "eligible_change_1d_oz": 79975.384,
-  "eligible_change_1d_pct": 0.907937,
-  "change_5d_oz": 132201.241,
-  "change_5d_pct": 0.576531,
-  "registered_change_5d_oz": -67305.111,
-  "registered_change_5d_pct": -0.472598,
-  "eligible_change_5d_oz": 199506.352,
-  "eligible_change_5d_pct": 2.296094,
-  "change_10d_oz": -62021.247,
-  "change_10d_pct": -0.268204,
-  "registered_change_10d_oz": -207496.911,
-  "registered_change_10d_pct": -1.442785,
-  "eligible_change_10d_oz": 145475.664,
-  "eligible_change_10d_pct": 1.663914,
-  "change_20d_oz": -341731.993,
-  "change_20d_pct": -1.46012,
-  "registered_change_20d_oz": -642772.745,
-  "registered_change_20d_pct": -4.338085,
-  "eligible_change_20d_oz": 301040.752,
-  "eligible_change_20d_pct": 3.505605,
+  "change_1d_oz": -97032.015,
+  "change_1d_pct": -0.420732,
+  "registered_change_1d_oz": -10573.555,
+  "registered_change_1d_pct": -0.074597,
+  "eligible_change_1d_oz": -86458.46,
+  "eligible_change_1d_pct": -0.972705,
+  "change_5d_oz": 35426.434,
+  "change_5d_pct": 0.154497,
+  "registered_change_5d_oz": -77878.666,
+  "registered_change_5d_pct": -0.546843,
+  "eligible_change_5d_oz": 113305.1,
+  "eligible_change_5d_pct": 1.304053,
+  "change_10d_oz": -31511.943,
+  "change_10d_pct": -0.137026,
+  "registered_change_10d_oz": -192510.627,
+  "registered_change_10d_pct": -1.340964,
+  "eligible_change_10d_oz": 160998.684,
+  "eligible_change_10d_pct": 1.863196,
+  "change_20d_oz": -377446.464,
+  "change_20d_pct": -1.616953,
+  "registered_change_20d_oz": -653346.3,
+  "registered_change_20d_pct": -4.409446,
+  "eligible_change_20d_oz": 275899.836,
+  "eligible_change_20d_pct": 3.235946,
   "change_windows": {
     "1d": {
       "status": "CME_PREV_TOTAL",
@@ -104,45 +104,45 @@
     },
     "5d": {
       "status": "AVAILABLE_CONSECUTIVE_WEEKDAYS",
-      "baseline_date": "2026-11-10"
+      "baseline_date": "2026-11-11"
     },
     "10d": {
       "status": "AVAILABLE_CONSECUTIVE_WEEKDAYS",
-      "baseline_date": "2026-11-03"
+      "baseline_date": "2026-11-04"
     },
     "20d": {
       "status": "AVAILABLE_CONSECUTIVE_WEEKDAYS",
-      "baseline_date": "2026-10-20"
+      "baseline_date": "2026-10-21"
     }
   },
   "movements": {
     "registered": {
-      "previous_oz": 14187589.148,
+      "previous_oz": 14174196.261,
       "received_oz": 0.0,
       "withdrawn_oz": 0.0,
       "net_change_oz": 0.0,
-      "adjustment_oz": -13392.887
+      "adjustment_oz": -10573.555
     },
     "pledged": {
-      "previous_oz": 1675835.792,
+      "previous_oz": 1710790.808,
       "received_oz": null,
       "withdrawn_oz": null,
       "net_change_oz": null,
       "adjustment_oz": null
     },
     "eligible": {
-      "previous_oz": 8808477.592,
-      "received_oz": 66936.158,
-      "withdrawn_oz": 353.661,
-      "net_change_oz": 66582.497,
-      "adjustment_oz": 13392.887
+      "previous_oz": 8888452.976,
+      "received_oz": 0.0,
+      "withdrawn_oz": 96935.265,
+      "net_change_oz": -96935.265,
+      "adjustment_oz": 10476.805
     },
     "total": {
-      "previous_oz": 22996066.74,
-      "received_oz": 66936.158,
-      "withdrawn_oz": 353.661,
-      "net_change_oz": 66582.497,
-      "adjustment_oz": 0.0
+      "previous_oz": 23062649.237,
+      "received_oz": 0.0,
+      "withdrawn_oz": 96935.265,
+      "net_change_oz": -96935.265,
+      "adjustment_oz": -96.75
     }
   },
   "registered_alert": {
