@@ -98,14 +98,37 @@ jobs:
         with:
           name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
           path: public-data
-      - name: Publish data endpoint
+      # The Pages artifact can be uploaded successfully before it is visible to
+      # deploy-pages' artifact service. Retry metadata discovery before failing.
+      - name: Publish data endpoint (attempt 1)
         id: deploy
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+        with:
+          artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Wait before Pages deployment retry
+        if: steps.deploy.outcome == 'failure'
+        run: sleep 10
+      - name: Publish data endpoint (attempt 2)
+        id: deploy_retry
+        if: steps.deploy.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+        with:
+          artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Wait before final Pages deployment retry
+        if: steps.deploy.outcome == 'failure' && steps.deploy_retry.outcome == 'failure'
+        run: sleep 20
+      - name: Publish data endpoint (attempt 3)
+        id: deploy_retry_final
+        if: steps.deploy.outcome == 'failure' && steps.deploy_retry.outcome == 'failure'
         uses: actions/deploy-pages@v4
         with:
           artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Verify deployed JSON, health and manifest
+        if: steps.deploy.outcome == 'success' || steps.deploy_retry.outcome == 'success' || steps.deploy_retry_final.outcome == 'success'
         env:
-          PAGE_URL: ${{ steps.deploy.outputs.page_url }}
+          PAGE_URL: ${{ steps.deploy.outputs.page_url || steps.deploy_retry.outputs.page_url || steps.deploy_retry_final.outputs.page_url }}
         run: |
           python - <<'PY'
           import hashlib, json, os, time, urllib.request
