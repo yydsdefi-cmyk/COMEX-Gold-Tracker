@@ -3,10 +3,10 @@
   "source": "CME",
   "as_of_local_date": "2026-11-27",
   "as_of_timezone": "Asia/Kuala_Lumpur",
-  "generated_at_utc": "2026-11-27T03:38:28.345992+00:00",
+  "generated_at_utc": "2026-11-27T05:03:03.042495+00:00",
   "update_status": "UNCHANGED",
   "last_update": {
-    "attempted_at_utc": "2026-11-27T03:38:27.683709+00:00",
+    "attempted_at_utc": "2026-11-27T05:03:02.425772+00:00",
     "source_url": "https://www.cmegroup.com/delivery_reports/Gold_Stocks.xls",
     "status": "UNCHANGED",
     "imported_reports": 1,
@@ -46,9 +46,9 @@
       "Content-Length": "16896",
       "Last-Modified": "Wed, 25 Nov 2026 19:04:07 GMT",
       "ETag": "\"f70fc802f46dd1b0691f26f066d00abf\"",
-      "Date": "Fri, 27 Nov 2026 03:38:27 GMT"
+      "Date": "Fri, 27 Nov 2026 05:03:02 GMT"
     },
-    "last_verified_at_utc": "2026-11-27T03:38:27.932880+00:00"
+    "last_verified_at_utc": "2026-11-27T05:03:02.700219+00:00"
   },
   "observation_count": 62,
   "reconciliation_checks_passed": 164,
