@@ -302,6 +302,7 @@ class MacroV14Tests(unittest.TestCase):
         self.assertEqual([o['observation_date'] for o in obs][:2],['2026-09-04','2026-09-11'])
         self.assertEqual(obs[-1]['value'],412517);self.assertEqual(obs[-1]['metric'],'eia_crude_stocks')
         self.assertEqual(obs[-1]['unit'],'thousand_barrels')
+        self.assertIn(b"class='FloatTitle'",(FIX/'eia_crude.html').read_bytes())  # live server markup uses single-quoted attributes
         spr,_=parsers.parse_eia_weekly((FIX/'eia_spr.html').read_bytes(),NOW,metric='eia_spr')
         self.assertEqual(spr[-1]['metric'],'eia_spr_stocks');self.assertEqual(spr[-1]['value'],282683)
 
