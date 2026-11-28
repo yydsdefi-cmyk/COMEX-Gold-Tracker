@@ -8,10 +8,13 @@ from .core import DATA
 
 PERCENT={'sp500','nasdaq','dxy','wti','gold','btc'}
 ABSOLUTE={'aaii_spread':'pp','cnn_fg':'点','vix':'点','vix3m':'点','vix_ratio':'倍',
-          'crypto_fg':'点','srf_usd':'B USD','mmf_assets_usd':'B USD','comex_registered_ratio':'pp'}
-SCALE={'srf_usd':Decimal('1000000000'),'mmf_assets_usd':Decimal('1000000000')}
+          'crypto_fg':'点','srf_usd':'B USD','mmf_assets_usd':'B USD','comex_registered_ratio':'pp',
+          'ust_2s10s':'bp','eia_crude_stocks':'百万桶','eia_spr_stocks':'百万桶'}
+BASIS_POINTS={'us10y','ust_2y','ust_10y','ust_30y'}
+SCALE={'srf_usd':Decimal('1000000000'),'mmf_assets_usd':Decimal('1000000000'),
+       'eia_crude_stocks':Decimal('1000'),'eia_spr_stocks':Decimal('1000')}
 LEVEL_UNITS={**ABSOLUTE,'sp500':'点','nasdaq':'点','dxy':'点','wti':'USD/桶','gold':'USD/oz',
-             'btc':'USD','us10y':'%','comex_registered_ratio':'%'}
+             'btc':'USD','us10y':'%','comex_registered_ratio':'%','ust_2y':'%','ust_10y':'%','ust_30y':'%'}
 
 
 def decimal(value):
@@ -55,7 +58,7 @@ def audit_payload(payload,captures):
             if metric in PERCENT:
                 if av==0:raise ValueError('Zero percentage baseline')
                 want=(bv-av)*Decimal(100)/av;unit='%'
-            elif metric=='us10y':want=(bv-av)*Decimal(100);unit='bp'
+            elif metric in BASIS_POINTS:want=(bv-av)*Decimal(100);unit='bp'
             elif metric in ABSOLUTE:want=(bv-av)/SCALE.get(metric,Decimal(1));unit=ABSOLUTE[metric]
             else:raise ValueError('No independent measurement rule for metric')
             if row['change_unit']!=unit:raise ValueError('Change unit mismatch')
