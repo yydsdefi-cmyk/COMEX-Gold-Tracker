@@ -460,3 +460,62 @@ def parse_bill(body, now, identity):
     return [], {'items':items,'bill_title':title,'bill_identity':actual,'bulk_updated_at':updated,
                 'latest_action':latest,'laws':laws,'enactment_record':'ENACTED' if enacted else 'NO_ENACTMENT_RECORD',
                 'actions_in_window':len(items),'coverage':'Only this identified bill; current official action history, not new-bill discovery'}
+
+
+UST_TENORS={'3 Mo':'ust_3m','2 Yr':'ust_2y','10 Yr':'ust_10y','30 Yr':'ust_30y'}
+
+
+def parse_ust_curve(body, now):
+    """Official Treasury daily par yield curve CSV (percent). 2s10s is derived same-day."""
+    rows=list(csv.DictReader(io.StringIO(body.decode('utf-8-sig'))))
+    if not rows or 'Date' not in rows[0]:
+        raise ValueError('Treasury yield curve header missing')
+    missing=[k for k in UST_TENORS if k not in rows[0]]
+    if missing:
+        raise ValueError('Treasury yield curve tenor missing: '+', '.join(missing))
+    out=[];seen=set()
+    for r in rows[:30]:
+        day=datetime.strptime(r['Date'].strip(),'%m/%d/%Y').date().isoformat()
+        if day in seen:raise ValueError('Duplicate Treasury curve date')
+        seen.add(day);vals={}
+        for col,metric in UST_TENORS.items():
+            raw=(r.get(col) or '').strip()
+            if not raw or raw.upper()=='N/A':continue
+            v=number(raw)
+            if not -1<v<25:raise ValueError('Treasury yield out of range')
+            vals[metric]=v
+            out.append(observation(metric,v,day,'percent'))
+        if 'ust_2y' in vals and 'ust_10y' in vals:
+            out.append(observation('ust_2s10s',round((vals['ust_10y']-vals['ust_2y'])*100,4),day,'basis_points'))
+    if not out:
+        raise ValueError('Empty Treasury yield curve')
+    return out,{'publication_note':'财政部每个工作日发布当日收益率；CSV未逐行提供发布时间',
+                'derived':'ust_2s10s = 10Y - 2Y（同日，单位bp）'}
+
+
+def parse_eia_weekly(body, now, metric='eia_crude'):
+    """EIA dnav weekly history table (thousand barrels). Week-ending dates, not release dates."""
+    s=body.decode('utf-8','replace')
+    m=re.search(r'<table[^>]*class="FloatTitle"[^>]*>(.*?)</table>',s,re.S|re.I)
+    if not m:
+        raise ValueError('EIA history table missing')
+    title=re.search(r'<title>(.*?)</title>',s,re.S|re.I)
+    title=text(title[1]) if title else ''
+    if 'Thousand Barrels' not in title:
+        raise ValueError('EIA unit not thousand barrels')
+    out=[];seen=set()
+    for row in re.findall(r'<tr[^>]*>(.*?)</tr>',m[1],re.S|re.I):
+        ym=re.search(r'class="B6"[^>]*>\s*(?:&nbsp;|\s)*(\d{4})-([A-Za-z]{3})',row)
+        if not ym:continue
+        year=int(ym[1])
+        for md,val in re.findall(r'class="B5"[^>]*>\s*(\d{2}/\d{2})(?:&nbsp;|\s)*</td>\s*<td[^>]*class="B3"[^>]*>\s*([\d,]+)',row):
+            day=datetime.strptime(f'{md}/{year}','%m/%d/%Y').date().isoformat()
+            if day in seen:raise ValueError('Duplicate EIA week')
+            seen.add(day);v=number(val)
+            if v<=0:raise ValueError('Non-positive EIA stock level')
+            out.append((day,v))
+    if not out:
+        raise ValueError('Empty EIA weekly table')
+    out.sort()
+    obs=[observation(metric+'_stocks',v,d,'thousand_barrels') for d,v in out[-12:]]
+    return obs,{'series_title':title,'publication_note':'观察日期为周截止日（周五）；EIA通常在下周三发布'}
