@@ -494,9 +494,10 @@ def parse_ust_curve(body, now):
 
 
 def parse_eia_weekly(body, now, metric='eia_crude'):
-    """EIA dnav weekly history table (thousand barrels). Week-ending dates, not release dates."""
+    """EIA dnav weekly history table (thousand barrels). Week-ending dates, not release dates.
+    The live server sends single-quoted attributes and CR line breaks; accept either quote style."""
     s=body.decode('utf-8','replace')
-    m=re.search(r'<table[^>]*class="FloatTitle"[^>]*>(.*?)</table>',s,re.S|re.I)
+    m=re.search(r'<table[^>]*class=[\'"]?FloatTitle[\'"]?[^>]*>(.*?)</table>',s,re.S|re.I)
     if not m:
         raise ValueError('EIA history table missing')
     title=re.search(r'<title>(.*?)</title>',s,re.S|re.I)
@@ -505,10 +506,10 @@ def parse_eia_weekly(body, now, metric='eia_crude'):
         raise ValueError('EIA unit not thousand barrels')
     out=[];seen=set()
     for row in re.findall(r'<tr[^>]*>(.*?)</tr>',m[1],re.S|re.I):
-        ym=re.search(r'class="B6"[^>]*>\s*(?:&nbsp;|\s)*(\d{4})-([A-Za-z]{3})',row)
+        ym=re.search(r'class=[\'"]?B6[\'"]?[^>]*>\s*(?:&nbsp;|\s)*(\d{4})-([A-Za-z]{3})',row)
         if not ym:continue
         year=int(ym[1])
-        for md,val in re.findall(r'class="B5"[^>]*>\s*(\d{2}/\d{2})(?:&nbsp;|\s)*</td>\s*<td[^>]*class="B3"[^>]*>\s*([\d,]+)',row):
+        for md,val in re.findall(r'class=[\'"]?B5[\'"]?[^>]*>\s*(\d{2}/\d{2})(?:&nbsp;|\s)*</td>\s*<td[^>]*class=[\'"]?B3[\'"]?[^>]*>\s*([\d,]+)',row):
             day=datetime.strptime(f'{md}/{year}','%m/%d/%Y').date().isoformat()
             if day in seen:raise ValueError('Duplicate EIA week')
             seen.add(day);v=number(val)
