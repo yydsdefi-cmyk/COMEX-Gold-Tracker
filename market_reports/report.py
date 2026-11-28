@@ -151,6 +151,42 @@ def treasury_lines(capture):
     return lines or ['未来7日已公告拍卖待确认。']
 
 
+def curve_lines(capture):
+    status={r['id']:r['status'] for r in capture['sources']}.get('ust_curve','MISSING')
+    rows={}
+    for m in ('ust_3m','ust_2y','ust_10y','ust_30y','ust_2s10s'):
+        rows[m]=series(capture,m)
+    if not rows['ust_10y']:
+        return ['待确认；缺失不写0。']
+    lines=[]
+    parts=[]
+    for m,label in [('ust_3m','3M'),('ust_2y','2Y'),('ust_10y','10Y'),('ust_30y','30Y')]:
+        r=rows[m]
+        if not r:parts.append(label+' 待确认');continue
+        ch=(r[-1]['value']-r[-2]['value'])*100 if len(r)>1 else None
+        parts.append(label+' **'+fmt(r[-1]['value'])+'%** '+fmt(ch,0,True)+'bp')
+    lines.append('｜'.join(parts)+'｜'+dates(rows['ust_10y'][-1]))
+    sp=rows['ust_2s10s']
+    if sp:
+        v=sp[-1]['value']
+        lines.append('2s10s（10Y−2Y）**'+fmt(v,0,True)+'bp** → '+('倒挂' if v<0 else '正斜率' if v>0 else '持平')+'｜'+sp[-1]['observation_date'])
+    lines.append('官方CMT收益率，与上方Yahoo的US10Y可能有几个bp差异；变化为相邻两个发布日之差。'+('' if status=='OK' else '⚠来源状态 '+status+'。'))
+    return lines
+
+
+def eia_lines(capture):
+    status={r['id']:r['status'] for r in capture['sources']}
+    lines=[]
+    for metric,src,label in [('eia_crude_stocks','eia_crude','商业原油（不含SPR）'),('eia_spr_stocks','eia_spr','战略储备SPR')]:
+        r=series(capture,metric)
+        if not r:lines.append(label+'：待确认');continue
+        ch=(r[-1]['value']-r[-2]['value'])/1000 if len(r)>1 else None
+        lines.append(label+' **'+fmt(r[-1]['value']/1000,1)+'** 百万桶｜周变化 '+fmt(ch,2,True)+' 百万桶｜周截止 '+r[-1]['observation_date']
+                     +('' if status.get(src)=='OK' else '｜⚠'+status.get(src,'MISSING')))
+    lines.append('EIA每周三发布上一周（截至周五）数据；库存下降不等于必然涨价，节假日会顺延。')
+    return lines
+
+
 def daily(capture):
     now=parse_time(capture['generated_at_utc']).astimezone(MYT)
     sources={r['id']:r for r in capture['sources']}
@@ -210,6 +246,8 @@ def daily(capture):
     else:
         lines.append('待确认；缺失不写0。')
     lines += ['## Treasury']+treasury_lines(capture)
+    lines += ['## 美债收益率曲线（财政部官方）']+curve_lines(capture)
+    lines += ['## 美国原油库存（EIA）']+eia_lines(capture)
     lines += ['## COMEX Gold']+comex_lines(capture)
     lines += ['## Cash Liquidity / ICI']
     a=latest(capture,'mmf_assets_usd');delta=value(capture,'mmf_weekly_asset_change_usd')
