@@ -31,7 +31,7 @@ class IndependentAuditTests(unittest.TestCase):
     def test_calculable_only_pass_does_not_claim_missing_indicators_pass(self):
         p,c=self.sample();r=audit_payload(p,c)
         self.assertEqual(r['status'],'PASS_CALCULABLE_ONLY');self.assertEqual(r['verified'],5)
-        self.assertEqual(r['not_calculable'],11);self.assertEqual(r['failed'],0)
+        self.assertEqual(r['not_calculable'],17);self.assertEqual(r['failed'],0)  # 11 original + 6 v1.4 macro metrics
 
     def test_wrong_numeric_result_fails_independent_decimal_audit(self):
         p,c=self.sample();p['analysis']['weekly_comparisons'][0]['change']=99
