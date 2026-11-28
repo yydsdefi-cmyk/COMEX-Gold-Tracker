@@ -35,9 +35,9 @@ def fake_sources(now):
             from market_reports.calendar import parse_calendar
             details=parse_calendar((FIX/'nyfed_calendar_oct.html').read_bytes())
             out.append(receipt(k,details=details));continue
-        fixture={'aaii':'aaii.html','srf':'srf.json','crypto':'crypto.json','vix':'vix.txt','vix3m':'vix3m.txt','ici':'ici.html','treasury':'auctions.json','bea':'bea.txt','fomc':'fed_calendar.txt','bls':'bls.txt','occ':'occ_rss.xml','clarity_bill':'govinfo_clarity_excerpt.xml','genius_bill':'govinfo_genius_excerpt.xml'}.get(k)
+        fixture={'aaii':'aaii.html','srf':'srf.json','crypto':'crypto.json','vix':'vix.txt','vix3m':'vix3m.txt','ici':'ici.html','treasury':'auctions.json','bea':'bea.txt','fomc':'fed_calendar.txt','bls':'bls.txt','occ':'occ_rss.xml','clarity_bill':'govinfo_clarity_excerpt.xml','genius_bill':'govinfo_genius_excerpt.xml','ust_curve':'ust_curve.csv','eia_crude':'eia_crude.html','eia_spr':'eia_spr.html'}.get(k)
         if fixture:
-            args={'metric':k} if k in ('vix','vix3m') else {'identity':s['bill_identity']} if s['parser']=='bill' else {}
+            args={'metric':k} if k in ('vix','vix3m','eia_crude','eia_spr') else {'identity':s['bill_identity']} if s['parser']=='bill' else {}
             obs,details=getattr(parsers,'parse_'+s['parser'])((FIX/fixture).read_bytes(),now,**args)
         out.append(receipt(k,obs,details))
     return out
@@ -275,3 +275,46 @@ class IntegrityAndEndToEndTests(unittest.TestCase):
         for line in w.splitlines():
             if 'uses: actions/' in line:
                 ref=line.split('@')[1].split()[0];self.assertEqual(len(ref),40)
+
+
+class MacroV14Tests(unittest.TestCase):
+    def test_treasury_curve_tenors_and_same_day_spread(self):
+        obs,d=parsers.parse_ust_curve((FIX/'ust_curve.csv').read_bytes(),NOW)
+        day={o['metric']:o for o in obs if o['observation_date']=='2026-10-23'}
+        self.assertEqual(day['ust_2y']['value'],4.55);self.assertEqual(day['ust_10y']['value'],4.83)
+        self.assertEqual(day['ust_2s10s']['value'],28.0);self.assertEqual(day['ust_2s10s']['unit'],'basis_points')
+        old={o['metric']:o for o in obs if o['observation_date']=='2026-10-16'}
+        self.assertEqual(old['ust_2s10s']['value'],31.0)
+        self.assertIsNone(day['ust_10y']['publication_date'])
+
+    def test_treasury_curve_rejects_missing_tenor_and_bad_values(self):
+        b=(FIX/'ust_curve.csv').read_bytes()
+        with self.assertRaises(ValueError):parsers.parse_ust_curve(b.replace(b'"10 Yr"',b'"10Y"'),NOW)
+        with self.assertRaises(ValueError):parsers.parse_ust_curve(b.replace(b',4.83,',b',48.3,'),NOW)
+
+    def test_treasury_na_cells_are_skipped_not_zero(self):
+        b=(FIX/'ust_curve.csv').read_bytes().replace(b'10/23/2026,4.25,4.26,4.28,4.31',b'10/23/2026,4.25,4.26,4.28,N/A')
+        obs,_=parsers.parse_ust_curve(b,NOW)
+        self.assertFalse([o for o in obs if o['metric']=='ust_3m' and o['observation_date']=='2026-10-23'])
+
+    def test_eia_weekly_stocks_parse_live_markup(self):
+        obs,d=parsers.parse_eia_weekly((FIX/'eia_crude.html').read_bytes(),NOW,metric='eia_crude')
+        self.assertEqual([o['observation_date'] for o in obs][:2],['2026-09-04','2026-09-11'])
+        self.assertEqual(obs[-1]['value'],412517);self.assertEqual(obs[-1]['metric'],'eia_crude_stocks')
+        self.assertEqual(obs[-1]['unit'],'thousand_barrels')
+        spr,_=parsers.parse_eia_weekly((FIX/'eia_spr.html').read_bytes(),NOW,metric='eia_spr')
+        self.assertEqual(spr[-1]['metric'],'eia_spr_stocks');self.assertEqual(spr[-1]['value'],282683)
+
+    def test_eia_rejects_wrong_unit_or_missing_table(self):
+        b=(FIX/'eia_crude.html').read_bytes()
+        with self.assertRaises(ValueError):parsers.parse_eia_weekly(b.replace(b'Thousand Barrels',b'Barrels per Day'),NOW,metric='eia_crude')
+        with self.assertRaises(ValueError):parsers.parse_eia_weekly(b.replace(b'FloatTitle',b'Other'),NOW,metric='eia_crude')
+
+    def test_registry_has_v4_sources_and_daily_renders_sections(self):
+        from market_reports.sources import SOURCE_IDS_V4
+        self.assertEqual({s['id'] for s in registry(NOW)}|{'comex'},set(SOURCE_IDS_V4))
+        receipts=fake_sources(NOW)+[fake_comex(NOW)]
+        cap={'generated_at_utc':NOW.isoformat(),'sources':receipts,'observations':[o for r in receipts for o in r['observations']]}
+        md=daily(cap)
+        self.assertIn('## 美债收益率曲线（财政部官方）',md);self.assertIn('2s10s（10Y−2Y）**+28bp** → 正斜率',md)
+        self.assertIn('## 美国原油库存（EIA）',md);self.assertIn('商业原油（不含SPR） **412.5** 百万桶｜周变化 -3.06 百万桶',md)
