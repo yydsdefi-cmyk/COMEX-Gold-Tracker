@@ -5,7 +5,7 @@ import sys
 from datetime import datetime, timedelta
 from pathlib import Path
 from .core import DATA, MYT, ROOT, UTC, atomic, commit_bundle, digest, due_reports, encoded, immutable, rebuild_history, history_view, stamp, verify_bundle, parse_time
-from .sources import collect, registry, SOURCE_IDS_V1, SOURCE_IDS_V2, SOURCE_IDS_V3
+from .sources import collect, registry, SOURCE_IDS_V1, SOURCE_IDS_V2, SOURCE_IDS_V3, SOURCE_IDS_V4
 from .comex import collect_comex
 from .report import daily,weekly,event_list
 from .trends import weekly_changes
@@ -20,9 +20,9 @@ def validate_archive(data, check_history=True):
         raw=p.read_bytes()
         if p.stem!=digest(raw):raise ValueError('Capture hash mismatch '+p.name)
         c=json.loads(raw)
-        if c['schema_version'] not in (1,2,3):raise ValueError('Unknown capture schema')
+        if c['schema_version'] not in (1,2,3,4):raise ValueError('Unknown capture schema')
         sources={r['id']:r for r in c['sources']}
-        expected={1:SOURCE_IDS_V1,2:SOURCE_IDS_V2,3:SOURCE_IDS_V3}[c['schema_version']]
+        expected={1:SOURCE_IDS_V1,2:SOURCE_IDS_V2,3:SOURCE_IDS_V3,4:SOURCE_IDS_V4}[c['schema_version']]
         if len(sources)!=len(c['sources']) or set(sources)!=expected:
             raise ValueError('Capture source set mismatch/duplicate')
         if c['schema_version']>=2 and c.get('source_ids')!=sorted(expected):
@@ -98,7 +98,7 @@ def run(kinds,data=DATA,now=None,collector=collect,comex_collector=collect_comex
     started_at=stamp(now)
     receipts=collector(now)+[comex_collector(now)]
     if not fixed_now:now=datetime.now(UTC)
-    capture={'schema_version':3,'source_ids':sorted(SOURCE_IDS_V3),'collection_started_at_utc':started_at,'generated_at_utc':stamp(now),'timezone':'Asia/Kuala_Lumpur',
+    capture={'schema_version':4,'source_ids':sorted(SOURCE_IDS_V4),'collection_started_at_utc':started_at,'generated_at_utc':stamp(now),'timezone':'Asia/Kuala_Lumpur',
              'sources':receipts,'observations':[o for r in receipts for o in r['observations']]}
     raw=encoded(capture);capture_id=digest(raw)
     immutable(data/'captures'/(capture_id+'.json'),raw)
