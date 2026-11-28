@@ -3,6 +3,7 @@ import json
 from datetime import datetime
 from .core import MYT, UTC, parse_time, stamp, number, observation, inventory_level, digest
 from .sources import download
+from comex_gold.watchdog import snapshot_is_fresh
 
 BASE='https://api.github.com/repos/yydsdefi-cmyk/COMEX-Gold-Tracker'
 
@@ -28,9 +29,23 @@ def health(snapshot, now, runs):
         issues.append('SCHEDULE_UNVERIFIED')
     elif completed[0].get('conclusion')!='success':
         issues.append('LATEST_COLLECTION_FAILED_OR_CANCELLED')
-    elif attempt and (parse_time(completed[0]['updated_at'])-attempt).total_seconds()>300:
+    elif attempt and (parse_time(completed[0]['updated_at'])-attempt).total_seconds()>300 \
+            and not skipped_by_freshness_guard(snapshot, completed[0]):
         issues.append('SNAPSHOT_BEHIND_RUN')
     return issues
+
+
+def skipped_by_freshness_guard(snapshot, run):
+    """A later scheduled Gold run legitimately skips collection (comex_gold.watchdog)
+    when today's snapshot was already valid, so it finishes without a new attempt.
+    Push and manual runs bypass the guard and always collect, so they still count as lag."""
+    if run.get('event')!='schedule':
+        return False
+    try:
+        fresh,_=snapshot_is_fresh(snapshot, parse_time(run['updated_at']))
+    except (KeyError,TypeError,ValueError):
+        return False
+    return fresh
 
 
 def collect_comex(now,downloader=download):
