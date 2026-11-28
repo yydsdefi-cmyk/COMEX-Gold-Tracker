@@ -40,7 +40,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}market/
+      url: ${{ steps.deploy.outputs.page_url || steps.deploy_retry.outputs.page_url || steps.deploy_retry_final.outputs.page_url }}market/
     env:
       PYTHONUNBUFFERED: '1'
       REPORT_KIND: ${{ github.event_name == 'schedule' && 'due' || inputs.report || 'both' }}
@@ -84,8 +84,30 @@ jobs:
           name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
           path: public-data
           retention-days: 1
-      - name: Deploy combined Pages package
+      # The Pages artifact can be uploaded before deploy-pages' artifact service can see it
+      # ("No artifacts named ... were found"). Retry like the Gold workflow before failing.
+      - name: Deploy combined Pages package (attempt 1)
         id: deploy
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+        continue-on-error: true
+        with:
+          artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Wait before Pages deployment retry
+        if: steps.deploy.outcome == 'failure'
+        run: sleep 15
+      - name: Deploy combined Pages package (attempt 2)
+        id: deploy_retry
+        if: steps.deploy.outcome == 'failure'
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+        continue-on-error: true
+        with:
+          artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Wait before final Pages deployment retry
+        if: steps.deploy.outcome == 'failure' && steps.deploy_retry.outcome == 'failure'
+        run: sleep 30
+      - name: Deploy combined Pages package (attempt 3)
+        id: deploy_retry_final
+        if: steps.deploy.outcome == 'failure' && steps.deploy_retry.outcome == 'failure'
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
         with:
           artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
