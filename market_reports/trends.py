@@ -11,7 +11,10 @@ SPECS=[('sp500','S&P 500','percent','点',1,2),('nasdaq','Nasdaq','percent','点
  ('vix3m','VIX3M','absolute','点',1,2),('vix_ratio','VIX/VIX3M','absolute','倍',1,3),
  ('crypto_fg','Crypto F&G','absolute','点',1,0),('srf_usd','SRF','absolute','B USD',1e9,6),
  ('mmf_assets_usd','MMF资产','absolute','B USD',1e9,2),
- ('comex_registered_ratio','Registered Ratio','absolute','%',1,3)]
+ ('comex_registered_ratio','Registered Ratio','absolute','%',1,3),
+ ('ust_2y','美债2Y','bp','%',1,2),('ust_10y','美债10Y（官方）','bp','%',1,2),
+ ('ust_30y','美债30Y','bp','%',1,2),('ust_2s10s','2s10s利差','absolute','bp',1,1),
+ ('eia_crude_stocks','美国商业原油库存','absolute','百万桶',1e3,2),('eia_spr_stocks','SPR原油库存','absolute','百万桶',1e3,2)]
 
 
 def dated_series(captures,metric):
