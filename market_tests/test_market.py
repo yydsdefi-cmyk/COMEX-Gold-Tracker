@@ -174,8 +174,18 @@ class DateAndMathTests(unittest.TestCase):
 
     def test_comex_run_fail_and_snapshot_lag(self):
         s={'available':True,'update_status':'UNCHANGED','freshness':'WITHIN_AGE_LIMIT','last_update':{'attempted_at_utc':'2026-10-23T23:00:00+00:00'}}
-        runs=[{'status':'completed','conclusion':'success','event':'schedule','updated_at':'2026-10-24T00:00:13+00:00'}]
+        runs=[{'status':'completed','conclusion':'success','event':'schedule','updated_at':'2026-10-24T00:00:13+00:00'},
+              {'status':'completed','conclusion':'success','event':'schedule','updated_at':'2026-10-23T23:00:05+00:00'}]
+        # Later scheduled run skipped by the freshness guard: today's valid snapshot is not lag.
+        self.assertEqual(health(s,NOW,runs),[])
+        # Push/manual runs bypass the guard and always collect, so a gap is real lag.
+        runs[0]['event']='push'
         self.assertIn('SNAPSHOT_BEHIND_RUN',health(s,NOW,runs))
+        runs[0]['event']='workflow_dispatch'
+        self.assertIn('SNAPSHOT_BEHIND_RUN',health(s,NOW,runs))
+        # A scheduled run would have collected if the snapshot was not valid (e.g. STALE).
+        runs[0]['event']='schedule'
+        self.assertIn('SNAPSHOT_BEHIND_RUN',health({**s,'freshness':'STALE'},NOW,runs))
         runs[0]['conclusion']='failure'
         self.assertIn('LATEST_COLLECTION_FAILED_OR_CANCELLED',health(s,NOW,runs))
 
