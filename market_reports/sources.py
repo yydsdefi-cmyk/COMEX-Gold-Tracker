@@ -14,6 +14,7 @@ from .core import UTC, stamp, digest, assess_date, observation, ET
 SOURCE_IDS_V1=frozenset('aaii cnn vix vix3m crypto srf treasury ici bls bea fomc sec cftc fed congress whitehouse treasury_news federal_register sp500 nasdaq us10y dxy wti gold btc comex'.split())
 SOURCE_IDS_V2=SOURCE_IDS_V1|{'occ','clarity_bill','genius_bill'}
 SOURCE_IDS_V3=SOURCE_IDS_V2|{'nyfed_calendar'}
+SOURCE_IDS_V4=SOURCE_IDS_V3|{'ust_curve','eia_crude','eia_spr'}
 
 
 def registry(now):
@@ -43,6 +44,12 @@ def registry(now):
       s('whitehouse','https://www.whitehouse.gov/presidential-actions/feed/','rss'),
       s('treasury_news','https://home.treasury.gov/news/press-releases','treasury_news',note='Official press-release index; linked release pages are the primary references.'),
       s('federal_register',regulation.fr_page_url(now,1),'federal_register',note='Full bounded seven-day document window, local topic filtering, official PDF and effective-date metadata.'),
+      s('ust_curve','https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/'+str(now.astimezone(ET).year)+'/all?type=daily_treasury_yield_curve&field_tdr_date_value='+str(now.astimezone(ET).year)+'&page&_format=csv','ust_curve',4,
+        note='Official Treasury daily par yield curve (CMT). 2s10s derived same-day. Early January may hold only a few rows.'),
+      s('eia_crude','https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WCESTUS1&f=W','eia_weekly',13,
+        note='Official EIA weekly commercial crude stocks excl. SPR (WCESTUS1). Week-ending date; released the following Wednesday.'),
+      s('eia_spr','https://www.eia.gov/dnav/pet/hist/LeafHandler.ashx?n=PET&s=WCSSTUS1&f=W','eia_weekly',13,
+        note='Official EIA weekly SPR crude stocks (WCSSTUS1).'),
     ]
     for key,symbol in [('sp500','^GSPC'),('nasdaq','^IXIC'),('us10y','^TNX'),('dxy','DX-Y.NYB'),('wti','CL=F'),('gold','GC=F'),('btc','BTC-USD')]:
         src.append(s(key,'https://query1.finance.yahoo.com/v8/finance/chart/'+quote(symbol,safe='')+'?range=1mo&interval=1d','yahoo',2 if key=='btc' else 4,'secondary',
@@ -83,7 +90,7 @@ def collect_one(spec, now, downloader=download):
         body,meta=downloader(spec['url'])
         receipt.update(meta)
         fn=getattr(parsers,'parse_'+spec['parser'])
-        args={'metric':spec['id']} if spec['parser'] in ('cboe','yahoo') else {'identity':spec['bill_identity']} if spec['parser']=='bill' else {}
+        args={'metric':spec['id']} if spec['parser'] in ('cboe','yahoo','eia_weekly') else {'identity':spec['bill_identity']} if spec['parser']=='bill' else {}
         obs,details=fn(body,now,**args)
         if spec['id']=='ici':
             # Only a successful official HTML release permits the optional public XLS extension.
